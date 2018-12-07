@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>[转]Java中的反射总结 | MAY THE FORCE BE WITH YOU</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Java,Reflect">
+    <meta name="description" content="content{:toc}  原文链接：Java中的反射总结 刚开始学习java的时候真的很难理解反射到底是个什么东西 一些书籍，哪怕是很经典的书籍都解释的让人感觉懵懵的，或许的确是我太笨 况且，网上说在将来学习框架的时候需要经常应用到反射机制，这样一来总让人心里有些不安 就方才偶然又把讲解反射的章节和视频看了一点，觉得能理解一些了 现在决定一鼓作气，边看边写，顺便把一些主要的内容和操作都记载到">
+<meta name="keywords" content="Java,Reflect">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[转]Java中的反射总结">
+<meta property="og:url" content="http://blog.duanxu.science/2016/12/20/2016/2016-12-20-转-Java中的反射总结/index.html">
+<meta property="og:site_name" content="MAY THE FORCE BE WITH YOU">
+<meta property="og:description" content="content{:toc}  原文链接：Java中的反射总结 刚开始学习java的时候真的很难理解反射到底是个什么东西 一些书籍，哪怕是很经典的书籍都解释的让人感觉懵懵的，或许的确是我太笨 况且，网上说在将来学习框架的时候需要经常应用到反射机制，这样一来总让人心里有些不安 就方才偶然又把讲解反射的章节和视频看了一点，觉得能理解一些了 现在决定一鼓作气，边看边写，顺便把一些主要的内容和操作都记载到">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-07T12:36:39.768Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[转]Java中的反射总结">
+<meta name="twitter:description" content="content{:toc}  原文链接：Java中的反射总结 刚开始学习java的时候真的很难理解反射到底是个什么东西 一些书籍，哪怕是很经典的书籍都解释的让人感觉懵懵的，或许的确是我太笨 况且，网上说在将来学习框架的时候需要经常应用到反射机制，这样一来总让人心里有些不安 就方才偶然又把讲解反射的章节和视频看了一点，觉得能理解一些了 现在决定一鼓作气，边看边写，顺便把一些主要的内容和操作都记载到">
+    
+        <link rel="alternate" type="application/atom+xml" title="MAY THE FORCE BE WITH YOU" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon_64.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Duan Xu</h5>
+          <a href="mailto:duanxu@outlook.com" title="duanxu@outlook.com" class="mail">duanxu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/doodle777" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/2886472974" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">[转]Java中的反射总结</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">[转]Java中的反射总结</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-12-20T03:48:30.000Z" itemprop="datePublished" class="page-time">
+  2016-12-20
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Repost/">Repost</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-Class类"><span class="post-toc-number">1.</span> <span class="post-toc-text">1 Class类</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-Class类的应用"><span class="post-toc-number">2.</span> <span class="post-toc-text">2 Class类的应用</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-获取类的结构"><span class="post-toc-number">3.</span> <span class="post-toc-text">3 获取类的结构</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-反射的应用"><span class="post-toc-number">4.</span> <span class="post-toc-text">4 反射的应用</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-2016/2016-12-20-转-Java中的反射总结" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">[转]Java中的反射总结</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-12-20 11:48:30" datetime="2016-12-20T03:48:30.000Z" itemprop="datePublished">2016-12-20</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Repost/">Repost</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <ul>
+<li>content<br>{:toc}</li>
+</ul>
+<p><a href="http://www.cnblogs.com/nerxious/archive/2012/12/24/2829446.html" target="_blank" rel="noopener">原文链接：Java中的反射总结</a></p>
+<p>刚开始学习java的时候真的很难理解反射到底是个什么东西</p>
+<p>一些书籍，哪怕是很经典的书籍都解释的让人感觉懵懵的，或许的确是我太笨</p>
+<p>况且，网上说在将来学习框架的时候需要经常应用到反射机制，这样一来总让人心里有些不安</p>
+<p>就方才偶然又把讲解反射的章节和视频看了一点，觉得能理解一些了</p>
+<p>现在决定一鼓作气，边看边写，顺便把一些主要的内容和操作都记载到这里</p>
+<p>我想，对于我这么一个笨笨的人来说，学习的最好方法也许就是不断重复</p>
+<p>遇到不懂的知识就停下来把以往的重新学一遍，虽然浪费了很多时间，但对我也有些效果</p>
+<p>我的理解是：所谓反射，就是根据一个已经实例化了的对象来还原类的完整信息</p>
+<p>至少对我而言，我认为它带给我的好处是，让我从下往上的又了解了一遍面向对象</p>
+<p>x_x 在此又痛恨一边那些厚部头们，把我的脑细胞搞死一片</p>
+<h3 id="1-Class类"><a href="#1-Class类" class="headerlink" title="1 Class类"></a>1 Class类</h3><p>如果要完成反射，那么必须了解Class类</p>
+<p><strong>实例1：通过对象取得包名和类名</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.siu;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">     </span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Test t = <span class="keyword">new</span> Test();</span><br><span class="line">        System.out.println(t.getClass());</span><br><span class="line">        System.out.println(t.getClass().getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译结果如下，注意包的编译方式即可</p>
+<p>此处的getClass()方法是默认继承自Object类的</p>
+<blockquote>
+<p>class cn.com.duanxu.Test<br>cn.com.duanxu.Test</p>
+</blockquote>
+<p>在java中，Object类是所有类的父类，同样，所有类的实例化对象也都是Class类的实例</p>
+<p>因此，这样一来就会牵扯到向上转型和向下转型的概念</p>
+<p>由于向下转型的不安全因素，在这里泛型也会接踵而来</p>
+<p>（不过我想说的是，此处的泛型设计很刺眼！尼玛，整个java的语法设计同样刺眼，超恶心！！！）</p>
+<p><strong>实例2：Class类的实例化</strong></p>
+<p>由于Class类没有构造方法，所以实例化Class类的方式有点特殊，有三种方式：</p>
+<ul>
+<li>对象.getClass( )</li>
+<li>类.Class</li>
+<li>forName( )</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">     </span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//方式一：</span></span><br><span class="line">        Test t = <span class="keyword">new</span> Test();</span><br><span class="line">        Class&lt;? extends Test&gt; c1 = t.getClass();</span><br><span class="line">        System.out.println(c1);</span><br><span class="line">         </span><br><span class="line">        <span class="comment">//方式二：</span></span><br><span class="line">        <span class="comment">//为了避免特殊性，这里不用Test类，而用java库中的String类</span></span><br><span class="line">        Class&lt;String&gt; c2 = String.class;</span><br><span class="line">        System.out.println(c2);</span><br><span class="line">         </span><br><span class="line">        <span class="comment">//方式三：</span></span><br><span class="line">        <span class="comment">//forName()方法会抛出异常</span></span><br><span class="line">        Class&lt;?&gt; c3 = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            c3 = Class.forName(<span class="string">"cn.com.duanxu.Test"</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(c3);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 其中，forName( )方法需要重点掌握，因为它可以在类不确定的情况下实例化Class，更具灵活性</p>
+<blockquote>
+<p>class cn.com.duanxu.Test<br>class java.lang.String<br>class cn.com.duanxu.Test  </p>
+</blockquote>
+<h3 id="2-Class类的应用"><a href="#2-Class类的应用" class="headerlink" title="2 Class类的应用"></a>2 Class类的应用</h3><p>Class类中有一个方法叫做newInstance( ),它可以用来创建一个Class类对象的新实例</p>
+<p>怎么说呢？Class对象包含的内容就是反射好的那个类，我们要构造那个类的新实例（新对象）</p>
+<p><strong>实例3：Class类的无参构造对象</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//实例化Class对象，forName()方法会抛异常</span></span><br><span class="line">        Class&lt;?&gt; c = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//这里需要完整的包名和类名</span></span><br><span class="line">            c = Class.forName(<span class="string">"java.lang.String"</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">         </span><br><span class="line">        <span class="comment">//生成一个字符串的引用</span></span><br><span class="line">        String s = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//将构造好的对象向下转型为String类</span></span><br><span class="line">            <span class="comment">//newInstance()方法会抛异常</span></span><br><span class="line">            s = (String) c.newInstance();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InstantiationException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"字符串长度： "</span> + s.length());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样就通过无参数的形式构造了一个新的对象，如同正常模式中</p>
+<p>通过无参构造方法来构造新对象一样</p>
+<blockquote>
+<p>字符串长度： 0</p>
+</blockquote>
+<p>我们知道，类中除了有无参构造方法，还会存在有参数的构造方法</p>
+<p>那在反射中如何通过有参数的形式构造对象呢？接着看</p>
+<p><strong>实例4：Class类的有参构造对象</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.reflect.Constructor;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo</span> </span>&#123;</span><br><span class="line">    <span class="comment">//下面的几个方法抛出来的异常太多，为了代码的紧凑性，这里就直接抛给虚拟机了</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        Class&lt;?&gt; c = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            c = Class.forName(<span class="string">"java.lang.String"</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">char</span>[] ch = &#123;<span class="string">'h'</span>,<span class="string">'e'</span>,<span class="string">'l'</span>,<span class="string">'l'</span>,<span class="string">'o'</span>&#125;;</span><br><span class="line">        String s = <span class="keyword">null</span>;</span><br><span class="line">        <span class="comment">//获得Class类对象的有参构造方法，括号里面参数的写法是：类型.class</span></span><br><span class="line">        Constructor&lt;?&gt; con = c.getConstructor(<span class="keyword">char</span>[].class);</span><br><span class="line">        <span class="comment">//用此构造方法构造一个新的字符串对象，参数为一个char数组</span></span><br><span class="line">        s = (String) con.newInstance(ch);</span><br><span class="line">        System.out.println(<span class="string">"构造的字符串："</span> + s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们还是使用String类做例，因为String类用的比较多，便于理解</p>
+<p>这里需要注意的是，构造方法需要使用getConstructor( )方法获得</p>
+<p>至于参数类型则是：原有类型.class</p>
+<blockquote>
+<p>构造的字符串：hello</p>
+</blockquote>
+<p>还有一点，无论是有参还是无参，这里所使用的构造方法，原本的类里面必须对应存在</p>
+<p>那么，如何才能知道原有类里面的构造方法，普通方法，继承的父类等详细信息呢？接着看</p>
+<h3 id="3-获取类的结构"><a href="#3-获取类的结构" class="headerlink" title="3 获取类的结构"></a>3 获取类的结构</h3><p>要通过反射获取类的结构我们这里要导入一个新的包java.lang.reflect</p>
+<p><strong>实例5：取得类的构造方法</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.reflect.Constructor;</span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo</span> </span>&#123;</span><br><span class="line">    <span class="comment">//下面的几个方法抛出来的异常太多，为了代码的紧凑性，这里就直接抛给虚拟机了</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        Class&lt;?&gt; c = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            c = Class.forName(<span class="string">"java.lang.Boolean"</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//这里的getConstructors()方法返回的是一个Constructor数组</span></span><br><span class="line">        Constructor&lt;?&gt;[] cons = c.getConstructors();</span><br><span class="line">        <span class="comment">//打印的方式你可以自己写，为了方便我用Arrays.toString()，凑合着看</span></span><br><span class="line">        System.out.println(Arrays.toString(cons));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 我选择了Boolean类来做例，因为Boolean类的构造方法就两个，方便看</p>
+<blockquote>
+<p>[public java.lang.Boolean(boolean), public java.lang.Boolean(java.lang.String)]</p>
+</blockquote>
+<p><strong>实例6：取得类所实现的接口</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        Class&lt;?&gt; c = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            c = Class.forName(<span class="string">"java.lang.Boolean"</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        Class&lt;?&gt;[] in = c.getInterfaces();</span><br><span class="line">        System.out.println(Arrays.toString(in));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 没什么好说的，看结果</p>
+<blockquote>
+<p>[interface java.io.Serializable, interface java.lang.Comparable]</p>
+</blockquote>
+<p><strong>实例7：取得父类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        Class&lt;?&gt; c = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            c = Class.forName(<span class="string">"java.lang.Boolean"</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//注意了，这里不会是数组，why？</span></span><br><span class="line">        Class&lt;?&gt; su = c.getSuperclass();</span><br><span class="line">        System.out.println(su);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 别忘了，java中是单继承，父类只有一个</p>
+<blockquote>
+<p>class java.lang.Object</p>
+</blockquote>
+<p><strong>实例8：取得类的全部方法</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        Class&lt;?&gt; c = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            c = Class.forName(<span class="string">"java.lang.Boolean"</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        Method[] m = c.getMethods();</span><br><span class="line">        <span class="comment">//好吧，这次我就大发慈悲的写个打印列表出来</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m.length; i++) &#123;</span><br><span class="line">            System.out.println(m[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>截取一部分，看看，意思下就行了……这几个例子都比较简单</p>
+<blockquote>
+<p>public boolean java.lang.Boolean.equals(java.lang.Object)<br>public java.lang.String java.lang.Boolean.toString()<br>public static java.lang.String java.lang.Boolean.toString(boolean)<br>public static int java.lang.Boolean.hashCode(boolean)<br>public int java.lang.Boolean.hashCode()<br>public int java.lang.Boolean.compareTo(java.lang.Boolean)<br>public int java.lang.Boolean.compareTo(java.lang.Object)<br>public static boolean java.lang.Boolean.getBoolean(java.lang.String)<br>public boolean java.lang.Boolean.booleanValue()<br>public static java.lang.Boolean java.lang.Boolean.valueOf(java.lang.String)<br>public static java.lang.Boolean java.lang.Boolean.valueOf(boolean)<br>public static int java.lang.Boolean.compare(boolean,boolean)<br>public static boolean java.lang.Boolean.parseBoolean(java.lang.String)<br>public static boolean java.lang.Boolean.logicalAnd(boolean,boolean)<br>public static boolean java.lang.Boolean.logicalOr(boolean,boolean)<br>public static boolean java.lang.Boolean.logicalXor(boolean,boolean)<br>public final void java.lang.Object.wait(long,int) throws java.lang.InterruptedException<br>public final native void java.lang.Object.wait(long) throws java.lang.InterruptedException<br>public final void java.lang.Object.wait() throws java.lang.InterruptedException<br>public final native java.lang.Class java.lang.Object.getClass()<br>public final native void java.lang.Object.notify()<br>public final native void java.lang.Object.notifyAll()  </p>
+</blockquote>
+<p><strong>实例9：取得本类的全部属性</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        Class&lt;?&gt; c = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            c = Class.forName(<span class="string">"Person"</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        Field[] f = c.getDeclaredFields();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; f.length; i++) &#123;</span><br><span class="line">            System.out.println(f[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>getDeclaredFielsd()方法可以获取全部属性，getFields()只能获取公共属性</p>
+<blockquote>
+<p>private java.lang.String Person.name<br>private int Person.age</p>
+</blockquote>
+<p><strong>实例10：获取本类中属性的值</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line">     </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        Person p = <span class="keyword">new</span> Person(<span class="string">"zhangsan"</span>,<span class="number">12</span>);</span><br><span class="line"> </span><br><span class="line">        Class&lt;?&gt; c = p.getClass();</span><br><span class="line">         </span><br><span class="line">        <span class="comment">//获取公共属性的值</span></span><br><span class="line">        Field f1 = c.getField(<span class="string">"name"</span>);</span><br><span class="line">        <span class="comment">//get(p)表明要获取是哪个对象的值</span></span><br><span class="line">        String str = (String) f1.get(p);</span><br><span class="line">        System.out.println(<span class="string">"姓名： "</span> + str);</span><br><span class="line">         </span><br><span class="line">        <span class="comment">//获取私有属性的值</span></span><br><span class="line">        Field f2 = c.getDeclaredField(<span class="string">"age"</span>);</span><br><span class="line">        <span class="comment">//age是私有属性，所以要设置安全检查为true</span></span><br><span class="line">        f2.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        <span class="keyword">int</span> age = (<span class="keyword">int</span>) f2.get(p);</span><br><span class="line">        System.out.println(<span class="string">"年龄： "</span> + age);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 要注意的是：setAccessible()方法可以设置是否访问和修改私有属性</p>
+<blockquote>
+<p>姓名： zhangsan<br>年龄： 12  </p>
+</blockquote>
+<p>坦白说，java学到现在我还没发现什么能亮瞎我钛金眼的知识在里边</p>
+<p>每次都是写一堆繁琐的语法实现个小玩意儿，不然就是拼命调用API，拼命的抛异常</p>
+<p>让本身显得不够紧凑的代码变得愈发累赘</p>
+<p>如果我喜欢一门语言，在我利用它做出东西来之前，它本身的特性必须能够打动我</p>
+<p>显然，java并不让我快乐，也许很多程序员跟我一样是被迫使用java的</p>
+<p>仅以此来安抚我那颗孤独编码的心，下面接着看内容</p>
+<h3 id="4-反射的应用"><a href="#4-反射的应用" class="headerlink" title="4 反射的应用"></a>4 反射的应用</h3><p><strong>实例11：通过反射修改属性</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">     </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">     </span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"姓名： "</span> + <span class="keyword">this</span>.name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        Person p = <span class="keyword">new</span> Person(<span class="string">"王二狗"</span>);</span><br><span class="line">        System.out.println(p);</span><br><span class="line">        Class&lt;?&gt; c = p.getClass();</span><br><span class="line">     </span><br><span class="line">        <span class="comment">//定义要修改的属性</span></span><br><span class="line">        Field f = c.getDeclaredField(<span class="string">"name"</span>);</span><br><span class="line">        f.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        <span class="comment">//修改属性，传入要设置的对象和值</span></span><br><span class="line">        f.set(p, <span class="string">"张二蛋"</span>);</span><br><span class="line">        System.out.println(p);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 几个方法都是有联系的，如果看不懂就先熟悉上面几个例子</p>
+<blockquote>
+<p>姓名： 王二狗<br>姓名： 张二蛋  </p>
+</blockquote>
+<p><strong>实例12：通过反射调用方法</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"我在写数字： "</span> + i);</span><br><span class="line">    &#125;</span><br><span class="line">     </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">say</span><span class="params">(String str)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"我在说： "</span> + str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        Person p = <span class="keyword">new</span> Person();</span><br><span class="line">        Class&lt;?&gt; c = p.getClass();</span><br><span class="line">     </span><br><span class="line">        <span class="comment">//getMethod()方法需要传入方法名，和参数类型</span></span><br><span class="line">        Method m1 = c.getMethod(<span class="string">"print"</span>, <span class="keyword">int</span>.class);</span><br><span class="line">        <span class="comment">//invoke()表示调用的意思，需要传入对象和参数</span></span><br><span class="line">        m1.invoke(p, <span class="number">10</span>);</span><br><span class="line">         </span><br><span class="line">        Method m2 = c.getMethod(<span class="string">"say"</span>, String.class);</span><br><span class="line">        <span class="comment">//这里的null表示不由对象调用，也就是静态方法</span></span><br><span class="line">        m2.invoke(<span class="keyword">null</span>, <span class="string">"你妹"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里演示了一个普通的有参方法和一个静态方法</p>
+<blockquote>
+<p>我在写数字： 10<br>我在说： 你妹  </p>
+</blockquote>
+<p>既然有参数的都写出来了，那么无参的就更简单了，直接传入一个对象即可</p>
+<p><strong>实例13：通过反射操作数组</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.reflect.Array;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] arr = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line">        Class&lt;?&gt; c = arr.getClass().getComponentType();</span><br><span class="line">         </span><br><span class="line">        System.out.println(<span class="string">"数组类型： "</span> + c.getName());</span><br><span class="line">        <span class="keyword">int</span> len = Array.getLength(arr);</span><br><span class="line">        System.out.println(<span class="string">"数组长度： "</span> + len);</span><br><span class="line">        System.out.print(<span class="string">"遍历数组： "</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">            System.out.print(Array.get(arr, i) + <span class="string">" "</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println();</span><br><span class="line">        <span class="comment">//修改数组</span></span><br><span class="line">        System.out.println(<span class="string">"修改前的第一个元素： "</span> + Array.get(arr, <span class="number">0</span>));</span><br><span class="line">        Array.set(arr, <span class="number">0</span>, <span class="number">3</span>);</span><br><span class="line">        System.out.println(<span class="string">"修改后的第一个元素： "</span> + Array.get(arr, <span class="number">0</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 这里要注意一点，getComponentType( )返回的是数组元素的Class</p>
+<blockquote>
+<p>数组类型： int<br>数组长度： 5<br>遍历数组： 1 2 3 4 5<br>修改前的第一个元素： 1<br>修改后的第一个元素： 3  </p>
+</blockquote>
+<p>暂时就写这么多，我看的书中还有反射在工厂模式中的应用</p>
+<p>无非是用forName()方法替换一下，没什么可说的</p>
+<p>我是个java初级黑，我恨java那种恶心的语法和设计</p>
+<p>这都是为了Android，为了打基础，为了适应以后的工作</p>
+<p>Fuck java……</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-12-07T12:36:39.768Z" itemprop="dateUpdated">2018-12-07 20:36:39</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2016/12/20/2016/2016-12-20-转-Java中的反射总结/" target="_blank" rel="external">http://blog.duanxu.science/2016/12/20/2016/2016-12-20-转-Java中的反射总结/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.duanxu.science">
+            <img src="/img/avatar.jpg" alt="Duan Xu">
+            Duan Xu
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Reflect/">Reflect</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.science/2016/12/20/2016/2016-12-20-转-Java中的反射总结/&title=《[转]Java中的反射总结》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.science/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.science/2016/12/20/2016/2016-12-20-转-Java中的反射总结/&title=《[转]Java中的反射总结》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.science/2016/12/20/2016/2016-12-20-转-Java中的反射总结/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《[转]Java中的反射总结》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.science/2016/12/20/2016/2016-12-20-转-Java中的反射总结/&via=http://blog.duanxu.science" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.science/2016/12/20/2016/2016-12-20-转-Java中的反射总结/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2016/12/27/2016/2016-12-27-转-三十分钟学会AWK/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">[转]三十分钟学会AWK</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/12/19/2016/2016-12-19-转-Python爬虫实战-抓取图书馆借阅信息/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">[转]Python爬虫实战 抓取图书馆借阅信息 </h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Duan Xu &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.science/2016/12/20/2016/2016-12-20-转-Java中的反射总结/&title=《[转]Java中的反射总结》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.science/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.science/2016/12/20/2016/2016-12-20-转-Java中的反射总结/&title=《[转]Java中的反射总结》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.science/2016/12/20/2016/2016-12-20-转-Java中的反射总结/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《[转]Java中的反射总结》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.science/2016/12/20/2016/2016-12-20-转-Java中的反射总结/&via=http://blog.duanxu.science" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.science/2016/12/20/2016/2016-12-20-转-Java中的反射总结/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACvElEQVR42u3aQW4bMRAEQP//0w7gayy5e4aUdKg9BdBKZDEAOe7h11f8fP88yTuP3nz+6fOx8u8OHzw8PLzR1B89yZDPv5tM/fkv//9mMS4eHh7eNd7zqSSb9YyUjz4bCw8PD++9vNlCvGtR8PDw8D6Bl3yaFM15AZ2PgoeHh/d6XhJGJBFtPq39bx7OWvDw8PC6fLVogH3Cvy/29/Dw8PAWXfXZ5vvonX1YXM8QDw8P7wJvdqUpiQyS8KIt3NsgGA8PD+82L59KGxPMwt8N75eDAQ8PD+8CL9+UNwvRtsHyGRYpNR4eHt6Cl0QGbXupvVJwKv6o/zfw8PDwRrxZfJBjko2+vYaVXy/Aw8PDu83Lv9BGt3lo22KiRhoeHh7eNV5eLm9aZbNjYFbQ4+Hh4d3gzUj5pGfF9yae+OVOGR4eHt5RXnuGtCVysj8nC7QPl/Hw8PBO8TZl9OaSQXt1IDlCjp17eHh4eOnuXV8CyDf0tpjeYIozEA8PD2/Nyxv/+XJsWmj5gVSX13h4eHhrXgtrB27D1jy0jd7Hw8PDu8ZrS9sZqS3B82PmjwsEeHh4eEd5bcya/2h77WBzQeGP0h8PDw/vKC/fiPNgdxb7bkrqh2Ph4eHhXeC1hXV7YGwi4HYJ8PDw8F7Dy//U3xwhydJsOnh4eHh4r+S1gWy+QW8abG0Lrc5a8PDw8Ba89k/99jJBHme0R9GxfBoPDw/v0JGwaUHlB0NbcNcPHh4e3lHed/m0xXQb2s7K8YffwsPDw7vA2zSoZp/OCujZKHh4eHj3ePsoNtmy89XNj6LkaMHDw8O7x2uDhvxi1qZ5tolU8PDw8D6NNxxsNO4qgMDDw8N7K69t6ucXCJI5PP+14qIqHh4e3iFeHiu08cFmgfJW3Kpyx8PDwzva+mq38mSzzherjW6HVDw8PLz0nX+zBaZLP6dZSwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '失去灵魂(╯‵□′)╯︵┻━┻';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Blog | Duan Xu';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

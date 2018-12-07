@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Android开发手记(23) Notification | MAY THE FORCE BE WITH YOU</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Android,Notification">
+    <meta name="description" content="content{:toc}  　　有时候，我们需要应用程序在状态内显示一些通知信息，这时我们就需要使用Notification来完成这一工作。也许我们会想到以前经常使用的Toast来通知用户。虽然Notification与Toast都可以起到通知、提醒的作用，其实这两者还是有很大不同的。在android中，Notification是通过NotificationManager进行统一管理的，而To">
+<meta name="keywords" content="Android,Notification">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android开发手记(23) Notification">
+<meta property="og:url" content="http://blog.duanxu.science/2015/11/06/2015/2015-11-06-Android-Study-23-Notification/index.html">
+<meta property="og:site_name" content="MAY THE FORCE BE WITH YOU">
+<meta property="og:description" content="content{:toc}  　　有时候，我们需要应用程序在状态内显示一些通知信息，这时我们就需要使用Notification来完成这一工作。也许我们会想到以前经常使用的Toast来通知用户。虽然Notification与Toast都可以起到通知、提醒的作用，其实这两者还是有很大不同的。在android中，Notification是通过NotificationManager进行统一管理的，而To">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://blog.duanxu.science/images/201511/2015110601.png">
+<meta property="og:updated_time" content="2018-12-07T12:45:11.957Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android开发手记(23) Notification">
+<meta name="twitter:description" content="content{:toc}  　　有时候，我们需要应用程序在状态内显示一些通知信息，这时我们就需要使用Notification来完成这一工作。也许我们会想到以前经常使用的Toast来通知用户。虽然Notification与Toast都可以起到通知、提醒的作用，其实这两者还是有很大不同的。在android中，Notification是通过NotificationManager进行统一管理的，而To">
+<meta name="twitter:image" content="http://blog.duanxu.science/images/201511/2015110601.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="MAY THE FORCE BE WITH YOU" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon_64.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Duan Xu</h5>
+          <a href="mailto:duanxu@outlook.com" title="duanxu@outlook.com" class="mail">duanxu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/doodle777" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/2886472974" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android开发手记(23) Notification</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android开发手记(23) Notification</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2015-11-06T08:37:00.000Z" itemprop="datePublished" class="page-time">
+  2015-11-06
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+
+<article id="post-2015/2015-11-06-Android-Study-23-Notification" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android开发手记(23) Notification</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2015-11-06 16:37:00" datetime="2015-11-06T08:37:00.000Z" itemprop="datePublished">2015-11-06</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <ul>
+<li>content<br>{:toc}</li>
+</ul>
+<p>　　有时候，我们需要应用程序在状态内显示一些通知信息，这时我们就需要使用Notification来完成这一工作。也许我们会想到以前经常使用的Toast来通知用户。虽然Notification与Toast都可以起到通知、提醒的作用，其实这两者还是有很大不同的。在android中，Notification是通过NotificationManager进行统一管理的，而Toast使用Toast.makeToast即可显示。另外，Notification可以长久的显示在系统的状态栏内，但是Toast只能暂时显示一段时间。</p>
+<p>　　现在我们开始讨论创建Notification的一般步骤。</p>
+<p>　　首先，我们需要通过getSystemService方法获得一个NotificationManager对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NotificationManager nfManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);</span><br></pre></td></tr></table></figure>
+<p>　　然后，要想显示一个Notification，我们还需一个PendingIntent，由于PendingIntent由android系统负责维护，可以防止在应用程序关闭的时候系统自动销毁Notification对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PendingIntent intent = PendingIntent.getActivity(MainActivity.<span class="keyword">this</span>, <span class="number">0</span>, getIntent(), <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<p>　　然后，通过Notification.Builder创建一个Notification对象。</p>
+<div style="text-align: center"><br><img src="/images/201511/2015110601.png"><br></div>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Notification notification = <span class="keyword">new</span> Notification.Builder(MainActivity.<span class="keyword">this</span>)</span><br><span class="line">             .setSmallIcon(android.R.drawable.ic_dialog_email) 		<span class="comment">// 设置Icon</span></span><br><span class="line">             .setTicker(<span class="string">"你有一封新邮件"</span>)                      		<span class="comment">// 设置接收时滚动通知</span></span><br><span class="line">             .setContentTitle(<span class="string">"邮件主题：这是第"</span> + notiID + <span class="string">"封邮件"</span>)	<span class="comment">// 设置Title</span></span><br><span class="line">             .setContentText(<span class="string">"邮件内容:"</span>)				<span class="comment">// 设置Message</span></span><br><span class="line">             .setContentIntent(intent)   				<span class="comment">// 设置用于显示的Intent</span></span><br><span class="line">             .setNumber(notiID)          				<span class="comment">// 设置右下角Number</span></span><br><span class="line">             .getNotification();         				<span class="comment">//API 11可以使用getNotificatin()</span></span><br><span class="line">                                         				<span class="comment">// API 16及之后使用 build()</span></span><br><span class="line">notification.flags = Notification.FLAG_AUTO_CANCEL;      		<span class="comment">// 点击自动消失</span></span><br></pre></td></tr></table></figure>
+<p>　　最后，通过NotificationManager来显示Notification即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nfManager.notify(notiID++, notification);  <span class="comment">// notiID定义了通知的编号，notification为通知的内容</span></span><br></pre></td></tr></table></figure>
+<p>　　如果想销毁显示的Notification可以使用NotificationManager提供的方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nfManager.cancel(notiID);  <span class="comment">// 销毁编号为notiID的通知</span></span><br><span class="line">nfManager.cancelAll();     <span class="comment">// 销毁所有通知</span></span><br></pre></td></tr></table></figure>
+<p>　　完整代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.app.Activity;</span><br><span class="line"><span class="keyword">import</span> android.app.Notification;</span><br><span class="line"><span class="keyword">import</span> android.app.NotificationManager;</span><br><span class="line"><span class="keyword">import</span> android.app.PendingIntent;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"><span class="keyword">import</span> android.widget.Button;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">private</span> NotificationManager nfManager;</span><br><span class="line">    <span class="keyword">private</span> Button btnNoti;</span><br><span class="line">    <span class="keyword">private</span> Button btnClear;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> notiID;</span><br><span class="line"> </span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span> <span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">            setContentView(R.layout.activity_main);</span><br><span class="line"> </span><br><span class="line">            notiID = <span class="number">1</span>;</span><br><span class="line">            nfManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);</span><br><span class="line">            btnNoti = (Button)findViewById(R.id.brnNoti);</span><br><span class="line">            btnNoti.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">                    PendingIntent intent = PendingIntent.getActivity(MainActivity.<span class="keyword">this</span>, <span class="number">0</span>, getIntent(), <span class="number">0</span>);</span><br><span class="line">                    Notification notification = <span class="keyword">new</span> Notification.Builder(MainActivity.<span class="keyword">this</span>)</span><br><span class="line">                            .setSmallIcon(android.R.drawable.ic_dialog_email) 		<span class="comment">// 设置Icon</span></span><br><span class="line">                            .setTicker(<span class="string">"你有一封新邮件"</span>)                      		<span class="comment">// 设置接收时滚动通知</span></span><br><span class="line">                            .setContentTitle(<span class="string">"邮件主题：这是第"</span> + notiID + <span class="string">"封邮件"</span>)	<span class="comment">// 设置Title</span></span><br><span class="line">                            .setContentText(<span class="string">"邮件内容:"</span>)				<span class="comment">// 设置Message</span></span><br><span class="line">                            .setContentIntent(intent)   				<span class="comment">// 设置用于显示的Intent</span></span><br><span class="line">                            .setNumber(notiID)          				<span class="comment">// 设置右下角Number</span></span><br><span class="line">                            .getNotification();         				<span class="comment">//API 11可以使用getNotificatin()</span></span><br><span class="line">                                                        				<span class="comment">// API 16及之后使用 build()</span></span><br><span class="line">                    notification.flags = Notification.FLAG_AUTO_CANCEL;      		<span class="comment">// 点击自动消失</span></span><br><span class="line">                    nfManager.notify(notiID++, notification);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line"> </span><br><span class="line">            btnClear = (Button)findViewById(R.id.btnClear);</span><br><span class="line">            btnClear.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">                    nfManager.cancel(notiID --);</span><br><span class="line"><span class="comment">//                    nfManager.cancelAll();</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　然后，我们添加三个TextView和三个EditText和一个Button。如图所示：</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-12-07T12:45:11.957Z" itemprop="dateUpdated">2018-12-07 20:45:11</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2015/11/06/2015/2015-11-06-Android-Study-23-Notification/" target="_blank" rel="external">http://blog.duanxu.science/2015/11/06/2015/2015-11-06-Android-Study-23-Notification/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.duanxu.science">
+            <img src="/img/avatar.jpg" alt="Duan Xu">
+            Duan Xu
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Notification/">Notification</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.science/2015/11/06/2015/2015-11-06-Android-Study-23-Notification/&title=《Android开发手记(23) Notification》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.science/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.science/2015/11/06/2015/2015-11-06-Android-Study-23-Notification/&title=《Android开发手记(23) Notification》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.science/2015/11/06/2015/2015-11-06-Android-Study-23-Notification/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android开发手记(23) Notification》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.science/2015/11/06/2015/2015-11-06-Android-Study-23-Notification/&via=http://blog.duanxu.science" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.science/2015/11/06/2015/2015-11-06-Android-Study-23-Notification/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2015/11/08/2015/2015-11-08-Android-Study-24-Log/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android开发手记(24) Log的使用及颜色的更改</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2015/11/05/2015/2015-11-05-Android-Study-22-Sensors/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android开发手记(22) 传感器的使用</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Duan Xu &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.science/2015/11/06/2015/2015-11-06-Android-Study-23-Notification/&title=《Android开发手记(23) Notification》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.science/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.science/2015/11/06/2015/2015-11-06-Android-Study-23-Notification/&title=《Android开发手记(23) Notification》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.science/2015/11/06/2015/2015-11-06-Android-Study-23-Notification/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android开发手记(23) Notification》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.science/2015/11/06/2015/2015-11-06-Android-Study-23-Notification/&via=http://blog.duanxu.science" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.science/2015/11/06/2015/2015-11-06-Android-Study-23-Notification/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACuUlEQVR42u3aS27DMAwFwN7/0i3QVYHW9iMpNlmMV0E+skYBJPpJHx/x9fl9/X7n5/vJd5KW8/aPXXh4eHitrl9d912/byehJryr/tx/Bw8PD2+bdz9l39+g+qsccN9ytMzg4eHhvZSXvJ53cVJe4+Hh4b0brzrFPxS7xVIbDw8P7914+cN/deJO4ok8dFjMWvDw8PBq83NhA+wdXi/u7+Hh4eENdtV7k3WvLO4V6A+9xcPDw1vg5d3KDwckk3j+aV7iX7aJh4eHd5Q3D2d7w1SFJUP8x2s8PDy8Bd7Zh//8xknXk+8nh7fw8PDwzvImlXjvwEE03sVl6fKOeHh4eGu8/CDU/FBUHm0cuBceHh7eGu9VYUS1tXyw8PDw8PZ4SQSQFMfVSCKf+qvDWvgP8fDw8Aa8vLk8gDiWMcdHCh5awMPDwzvES7ageuFFL2ioHrd66CceHh7eAq93IKBw4GkQOuQLUjW2wMPDw5vwJlN5wsun9WrcEPUZDw8Pb42XB6OTTa9q6NBD/vHEgIeHh3eUF31cLLLzBSPHj8prPDw8vKO8+yk4v1l+TRaP8vDh4eHhrfFONZ230Fskym3i4eHhrfEmy8Op7auk69UiGw8PD2+Dl0SiZ0veSYmcDOVljIuHh4d3iHf/s+oR0vlBrmoLDxtveHh4eGu86sZ/js87XV1soqUCDw8Pb4FXjSR6z/uTgwjVxelh9cPDw8Mb83olcnXqL2/5x8P68Cs8PDy8f+El03TOqG5l5eCoyMbDw8Nb4PVi07y5fJiqRwTyzTA8PDy8DV4vDpgMSi8C7h3PwsPDw9vjVTvXm7h7C8Yk7MDDw8N7La8Xzk4Wj/lQ4uHh4b0br1c6V7e4kj4fKKnx8PDwirwkjKgGstUJPXmnPGR4eHh4C7yzgWwvRMgH69ieHh4eHl6H9wUqqmnOrRqIewAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '失去灵魂(╯‵□′)╯︵┻━┻';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Blog | Duan Xu';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

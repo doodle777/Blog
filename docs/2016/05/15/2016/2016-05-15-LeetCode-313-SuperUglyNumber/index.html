@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>LeetCode 313. Super Ugly Number(MEDIUM) | MAY THE FORCE BE WITH YOU</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="LeetCode,ACM,Medium">
+    <meta name="description" content="content{:toc}  更多内容参考 263. Ugly Number 更多内容参考 264. Ugly Number II Discription:Write a program to find the nth super ugly number. Super ugly numbers are positive numbers whose all prime factors are in">
+<meta name="keywords" content="LeetCode,ACM,Medium">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeetCode 313. Super Ugly Number(MEDIUM)">
+<meta property="og:url" content="http://blog.duanxu.science/2016/05/15/2016/2016-05-15-LeetCode-313-SuperUglyNumber/index.html">
+<meta property="og:site_name" content="MAY THE FORCE BE WITH YOU">
+<meta property="og:description" content="content{:toc}  更多内容参考 263. Ugly Number 更多内容参考 264. Ugly Number II Discription:Write a program to find the nth super ugly number. Super ugly numbers are positive numbers whose all prime factors are in">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-07T12:49:59.687Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LeetCode 313. Super Ugly Number(MEDIUM)">
+<meta name="twitter:description" content="content{:toc}  更多内容参考 263. Ugly Number 更多内容参考 264. Ugly Number II Discription:Write a program to find the nth super ugly number. Super ugly numbers are positive numbers whose all prime factors are in">
+    
+        <link rel="alternate" type="application/atom+xml" title="MAY THE FORCE BE WITH YOU" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon_64.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Duan Xu</h5>
+          <a href="mailto:duanxu@outlook.com" title="duanxu@outlook.com" class="mail">duanxu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/doodle777" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/2886472974" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">LeetCode 313. Super Ugly Number(MEDIUM)</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">LeetCode 313. Super Ugly Number(MEDIUM)</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-05-15T11:35:00.000Z" itemprop="datePublished" class="page-time">
+  2016-05-15
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/LeetCode/">LeetCode</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Discription"><span class="post-toc-number">1.</span> <span class="post-toc-text">Discription:</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#题目描述："><span class="post-toc-number">2.</span> <span class="post-toc-text">题目描述：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#算法思想："><span class="post-toc-number">3.</span> <span class="post-toc-text">算法思想：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#代码（C-）："><span class="post-toc-number">4.</span> <span class="post-toc-text">代码（C++）：</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-2016/2016-05-15-LeetCode-313-SuperUglyNumber" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">LeetCode 313. Super Ugly Number(MEDIUM)</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-05-15 19:35:00" datetime="2016-05-15T11:35:00.000Z" itemprop="datePublished">2016-05-15</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/LeetCode/">LeetCode</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <ul>
+<li>content<br>{:toc}</li>
+</ul>
+<p>更多内容参考 <a href="!--￼1--">263. Ugly Number</a></p>
+<p>更多内容参考 <a href="!--￼2--">264. Ugly Number II</a></p>
+<h3 id="Discription"><a href="#Discription" class="headerlink" title="Discription:"></a>Discription:</h3><p>Write a program to find the nth super ugly number.</p>
+<p>Super ugly numbers are positive numbers whose all prime factors are in the given prime list primes of size k. For example, <a>[1, 2, 4, 7, 8, 13, 14, 16, 19, 26, 28, 32]</a> is the sequence of the first 12 super ugly numbers given <a>primes = [2, 7, 13, 19]</a> of size 4.</p>
+<p>Note:  </p>
+<ol>
+<li>1 is a super ugly number for any given primes.  </li>
+<li>The given numbers in primes are in ascending order.  </li>
+<li>$$ 0 &lt; k ≤ 100, 0 &lt; n ≤ 10^6, 0 &lt; primes[i] &lt; 1000 $$.</li>
+</ol>
+<h3 id="题目描述："><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h3><p>写一个程序来计算第n个超级丑数的值。</p>
+<p><strong>超级丑数</strong>是一个正整数，它的左右因子只包含给定的k个质数。例如：给定大小为4的质数序列：<a>primes = [2, 7, 13, 19]</a>，前12个超级丑数的序列为：<a>[1, 2, 4, 7, 8, 13, 14, 16, 19, 26, 28, 32]</a>。</p>
+<p>注意：  </p>
+<ol>
+<li>1是一个特殊的丑数。  </li>
+<li>给定的质数序列是递增序列。  </li>
+<li>$$ 0 &lt; k ≤ 100, 0 &lt; n ≤ 10^6, 0 &lt; primes[i] &lt; 1000 $$.</li>
+</ol>
+<hr>
+<h3 id="算法思想："><a href="#算法思想：" class="headerlink" title="算法思想："></a>算法思想：</h3><ol>
+<li>申请一个长度为 n 的数组 ugly，用于从小到大顺序存储 n 个超级丑数，数组中的首项为 1 ，即第一个超级丑数为 1  </li>
+<li>申请一个长度和 primes 相同的数组 index，用于存储下标，初始值均为 0  </li>
+<li>找出数组对于 index 内的每个下标 j，计算 ugly[index[j]]*primes[j] 的最小值，最小值即为下一个超级丑数，同时更新最小值对应的下标，如果多个数字同时为最小值，则它们的下标都要更新  </li>
+<li>找到第 n 个超级丑数时，循环结束，返回最后一个超级丑数  </li>
+</ol>
+<hr>
+<h3 id="代码（C-）："><a href="#代码（C-）：" class="headerlink" title="代码（C++）："></a>代码（C++）：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">nthSuperUglyNumber</span><span class="params">(<span class="keyword">int</span> n, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;primes)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len = primes.size();                         <span class="comment">// 质数的个数</span></span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; index(len, <span class="number">0</span>), ugly(n, INT_MAX);</span><br><span class="line">        ugly[<span class="number">0</span>] = <span class="number">1</span>;                                     <span class="comment">// 第一个超级丑数为 1</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; len; j++)                <span class="comment">// 找到 ugly[index[j]]×primes[j] 的最小值</span></span><br><span class="line">                ugly[i] = min(ugly[i], ugly[index[j]] * primes[j]);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; len; j++)                <span class="comment">// 更新下标</span></span><br><span class="line">                index[j] += (ugly[i] == ugly[index[j]] * primes[j]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ugly[n - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-12-07T12:49:59.687Z" itemprop="dateUpdated">2018-12-07 20:49:59</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2016/05/15/2016/2016-05-15-LeetCode-313-SuperUglyNumber/" target="_blank" rel="external">http://blog.duanxu.science/2016/05/15/2016/2016-05-15-LeetCode-313-SuperUglyNumber/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.duanxu.science">
+            <img src="/img/avatar.jpg" alt="Duan Xu">
+            Duan Xu
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ACM/">ACM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LeetCode/">LeetCode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Medium/">Medium</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.science/2016/05/15/2016/2016-05-15-LeetCode-313-SuperUglyNumber/&title=《LeetCode 313. Super Ugly Number(MEDIUM)》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.science/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.science/2016/05/15/2016/2016-05-15-LeetCode-313-SuperUglyNumber/&title=《LeetCode 313. Super Ugly Number(MEDIUM)》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.science/2016/05/15/2016/2016-05-15-LeetCode-313-SuperUglyNumber/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《LeetCode 313. Super Ugly Number(MEDIUM)》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.science/2016/05/15/2016/2016-05-15-LeetCode-313-SuperUglyNumber/&via=http://blog.duanxu.science" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.science/2016/05/15/2016/2016-05-15-LeetCode-313-SuperUglyNumber/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2016/05/16/2016/2016-05-16-LeetCode-121-BestTimeToBuyAndSellStock/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">LeetCode 121. Best Time to Buy and Sell Stock(EASY)</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/05/15/2016/2016-05-15-LeetCode-264-UglyNumberII/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">LeetCode 264. Ugly Number II(MEDIUM)</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Duan Xu &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.science/2016/05/15/2016/2016-05-15-LeetCode-313-SuperUglyNumber/&title=《LeetCode 313. Super Ugly Number(MEDIUM)》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.science/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.science/2016/05/15/2016/2016-05-15-LeetCode-313-SuperUglyNumber/&title=《LeetCode 313. Super Ugly Number(MEDIUM)》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.science/2016/05/15/2016/2016-05-15-LeetCode-313-SuperUglyNumber/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《LeetCode 313. Super Ugly Number(MEDIUM)》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.science/2016/05/15/2016/2016-05-15-LeetCode-313-SuperUglyNumber/&via=http://blog.duanxu.science" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.science/2016/05/15/2016/2016-05-15-LeetCode-313-SuperUglyNumber/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACuElEQVR42u3awWojMRAEUP//T+8S2MNCmJkqteQ48HwKxtboOaAW1f16xa8/317/v//9M/fv3K9/9cmr72544eHh4Y23fr/Rqwe3373/VoKPVsDDw8M7xrta9L4AJMd3son8M/me8fDw8D6Nd3Vkt3fd9laMh4eH93t5CWyycv4T4+Hh4f0ULwkUckZ+aW6v5gezFjw8PLyY115/P+HvI/09PDw8vHFXPQ9e15phSeiwts9/K+Dh4eEd4OUH7lqbf20AaxL74uHh4b2Tl2+3HcmaYJIi8XD5xsPDw9vKa4PatvXVjmq1P9PD/vHw8PCO8fLjftLyzxtUeUusuEzj4eHhbeVNml6ToGEyvBU9Cw8PD+8wLzmO28+0uUj79If18fDw8I7x1g70vQWgLQ/RKAMeHh7eAV5+uE820ca+k1GGyxXw8PDwtvLapdcmFPLLcd5OW2yD4eHh4Y15bWC6NnCQh8jtkMEot8bDw8Mb89qDOwG3peLElR0PDw9vF2+tbf+eCGNtoOEhpcbDw8Mb8/LH57D2ujwZTt32P8TDw8NbOj8njKQYTPCbw1w8PDy8AS+PWScxRL7ptSKxWPHw8PDwBrxJ2Jq3/NuxgPkVHw8PD+8Er23ztyVkVwFoRxDw8PDw3sPLF81LxaTBll++2yfi4eHhzXntiFXbpprEEHkUUvyX8PDw8Dbx8qZXi2mv0WsBx2UYgYeHh/cW3lr/aDKIkJeEtgrg4eHh7eVN0ovk/RNxbRE34+Hh4R3gtQduHj204UV7Ud5VSPDw8PDWeEkxyLeVR7f5tTspDFEDDA8PD28rb+0x81GAvKgsvvDw8PA+mLfrRt+u/7AmHh4e3gfw2mg1iRuSy/fiUCweHh7eMV4bIqwFFknEMCk5oxgXDw8Pb1NXfW8/bS3SzWPfg4EFHh4e3tfrL3mh992Ves2MAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '失去灵魂(╯‵□′)╯︵┻━┻';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Blog | Duan Xu';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

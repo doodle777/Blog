@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Ubuntu 双屏分辨率设置 | MAY THE FORCE BE WITH YOU</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Ubuntu,双屏,分辨率">
+    <meta name="description" content="content{:toc}  问题描述：在使用Ubuntu写代码的时候，使用双屏会更爽一些，但是这也带来了很多问题。比如在显卡驱动支持性不是很好的时候，第二块显示器有时的分辨率不是很理想，会出现分辨率低于显示器标准分辨率的情况。在设置选项里面，第二块显示器识别为“未知的显示器”。在这种情况下，需要我们手工设置显示器的分辨率。 解决方案：主要通过 xrandr 命令假设我们现有的两块显示器分辨率均">
+<meta name="keywords" content="Ubuntu,双屏,分辨率">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu 双屏分辨率设置">
+<meta property="og:url" content="http://blog.duanxu.science/2016/07/26/2016/2016-07-26-Ubuntu-双屏分辨率设置/index.html">
+<meta property="og:site_name" content="MAY THE FORCE BE WITH YOU">
+<meta property="og:description" content="content{:toc}  问题描述：在使用Ubuntu写代码的时候，使用双屏会更爽一些，但是这也带来了很多问题。比如在显卡驱动支持性不是很好的时候，第二块显示器有时的分辨率不是很理想，会出现分辨率低于显示器标准分辨率的情况。在设置选项里面，第二块显示器识别为“未知的显示器”。在这种情况下，需要我们手工设置显示器的分辨率。 解决方案：主要通过 xrandr 命令假设我们现有的两块显示器分辨率均">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-07T12:50:28.090Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ubuntu 双屏分辨率设置">
+<meta name="twitter:description" content="content{:toc}  问题描述：在使用Ubuntu写代码的时候，使用双屏会更爽一些，但是这也带来了很多问题。比如在显卡驱动支持性不是很好的时候，第二块显示器有时的分辨率不是很理想，会出现分辨率低于显示器标准分辨率的情况。在设置选项里面，第二块显示器识别为“未知的显示器”。在这种情况下，需要我们手工设置显示器的分辨率。 解决方案：主要通过 xrandr 命令假设我们现有的两块显示器分辨率均">
+    
+        <link rel="alternate" type="application/atom+xml" title="MAY THE FORCE BE WITH YOU" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon_64.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Duan Xu</h5>
+          <a href="mailto:duanxu@outlook.com" title="duanxu@outlook.com" class="mail">duanxu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/doodle777" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/2886472974" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Ubuntu 双屏分辨率设置</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Ubuntu 双屏分辨率设置</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-07-26T12:07:23.000Z" itemprop="datePublished" class="page-time">
+  2016-07-26
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Other/">Other</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#问题描述："><span class="post-toc-number">1.</span> <span class="post-toc-text">问题描述：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#解决方案："><span class="post-toc-number">2.</span> <span class="post-toc-text">解决方案：</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#主要通过-xrandr-命令"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">主要通过 xrandr 命令</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#写成脚本"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">写成脚本</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-2016/2016-07-26-Ubuntu-双屏分辨率设置" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Ubuntu 双屏分辨率设置</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-07-26 20:07:23" datetime="2016-07-26T12:07:23.000Z" itemprop="datePublished">2016-07-26</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Other/">Other</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <ul>
+<li>content<br>{:toc}</li>
+</ul>
+<h3 id="问题描述："><a href="#问题描述：" class="headerlink" title="问题描述："></a>问题描述：</h3><p>在使用Ubuntu写代码的时候，使用双屏会更爽一些，但是这也带来了很多问题。比如在显卡驱动支持性不是很好的时候，第二块显示器有时的分辨率不是很理想，会出现分辨率低于显示器标准分辨率的情况。在设置选项里面，第二块显示器识别为“未知的显示器”。在这种情况下，需要我们手工设置显示器的分辨率。</p>
+<h3 id="解决方案："><a href="#解决方案：" class="headerlink" title="解决方案："></a>解决方案：</h3><h4 id="主要通过-xrandr-命令"><a href="#主要通过-xrandr-命令" class="headerlink" title="主要通过 xrandr 命令"></a>主要通过 xrandr 命令</h4><p>假设我们现有的两块显示器分辨率均为“1920*1080”</p>
+<p>首先，直接运行xrandr查看下分辨率的情况：</p>
+<blockquote>
+<p>$ xrandr<br>Screen 0: minimum 320 x 200, current 3360 x 1050, maximum 8192 x 8192<br>DisplayPort-0 connected primary 1680x1050+0+0 (normal left inverted right x axis y axis) 0mm x 0mm<br>   1024x768      60.00<br>   800x600       60.32    56.25<br>   848x480       60.00<br>   640x480       59.94<br>   1440x900      59.89<em><br>DVI-0 connected 1680x1050+1680+0 (normal left inverted right x axis y axis) 473mm x 296mm<br>   1680x1050     59.95</em>+<br>   1600x1000     60.01<br>   1280x1024     75.02    60.02<br>   1440x900      59.89<br>   1280x960      60.00<br>   1152x864      75.00<br>   1024x768      75.08    60.00<br>   832x624       74.55<br>   800x600       75.00    60.32<br>   640x480       75.00    60.00<br>   720x400       70.08  </p>
+</blockquote>
+<p>发现，我们接在 DP接口上显示器没有工作在正常的分辨率上（其中标星号的是我们正在使用的分辨率）。</p>
+<blockquote>
+<p>$ xrandr<br>Screen 0: minimum 320 x 200, current 3360 x 1050, maximum 8192 x 8192<br>DisplayPort-0 connected primary 1680x1050+0+0 (normal left inverted right x axis y axis) 0mm x 0mm<br>   1024x768      60.00<br>   800x600       60.32    56.25<br>   848x480       60.00<br>   640x480       59.94<br>   1440x900_60.00  59.89<br>   1680x1050_60.00  59.95<em><br>DVI-0 connected 1680x1050+1680+0 (normal left inverted right x axis y axis) 473mm x 296mm<br>   1680x1050     59.95</em>+<br>   1600x1000     60.01<br>   1280x1024     75.02    60.02<br>   1440x900      59.89<br>   1280x960      60.00<br>   1152x864      75.00<br>   1024x768      75.08    60.00<br>   832x624       74.55<br>   800x600       75.00    60.32<br>   640x480       75.00    60.00<br>   720x400       70.08  </p>
+</blockquote>
+<h4 id="写成脚本"><a href="#写成脚本" class="headerlink" title="写成脚本"></a>写成脚本</h4><p>上述方法有个问题，就是每次重启之后需要再次设置分辨率，这里我们将其写为脚本，每次设置的时候只要运行一下脚本即可：</p>
+<p>首先新建一个脚本文件： vi display.sh</p>
+<p>然后将命令写入脚本文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">set</span> screen resolution to 1400 * 900</span></span><br><span class="line"></span><br><span class="line">xrandr --newmode "1680x1050_60.00"  146.25  1680 1784 1960 2240  1050 1053 1059 1089 -hsync +vsync;</span><br><span class="line">xrandr --addmode DisplayPort-0 "1680x1050_60.00";</span><br><span class="line">xrandr --output DisplayPort-0 --mode 1680x1050_60.00;</span><br><span class="line">xrandr --output DisplayPort-0 --right-of --down DVI-0;</span><br></pre></td></tr></table></figure>
+<p>至此，每次修改分辨率的时候，只要执行 display.sh 脚本即可自动修改。另外将其加入开机启动项，那么每次开机的时候便会自动执行。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-12-07T12:50:28.090Z" itemprop="dateUpdated">2018-12-07 20:50:28</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2016/07/26/2016/2016-07-26-Ubuntu-双屏分辨率设置/" target="_blank" rel="external">http://blog.duanxu.science/2016/07/26/2016/2016-07-26-Ubuntu-双屏分辨率设置/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.duanxu.science">
+            <img src="/img/avatar.jpg" alt="Duan Xu">
+            Duan Xu
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ubuntu/">Ubuntu</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分辨率/">分辨率</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/双屏/">双屏</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.science/2016/07/26/2016/2016-07-26-Ubuntu-双屏分辨率设置/&title=《Ubuntu 双屏分辨率设置》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.science/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.science/2016/07/26/2016/2016-07-26-Ubuntu-双屏分辨率设置/&title=《Ubuntu 双屏分辨率设置》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.science/2016/07/26/2016/2016-07-26-Ubuntu-双屏分辨率设置/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Ubuntu 双屏分辨率设置》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.science/2016/07/26/2016/2016-07-26-Ubuntu-双屏分辨率设置/&via=http://blog.duanxu.science" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.science/2016/07/26/2016/2016-07-26-Ubuntu-双屏分辨率设置/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2016/07/29/2016/2016-07-29-FreeMarker-学习/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">FreeMarker 学习（Java）</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/05/31/2016/2016-05-31-LeetCode-72-EditDistance/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">LeetCode 72. Edit Distance(HARD)</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Duan Xu &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.science/2016/07/26/2016/2016-07-26-Ubuntu-双屏分辨率设置/&title=《Ubuntu 双屏分辨率设置》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.science/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.science/2016/07/26/2016/2016-07-26-Ubuntu-双屏分辨率设置/&title=《Ubuntu 双屏分辨率设置》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.science/2016/07/26/2016/2016-07-26-Ubuntu-双屏分辨率设置/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Ubuntu 双屏分辨率设置》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.science/2016/07/26/2016/2016-07-26-Ubuntu-双屏分辨率设置/&via=http://blog.duanxu.science" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.science/2016/07/26/2016/2016-07-26-Ubuntu-双屏分辨率设置/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACrklEQVR42u3aMW7DMAwF0Nz/0unaorH7SYqFh+cpgG1ZT4PIkHq94ut9e31/5v731chXT+bjjC48PDy8talXYVcT/T1m8m4ynw8j4OHh4a3x8i376jPJztzbwyeLiIeHh/cEXp7+zlPkhIqHh4f3fN48YORvPSLu4eHh4Q2KEXm6nBQ1qgFjvdaCh4eHF/PyLtJzfq/09/Dw8PDGXfVqMyzZpnt3360LDw8Pb4N3qpy6cVxg3kLDw8PD2+NVH00mnY85WaBR8o2Hh4fX4lUbTtW7vfbVpHn2yqMQHh4e3oA3GSJvaN2HjWqTbPRfAQ8PD+8or5eDz0sMOb4wNzw8PLw1Xg+Zt6nu3z2VuEfFCDw8PLwFXtLaTzbr6i49KUP8kVLj4eHhrfHyD5c36DilTnijM2V4eHh4Y968KNArSfSWJk/0j9U88PDw8Iq8PCTkB6SSMNC7ezkTPDw8vAXeqWZ/3vqaH0RI3sLDw8Pb4/W27/xjk2MEeQC4nCceHh7eAm++NVefyRPrXliKggQeHh5ei5c3nDYOXVXT+mqQwMPDw9vglSsWcSqcNLqSNlgvKa/fxsPDw0t581XJg0F1aXoz+RD38PDw8BZ4pw5d5WWCahDqlZLx8PDwNniToU8x5sWOycLh4eHh9XjJQzmmtwSv4lV4Fw8PD2+ZlzTAqo3/yXaflzAuiyB4eHh4y7y8QZU8eWxzLwaMZtzDw8PDC3iT6kV1IXpZbrVh9uMuHh4e3gLv1J//PM1NlikvgvRadHh4eHhzXrWMWy0K94oOvZLxgQYYHh4eXsyrNvXzEu2k8LFTfsHDw8P7b161SZaMliff+dzw8PDwnsOblGjnYaacmuPh4eGt8appbl6wSErAi1/Bw8PD2/pK+R/9vOybl3HzUu+xggUeHh7e57tfSxrkKTodJRkAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '失去灵魂(╯‵□′)╯︵┻━┻';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Blog | Duan Xu';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

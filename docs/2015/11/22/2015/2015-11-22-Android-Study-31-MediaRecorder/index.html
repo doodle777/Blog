@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Android开发手记(31) 使用MediaRecorder录音 | MAY THE FORCE BE WITH YOU</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Android,MediaRecorder">
+    <meta name="description" content="content{:toc}  　　使用Android手机的时候，有时我们会用到录音功能，本文简单的介绍了如何使用MediaRecorder通过手机自带麦克风进行录音。 　　首先，既然是录音，我们需要录音和写外存的权限： 12&amp;lt;uses-permission android:name=&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot;/&amp;gt;&amp;lt;us">
+<meta name="keywords" content="Android,MediaRecorder">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android开发手记(31) 使用MediaRecorder录音">
+<meta property="og:url" content="http://blog.duanxu.science/2015/11/22/2015/2015-11-22-Android-Study-31-MediaRecorder/index.html">
+<meta property="og:site_name" content="MAY THE FORCE BE WITH YOU">
+<meta property="og:description" content="content{:toc}  　　使用Android手机的时候，有时我们会用到录音功能，本文简单的介绍了如何使用MediaRecorder通过手机自带麦克风进行录音。 　　首先，既然是录音，我们需要录音和写外存的权限： 12&amp;lt;uses-permission android:name=&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot;/&amp;gt;&amp;lt;us">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-07T12:47:10.146Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android开发手记(31) 使用MediaRecorder录音">
+<meta name="twitter:description" content="content{:toc}  　　使用Android手机的时候，有时我们会用到录音功能，本文简单的介绍了如何使用MediaRecorder通过手机自带麦克风进行录音。 　　首先，既然是录音，我们需要录音和写外存的权限： 12&amp;lt;uses-permission android:name=&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot;/&amp;gt;&amp;lt;us">
+    
+        <link rel="alternate" type="application/atom+xml" title="MAY THE FORCE BE WITH YOU" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon_64.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Duan Xu</h5>
+          <a href="mailto:duanxu@outlook.com" title="duanxu@outlook.com" class="mail">duanxu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/doodle777" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/2886472974" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android开发手记(31) 使用MediaRecorder录音</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android开发手记(31) 使用MediaRecorder录音</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2015-11-22T11:57:00.000Z" itemprop="datePublished" class="page-time">
+  2015-11-22
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#activity-main-xml"><span class="post-toc-number">1.</span> <span class="post-toc-text">activity_main.xml</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#MainActivity-java"><span class="post-toc-number">2.</span> <span class="post-toc-text">MainActivity.java</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-2015/2015-11-22-Android-Study-31-MediaRecorder" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android开发手记(31) 使用MediaRecorder录音</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2015-11-22 19:57:00" datetime="2015-11-22T11:57:00.000Z" itemprop="datePublished">2015-11-22</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <ul>
+<li>content<br>{:toc}</li>
+</ul>
+<p>　　使用Android手机的时候，有时我们会用到录音功能，本文简单的介绍了如何使用MediaRecorder通过手机自带麦克风进行录音。</p>
+<p>　　首先，既然是录音，我们需要录音和写外存的权限：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.WRITE_EXTERNAL_STORAGE"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.RECORD_AUDIO"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>　　然后，我们创建一个录音的方法startRecord()，当我们单击录音按钮时调用这个方法来进行录音。录音的过程为：</p>
+<p>　　（1）确定录音的文件的存放位置</p>
+<p>　　（2）实例化一个MediaRecorder对象，并设置其参数</p>
+<p>　　（3）调用MediaRecorder.prepare()准备录音</p>
+<p>　　（4）调用MediaRecorder.start()开始录音</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">startRecord</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(mr == <span class="keyword">null</span>)&#123;</span><br><span class="line">        File filePath = <span class="keyword">new</span> File(Environment.getExternalStorageDirectory(), <span class="string">"myRecord"</span>);</span><br><span class="line">        File fileName = <span class="keyword">new</span> File(filePath, System.currentTimeMillis() + <span class="string">".amr"</span>);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (!filePath.exists()) &#123;</span><br><span class="line">                filePath.mkdirs();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (!fileName.exists()) &#123;</span><br><span class="line">                fileName.createNewFile();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span>(IOException e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        mr = <span class="keyword">new</span> MediaRecorder();</span><br><span class="line">        mr.setAudioSource(MediaRecorder.AudioSource.MIC);      <span class="comment">// 设置录音的输入源</span></span><br><span class="line">        mr.setOutputFormat(MediaRecorder.OutputFormat.AMR_WB); <span class="comment">// 设置输出格式</span></span><br><span class="line">        mr.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_WB); <span class="comment">// 设置编码格式</span></span><br><span class="line">        mr.setOutputFile(fileName.getAbsolutePath());          <span class="comment">// 设置输出文件名</span></span><br><span class="line"> </span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            mr.prepare();</span><br><span class="line">            mr.start();</span><br><span class="line">            textView.setText(<span class="string">"文件名："</span>+fileName.getAbsolutePath());</span><br><span class="line">        &#125; <span class="keyword">catch</span>(IOException e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　然后我们创建一个方法stopRecord()来停止录音，调用MediaRecorder.stop()可以停止录音，调用MediaRecorder.release()释放录音对象。然后将MediaRecorder指针置空以便下一次录音可以实例化新的MediaRecorder对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stopRecord</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(mr != <span class="keyword">null</span>)&#123;</span><br><span class="line">        mr.stop();</span><br><span class="line">        mr.release();</span><br><span class="line">        mr = <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　最后，在MainActivity中为按钮添加单击事件，并调用上述方法即可实现录音。完整代码如下：</p>
+<h4 id="activity-main-xml"><a href="#activity-main-xml" class="headerlink" title="activity_main.xml"></a>activity_main.xml</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">manifest</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">package</span>=<span class="string">"com.example.doodle.myapplication"</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">    <span class="tag">&lt;<span class="name">application</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:allowBackup</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:icon</span>=<span class="string">"@mipmap/ic_launcher"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:label</span>=<span class="string">"@string/app_name"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:supportsRtl</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:theme</span>=<span class="string">"@style/AppTheme"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">".MainActivity"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.MAIN"</span> /&gt;</span></span><br><span class="line"> </span><br><span class="line">                <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.LAUNCHER"</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">application</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">    <span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.WRITE_EXTERNAL_STORAGE"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.RECORD_AUDIO"</span>/&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="MainActivity-java"><a href="#MainActivity-java" class="headerlink" title="MainActivity.java"></a>MainActivity.java</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.app.Activity;</span><br><span class="line"><span class="keyword">import</span> android.media.MediaRecorder;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.os.Environment;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"><span class="keyword">import</span> android.widget.Button;</span><br><span class="line"><span class="keyword">import</span> android.widget.TextView;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">private</span> Button button;</span><br><span class="line">    <span class="keyword">private</span> TextView textView;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> isStart = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">private</span> MediaRecorder mr = <span class="keyword">null</span>;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"> </span><br><span class="line">        button = (Button)findViewById(R.id.button);</span><br><span class="line">        textView = (TextView)findViewById(R.id.textView);</span><br><span class="line">        button.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">if</span>(isStart)&#123;</span><br><span class="line">                    startRecord();</span><br><span class="line">                    button.setText(<span class="string">"停止录音"</span>);</span><br><span class="line">                    isStart = <span class="keyword">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> &#123;</span><br><span class="line">                    stopRecord();</span><br><span class="line">                    button.setText(<span class="string">"开始录音"</span>);</span><br><span class="line">                    isStart = <span class="keyword">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"> </span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">startRecord</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(mr == <span class="keyword">null</span>)&#123;</span><br><span class="line">            File filePath = <span class="keyword">new</span> File(Environment.getExternalStorageDirectory(), <span class="string">"myRecord"</span>);</span><br><span class="line">            File fileName = <span class="keyword">new</span> File(filePath, System.currentTimeMillis() + <span class="string">".amr"</span>);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (!filePath.exists()) &#123;</span><br><span class="line">                    filePath.mkdirs();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (!fileName.exists()) &#123;</span><br><span class="line">                    fileName.createNewFile();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span>(IOException e)&#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line"> </span><br><span class="line">            mr = <span class="keyword">new</span> MediaRecorder();</span><br><span class="line">            mr.setAudioSource(MediaRecorder.AudioSource.MIC);      <span class="comment">// 设置录音的输入源</span></span><br><span class="line">            mr.setOutputFormat(MediaRecorder.OutputFormat.AMR_WB); <span class="comment">// 设置输出格式</span></span><br><span class="line">            mr.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_WB); <span class="comment">// 设置编码格式</span></span><br><span class="line">            mr.setOutputFile(fileName.getAbsolutePath());          <span class="comment">// 设置输出文件名</span></span><br><span class="line"> </span><br><span class="line">            <span class="keyword">try</span>&#123;</span><br><span class="line">                mr.prepare();</span><br><span class="line">                mr.start();</span><br><span class="line">                textView.setText(<span class="string">"文件名："</span>+fileName.getAbsolutePath());</span><br><span class="line">            &#125; <span class="keyword">catch</span>(IOException e)&#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stopRecord</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(mr != <span class="keyword">null</span>)&#123;</span><br><span class="line">            mr.stop();</span><br><span class="line">            mr.release();</span><br><span class="line">            mr = <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-12-07T12:47:10.146Z" itemprop="dateUpdated">2018-12-07 20:47:10</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2015/11/22/2015/2015-11-22-Android-Study-31-MediaRecorder/" target="_blank" rel="external">http://blog.duanxu.science/2015/11/22/2015/2015-11-22-Android-Study-31-MediaRecorder/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.duanxu.science">
+            <img src="/img/avatar.jpg" alt="Duan Xu">
+            Duan Xu
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MediaRecorder/">MediaRecorder</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.science/2015/11/22/2015/2015-11-22-Android-Study-31-MediaRecorder/&title=《Android开发手记(31) 使用MediaRecorder录音》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.science/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.science/2015/11/22/2015/2015-11-22-Android-Study-31-MediaRecorder/&title=《Android开发手记(31) 使用MediaRecorder录音》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.science/2015/11/22/2015/2015-11-22-Android-Study-31-MediaRecorder/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android开发手记(31) 使用MediaRecorder录音》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.science/2015/11/22/2015/2015-11-22-Android-Study-31-MediaRecorder/&via=http://blog.duanxu.science" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.science/2015/11/22/2015/2015-11-22-Android-Study-31-MediaRecorder/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2015/11/22/2015/2015-11-22-Android-Study-32-Camera/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android开发手记(32) 使用摄像头拍照</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2015/11/20/2015/2015-11-20-Android-Study-30-Touch-and-Gesture/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android开发手记(30) 触摸及手势操作</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Duan Xu &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.science/2015/11/22/2015/2015-11-22-Android-Study-31-MediaRecorder/&title=《Android开发手记(31) 使用MediaRecorder录音》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.science/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.science/2015/11/22/2015/2015-11-22-Android-Study-31-MediaRecorder/&title=《Android开发手记(31) 使用MediaRecorder录音》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.science/2015/11/22/2015/2015-11-22-Android-Study-31-MediaRecorder/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android开发手记(31) 使用MediaRecorder录音》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.science/2015/11/22/2015/2015-11-22-Android-Study-31-MediaRecorder/&via=http://blog.duanxu.science" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.science/2015/11/22/2015/2015-11-22-Android-Study-31-MediaRecorder/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADMUlEQVR42u3awU7sSgwEUP7/p3nbKz1NUmUHiTQnKzQM6ZzOwtjVX1/x9f2/69Nv//0kv/Onn6+vdq36wsbGxn4JO7/19QKftuN64643NN+g3IKNjY19KjtfJn+s5M5JCcwLWL4iNjY29l9mt8u0D71fCxsbGxu7vV3RAMTlbb9N2NjY2H+NvRnBJ0OovDhdNyqzpgUbGxv7bPY+jv09P/9Ivo2NjY39i9nf5bUZ7s8K26Z1+ajAxsbGPojdhrizQzNtO/FUnHyzcdjY2NiHsp8aJ+3bnv2db76PjY2NfQS7HZ0/W7Q24US74scODBsbG/sIdhuXtsd02kM8+bGbfIOGbw8bGxv7VezZ0Zl9YHy9WbNDQjcbh42NjX0QO49RZyP+WZHLo9x8I7CxsbFPZc8KUvvNdpWnnuTjFmBjY2Mfx74uIT99WCcpY5vXE8UD2NjY2C9n5//Et13O/jBQGzZHIQE2Njb2cew2A22D1VmcvMlkb8oeNjY29kHszZGaWaFqt+CpiKKo3tjY2NivYrfHXJ4a6yRXe/QnCZvr94yNjY3969l5sJqMk2bNQ94dJKUrL2zY2NjYJ7GTcfxs2JS3FrOSORtyYWNjY5/HbiPVp/5qEx7PIoebbAQbGxv7tex9y7GJcvMx1iYYxsbGxj6VvT9807YfedGabUT08rCxsbEPZedjmtk3N+UqjzGioRg2Njb2cez2oExbfn5iJr9phLCxsbFPYrcNRjviz4Pb/G8fKGDY2NjYB7Hbx21LTtLGtBuaFMWbT7CxsbEPYs8GPXl6nES8m2i5/QQbGxv7VHY74s8xbclpD+usAgxsbGzs49ibwX3bcuQPtx9m3RQwbGxs7IPY7cB9M9xPitA+VL55cmxsbOwj2N/llbcN+YZujma2QcJX3uVgY2Njv4Q9O/iSD5jyof8s0N2E09jY2NgnsTcj+HYX8zghH2ANo2hsbGzs49ibYKA9lJPcZ3bGJmljsLGxsbFnzUZb8Nqy2kbC2NjY2H+ZPWsP2oFU28y04zBsbGzs89izR5yNeNqi1bY00cvDxsbGPoidl4HZ+H7ftOQF8qmyh42Njf0S9n+z6HLewsafCQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '失去灵魂(╯‵□′)╯︵┻━┻';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Blog | Duan Xu';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

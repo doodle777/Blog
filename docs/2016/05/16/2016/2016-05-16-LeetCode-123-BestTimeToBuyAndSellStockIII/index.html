@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>LeetCode 123. Best Time to Buy and Sell Stock III(HARD) | MAY THE FORCE BE WITH YOU</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="LeetCode,ACM">
+    <meta name="description" content="content{:toc}  更多内容参考 121. Best Time to Buy and Sell Stock 更多内容参考 122. Best Time to Buy and Sell Stock II Discription:Say you have an array for which the $$ i^{th} $$ element is the price of a given">
+<meta name="keywords" content="LeetCode,ACM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeetCode 123. Best Time to Buy and Sell Stock III(HARD)">
+<meta property="og:url" content="http://blog.duanxu.science/2016/05/16/2016/2016-05-16-LeetCode-123-BestTimeToBuyAndSellStockIII/index.html">
+<meta property="og:site_name" content="MAY THE FORCE BE WITH YOU">
+<meta property="og:description" content="content{:toc}  更多内容参考 121. Best Time to Buy and Sell Stock 更多内容参考 122. Best Time to Buy and Sell Stock II Discription:Say you have an array for which the $$ i^{th} $$ element is the price of a given">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-07T12:50:07.814Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LeetCode 123. Best Time to Buy and Sell Stock III(HARD)">
+<meta name="twitter:description" content="content{:toc}  更多内容参考 121. Best Time to Buy and Sell Stock 更多内容参考 122. Best Time to Buy and Sell Stock II Discription:Say you have an array for which the $$ i^{th} $$ element is the price of a given">
+    
+        <link rel="alternate" type="application/atom+xml" title="MAY THE FORCE BE WITH YOU" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon_64.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Duan Xu</h5>
+          <a href="mailto:duanxu@outlook.com" title="duanxu@outlook.com" class="mail">duanxu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/doodle777" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/2886472974" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">LeetCode 123. Best Time to Buy and Sell Stock III(HARD)</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">LeetCode 123. Best Time to Buy and Sell Stock III(HARD)</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-05-16T13:33:00.000Z" itemprop="datePublished" class="page-time">
+  2016-05-16
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/LeetCode/">LeetCode</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Discription"><span class="post-toc-number">1.</span> <span class="post-toc-text">Discription:</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#题目描述："><span class="post-toc-number">2.</span> <span class="post-toc-text">题目描述：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#算法思想："><span class="post-toc-number">3.</span> <span class="post-toc-text">算法思想：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#代码（C-）："><span class="post-toc-number">4.</span> <span class="post-toc-text">代码（C++）：</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-2016/2016-05-16-LeetCode-123-BestTimeToBuyAndSellStockIII" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">LeetCode 123. Best Time to Buy and Sell Stock III(HARD)</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-05-16 21:33:00" datetime="2016-05-16T13:33:00.000Z" itemprop="datePublished">2016-05-16</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/LeetCode/">LeetCode</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <ul>
+<li>content<br>{:toc}</li>
+</ul>
+<p>更多内容参考 <a href="!--￼1--">121. Best Time to Buy and Sell Stock</a></p>
+<p>更多内容参考 <a href="!--￼2--">122. Best Time to Buy and Sell Stock II</a></p>
+<h3 id="Discription"><a href="#Discription" class="headerlink" title="Discription:"></a>Discription:</h3><p>Say you have an array for which the $$ i^{th} $$ element is the price of a given stock on day i.</p>
+<p>Design an algorithm to find the maximum profit. You may complete at most two transactions.</p>
+<p><strong>Note:</strong><br>You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).</p>
+<h3 id="题目描述："><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h3><p>假设给定一个数组，数组的第 i 个元素是第 i 天股票的价格。</p>
+<p>设计一个算法使得盈利最大化。你最多可以进行两次交易。</p>
+<p><strong>注意：</strong><br>你不能在同一时间同时存在多次交易（比如你在购买股票之前将其售出）。</p>
+<hr>
+<h3 id="算法思想："><a href="#算法思想：" class="headerlink" title="算法思想："></a>算法思想：</h3><p>首先假设我们初始金币为 0。</p>
+<p>所以 $$ buy1 $$ 意味着我们需要从别人那借钱来买股票。我们需要保证利润最大化，所以应当尽可能少的去借钱。</p>
+<p>$$ sell1 $$ 意味着我们想要出售股票，在出售之后，我们的获得了当天股票的价格 $$ price[i] $$，之后还回一开始借来的钱，所以最后总的利润是 $$ price[i] - |buy1| = prices[i] + buy1 $$ 。我们的目的是保证利润最大化。</p>
+<p>$$ buys2 $$ 意味着我们要买另外一只股票，这时我们已经拥有了 $$ sell1 $$ 的钱，所以在购买 $$ buy2 $$ 之后，我们还剩有 $$ buy2 = sell1 - price[i] $$ 。需要尽可能多的省钱，所以需要保证 $$ buy2 $$ 最大化。</p>
+<p>$$ sell2 $$ 意味着我们想要出售股票2，在出售之后，我们的获得了当天股票的价格 $$ price[i] $$ ，由于之前已经有了 $$ buy2 $$ 那么多余钱，所以 $$ sell2 = buy2 + prices[i] $$ 是最终的利润。保证 $$ sell2 $$ 最大化，然后作为返回结果即可。</p>
+<hr>
+<h3 id="代码（C-）："><a href="#代码（C-）：" class="headerlink" title="代码（C++）："></a>代码（C++）：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxProfit</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;prices)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> buy1 = INT_MIN, sell1 = <span class="number">0</span>, buy2 = INT_MIN, sell2 = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i != prices.size(); i++)</span><br><span class="line">        &#123;</span><br><span class="line">            buy1  = max(buy1 , -prices[i]);           <span class="comment">// buy1 尽可能少借钱买股票</span></span><br><span class="line">            sell1 = max(sell1, (prices[i] + buy1));   <span class="comment">// 尽可能多的获取股票1得到的利润</span></span><br><span class="line">            buy2  = max(buy2 , (sell1 - prices[i]));  <span class="comment">// 拥有 buy1 的余钱，然后尽可能花少的钱买 buy2</span></span><br><span class="line">            sell2 = max(sell2, (prices[i] + buy2));   <span class="comment">// 保证 sell2 利润最大化</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sell2;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-12-07T12:50:07.814Z" itemprop="dateUpdated">2018-12-07 20:50:07</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2016/05/16/2016/2016-05-16-LeetCode-123-BestTimeToBuyAndSellStockIII/" target="_blank" rel="external">http://blog.duanxu.science/2016/05/16/2016/2016-05-16-LeetCode-123-BestTimeToBuyAndSellStockIII/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.duanxu.science">
+            <img src="/img/avatar.jpg" alt="Duan Xu">
+            Duan Xu
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ACM/">ACM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LeetCode/">LeetCode</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.science/2016/05/16/2016/2016-05-16-LeetCode-123-BestTimeToBuyAndSellStockIII/&title=《LeetCode 123. Best Time to Buy and Sell Stock III(HARD)》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.science/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.science/2016/05/16/2016/2016-05-16-LeetCode-123-BestTimeToBuyAndSellStockIII/&title=《LeetCode 123. Best Time to Buy and Sell Stock III(HARD)》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.science/2016/05/16/2016/2016-05-16-LeetCode-123-BestTimeToBuyAndSellStockIII/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《LeetCode 123. Best Time to Buy and Sell Stock III(HARD)》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.science/2016/05/16/2016/2016-05-16-LeetCode-123-BestTimeToBuyAndSellStockIII/&via=http://blog.duanxu.science" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.science/2016/05/16/2016/2016-05-16-LeetCode-123-BestTimeToBuyAndSellStockIII/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2016/05/16/2016/2016-05-16-LeetCode-188-BestTimeToBuyAndSellStockIV/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">LeetCode 188. Best Time to Buy and Sell Stock IV(HARD)</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/05/16/2016/2016-05-16-LeetCode-122-BestTimeToBuyAndSellStockII/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">LeetCode 122. Best Time to Buy and Sell Stock II(MEDIUM)</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Duan Xu &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.science/2016/05/16/2016/2016-05-16-LeetCode-123-BestTimeToBuyAndSellStockIII/&title=《LeetCode 123. Best Time to Buy and Sell Stock III(HARD)》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.science/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.science/2016/05/16/2016/2016-05-16-LeetCode-123-BestTimeToBuyAndSellStockIII/&title=《LeetCode 123. Best Time to Buy and Sell Stock III(HARD)》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.science/2016/05/16/2016/2016-05-16-LeetCode-123-BestTimeToBuyAndSellStockIII/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《LeetCode 123. Best Time to Buy and Sell Stock III(HARD)》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.science/2016/05/16/2016/2016-05-16-LeetCode-123-BestTimeToBuyAndSellStockIII/&via=http://blog.duanxu.science" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.science/2016/05/16/2016/2016-05-16-LeetCode-123-BestTimeToBuyAndSellStockIII/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADNUlEQVR42u3aS27bQBAFQN//0s42ASz6vW46EMfFlUDRw6nRot2fj4/4+vzrevXtqyevPydPXt95tasbLmxsbOyHsD8vr1fPXDPy55PjuHcP2NjY2Keyk7B0vXQbZootlkd2/bfY2NjY2HmSMEsq2kPExsbGxv5pdhICk8CWlLqwsbGxfzN7Xwy6t22QH8SP19KwsbGx356dd0Xf//OP9LexsbGx35j9WV5JIpEfWZ5O5AlJpMDGxsY+iJ0HgDYByDfXBqFkuCfZPzY2NvZ57HbUJg9Rs7SnPZpknx85DxsbG/sh7FlLIG/Wbtq6SWuhTZm+ycCwsbGxH8vO26Vt2JgN37QDOvXK2NjY2L+G3SYt+aFshoRu+JGwsbGxD2LnW6yL72WRaFM8ypsH2NjY2L+B3W5r1ipI0om2jJWsho2NjX0ee1OUz9u0eQhsi0fDnWBjY2MfxE5enw/E7JOEPB3aFKGwsbGxz2O3IzWzMv0mediXnLCxsbHPZufF9Fkq0la52rJRMng0bA9gY2Njvz27LffMXj9bLRnxyZOQf+5jY2NjH8RuR2qSgJS3cmcpR3tAdQaGjY2N/Vh2nhgkDdT8UDYN2ryRfEO/AhsbG/st2ZvTSoJWTsprYG3I/OIONjY29tHsZFt5izdfbbZyO6yDjY2NfR57FrQ2ZZ08aO0Pok2BsLGxsZ/I3iQP95aQNs3jtmSGjY2NfRJ7VjPfl4TaJCFfv24zYGNjYz+cnf/73iYJ+2ZAG8CKER9sbGzs49h5cWdGnU3ObNb5JgxjY2NjH8RuQ1cbTvbXbCQo+gmxsbGxj2Pn9/dFqLygnzcS6sCGjY2NfRw7Lwa15aeoO7EuS90Qt7GxsbEPZc/CUpvY5Hdm1xf7xMbGxj6CPSvxtMc0G+6ZtYqjg8PGxsY+iL2Je5sttmlD23humwrY2NjYT2e3221L9nkAS9ZMjjv6FhsbG/s4dh4YZqlL8q5ZCyEPbNjY2NjY+Xb/50EkP9JqMggbGxv7OPas4J6P4+RhKX/jbXEbGxsb+43ZbTO1xc/GgGbt5JvbA9jY2Nhvz8433SYh7RFcv6VtPCfNA2xsbOyHs/8AKWL4dKln4yAAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '失去灵魂(╯‵□′)╯︵┻━┻';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Blog | Duan Xu';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

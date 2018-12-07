@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Android开发手记(24) Log的使用及颜色的更改 | MAY THE FORCE BE WITH YOU</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Android,Log">
+    <meta name="description" content="content{:toc}  　　在程序开发过程中，LOG是广泛使用的用来记录程序执行过程的机制，它既可以用于程序调试，也可以用于产品运营中的事件记录。在Android系统中，提供了简单、便利的LOG机制，开发人员可以方便地使用。本文简单介绍了Android中Log的使用以及在Android Studio中 Log 颜色的更改。 　　要使用 Log，我们需要首先 import android.u">
+<meta name="keywords" content="Android,Log">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android开发手记(24) Log的使用及颜色的更改">
+<meta property="og:url" content="http://blog.duanxu.science/2015/11/08/2015/2015-11-08-Android-Study-24-Log/index.html">
+<meta property="og:site_name" content="MAY THE FORCE BE WITH YOU">
+<meta property="og:description" content="content{:toc}  　　在程序开发过程中，LOG是广泛使用的用来记录程序执行过程的机制，它既可以用于程序调试，也可以用于产品运营中的事件记录。在Android系统中，提供了简单、便利的LOG机制，开发人员可以方便地使用。本文简单介绍了Android中Log的使用以及在Android Studio中 Log 颜色的更改。 　　要使用 Log，我们需要首先 import android.u">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://blog.duanxu.science/images/201511/2015110801.png">
+<meta property="og:updated_time" content="2018-12-07T12:45:23.341Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android开发手记(24) Log的使用及颜色的更改">
+<meta name="twitter:description" content="content{:toc}  　　在程序开发过程中，LOG是广泛使用的用来记录程序执行过程的机制，它既可以用于程序调试，也可以用于产品运营中的事件记录。在Android系统中，提供了简单、便利的LOG机制，开发人员可以方便地使用。本文简单介绍了Android中Log的使用以及在Android Studio中 Log 颜色的更改。 　　要使用 Log，我们需要首先 import android.u">
+<meta name="twitter:image" content="http://blog.duanxu.science/images/201511/2015110801.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="MAY THE FORCE BE WITH YOU" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon_64.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Duan Xu</h5>
+          <a href="mailto:duanxu@outlook.com" title="duanxu@outlook.com" class="mail">duanxu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/doodle777" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/2886472974" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android开发手记(24) Log的使用及颜色的更改</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android开发手记(24) Log的使用及颜色的更改</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2015-11-08T11:43:00.000Z" itemprop="datePublished" class="page-time">
+  2015-11-08
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+
+<article id="post-2015/2015-11-08-Android-Study-24-Log" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android开发手记(24) Log的使用及颜色的更改</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2015-11-08 19:43:00" datetime="2015-11-08T11:43:00.000Z" itemprop="datePublished">2015-11-08</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <ul>
+<li>content<br>{:toc}</li>
+</ul>
+<p>　　在程序开发过程中，LOG是广泛使用的用来记录程序执行过程的机制，它既可以用于程序调试，也可以用于产品运营中的事件记录。在Android系统中，提供了简单、便利的LOG机制，开发人员可以方便地使用。本文简单介绍了Android中Log的使用以及在Android Studio中 Log 颜色的更改。</p>
+<p>　　要使用 Log，我们需要首先 import android.util.Log，其中Log常用的方法有5个：Log.v() Log.d() Log.i() Log.w() 以及 Log.e() 。根据首字母对应VERBOSE，DEBUG，INFORMATION，WARNING，ERROR。其中：</p>
+<ul>
+<li>Log.v 的调试颜色为黑色的，任何消息都会输出。</li>
+<li>Log.d的输出颜色是蓝色的，仅输出debug调试的意思，但他会输出上层的信息。</li>
+<li>Log.i的输出为绿色，一般提示性的消息information，它不会输出Log.v和Log.d的信息，但会显示i、w和e的信息。</li>
+<li>Log.w的意思为橙色，可以看作为warning警告，一般需要我们注意优化Android代码，同时选择它后还会输出Log.e的信息。</li>
+<li>Log.e为红色，可以想到error错误，这里仅显示红色的错误信息，这些错误就需要我们认真的分析，查看栈的信息了。</li>
+</ul>
+<p>　　我们新建一个Button，然后Click事件设置为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Log.v(<span class="string">"MainActivity"</span>, <span class="string">"This is Verbose."</span>);</span><br><span class="line">Log.d(<span class="string">"MainActivity"</span>, <span class="string">"This is Debug."</span>);</span><br><span class="line">Log.i(<span class="string">"MainActivity"</span>, <span class="string">"This is Information"</span>);</span><br><span class="line">Log.w(<span class="string">"MainActivity"</span>, <span class="string">"This is Warning."</span>);</span><br><span class="line">Log.e(<span class="string">"MainActivity"</span>, <span class="string">"This is Error."</span>);</span><br></pre></td></tr></table></figure>
+<p>　　此时，我们单击Button时，在Android/logcat中便会显示出Log信息：</p>
+<div style="text-align: center"><br><img src="/images/201511/2015110801.png"><br></div>
+
+<p>　　但是，我们发现，Log信息在你的电脑上可能是白色和红色的。那么如何来修改Log信息的颜色呢？</p>
+<ol>
+<li>File-&gt;Settings 或Ctrl + Alt +S</li>
+<li>找到 Editor -&gt; Colors &amp;Fonts -&gt; Android Logcat 或在上面的搜索框中输入Logcat</li>
+<li>点中Verbose , Info, Debug等选项，然后在后面将Use Inberited attributes 去掉勾选</li>
+<li>再将 Foreground 前的复选框选上，就可以双击后面的框框去选择颜色了</li>
+<li>Apply–&gt;OK<br>   我们可以将Log颜色修改如下，便可得到上图所示的Log效果。</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Log</th>
+<th>色值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VERBOSE</td>
+<td>BBBBBB</td>
+</tr>
+<tr>
+<td>DEBUG</td>
+<td>0070BB</td>
+</tr>
+<tr>
+<td>INFOMATION</td>
+<td>48BB31</td>
+</tr>
+<tr>
+<td>WARNING</td>
+<td>BBBB23</td>
+</tr>
+<tr>
+<td>ERROR</td>
+<td>FF0006</td>
+</tr>
+<tr>
+<td>ASSERT</td>
+<td>8F0005</td>
+</tr>
+</tbody>
+</table>
+<p>　　至此便可得到上述的效果了。</p>
+<p>　　完整代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.app.Activity;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.util.Log;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"><span class="keyword">import</span> android.widget.Button;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">private</span> Button button;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"> </span><br><span class="line">        button = (Button) findViewById(R.id.button);</span><br><span class="line"> </span><br><span class="line">        button.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">                Log.v(<span class="string">"MainActivity"</span>, <span class="string">"This is Verbose."</span>);</span><br><span class="line">                Log.d(<span class="string">"MainActivity"</span>, <span class="string">"This is Debug."</span>);</span><br><span class="line">                Log.i(<span class="string">"MainActivity"</span>, <span class="string">"This is Information"</span>);</span><br><span class="line">                Log.w(<span class="string">"MainActivity"</span>, <span class="string">"This is Warning."</span>);</span><br><span class="line">                Log.e(<span class="string">"MainActivity"</span>, <span class="string">"This is Error."</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-12-07T12:45:23.341Z" itemprop="dateUpdated">2018-12-07 20:45:23</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2015/11/08/2015/2015-11-08-Android-Study-24-Log/" target="_blank" rel="external">http://blog.duanxu.science/2015/11/08/2015/2015-11-08-Android-Study-24-Log/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.duanxu.science">
+            <img src="/img/avatar.jpg" alt="Duan Xu">
+            Duan Xu
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Log/">Log</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.science/2015/11/08/2015/2015-11-08-Android-Study-24-Log/&title=《Android开发手记(24) Log的使用及颜色的更改》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.science/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.science/2015/11/08/2015/2015-11-08-Android-Study-24-Log/&title=《Android开发手记(24) Log的使用及颜色的更改》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.science/2015/11/08/2015/2015-11-08-Android-Study-24-Log/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android开发手记(24) Log的使用及颜色的更改》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.science/2015/11/08/2015/2015-11-08-Android-Study-24-Log/&via=http://blog.duanxu.science" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.science/2015/11/08/2015/2015-11-08-Android-Study-24-Log/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2015/11/12/2015/2015-11-12-Android-Study-25-Service/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android开发手记(25) 简单Service的实现</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2015/11/06/2015/2015-11-06-Android-Study-23-Notification/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android开发手记(23) Notification</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Duan Xu &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.science/2015/11/08/2015/2015-11-08-Android-Study-24-Log/&title=《Android开发手记(24) Log的使用及颜色的更改》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.science/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.science/2015/11/08/2015/2015-11-08-Android-Study-24-Log/&title=《Android开发手记(24) Log的使用及颜色的更改》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.science/2015/11/08/2015/2015-11-08-Android-Study-24-Log/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android开发手记(24) Log的使用及颜色的更改》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.science/2015/11/08/2015/2015-11-08-Android-Study-24-Log/&via=http://blog.duanxu.science" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.science/2015/11/08/2015/2015-11-08-Android-Study-24-Log/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACsklEQVR42u3awY7iQAwE0Pn/n569jjRLtsruRqz0ckKAkrwgdZuyv77i4/vH8fOd39/JX796J7/isQMPDw9vceu/j1cXy99PPn31zWdqdAY8PDy8a7xXJ331OsEnnz6f//lxP58HDw8P73N4yRKf17qnCno8PDy8/4vXgvPlPg818PDw8N7Pa0vYpOBeLejrshsPDw/vHq8tfz/h9ZX+Hh4eHt66q94uuEnzbBb4fo8OPDw8vBu8tpydBa/7gnt1n3h4eHgXeO1AwKzMzTeGdpOI7goPDw/vKO8ZkDfyk0V/BltFFXh4eHhv4bXF9GaYtR04GBbTeHh4eNd4eZs/X8o3RXY7uDDs3eHh4eGNePly3C70m7I433L+EUbg4eHhHeW1y/EmbsgjjHYzqMdV8fDw8Ea8TTO+bZVtYojnK/5jpgwPDw/vKC/fGNoQdrYlnC3Q8fDw8O7xZmHEpimVD1QdG7rCw8PDO8pr49R2RCBf0GdniMpoPDw8vDfyZst0mxznraxZiIyHh4d3irfPMIpsI4hf80eT/Bh4eHh4N3htoytvPiVDBm0z7FiYi4eHh7fmtYVsWxDPYPmn9ZaAh4eHt+Dlpe2m2N0MFuTl+18eIh4eHt5lXhun5pfJwXXE8Nyuw8PDw7vAm0UDe/YskJ0FH3h4eHj3eKfK33bpz8cL2ggDDw8P7/28w9HAYpigLfqLMBcPDw9vzcuX+w3+1MZQt8Hw8PDw1rzZ3/s2vMinGNotBA8PD+/9vM3f/rxxtR/bysv04QaDh4eHV/JONbpmQfCsJVZsKnh4eHjXeO1lZmVuwj4VTODh4eF9Dm+2xOfbwP5x4+Hh4X0aLx/SyuOGzThXNHSFh4eHd4G3H73Kb+j54SZXKVpfeHh4eBd47T/6fRl9dhTgQHiBh4eHl17xDxUL7gOIF+gXAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '失去灵魂(╯‵□′)╯︵┻━┻';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Blog | Duan Xu';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

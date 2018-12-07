@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>[转]Python爬虫实战 抓取图书馆借阅信息  | MAY THE FORCE BE WITH YOU</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Python">
+    <meta name="description" content="content{:toc}  原文链接：Python爬虫实战—抓取图书馆借阅信息 　　前段时间在图书馆借了很多书，借得多了就容易忘记每本书的应还日期，老是担心自己会违约，影响日后借书，而自己又懒得总是登录到学校图书馆借阅系统查看，于是就打算写一个爬虫来抓取自己的借阅信息，把每本书的应还日期给爬下来，并写入txt文件，这样每次忘了就可以打开该txt文件查看，每次借阅信息改变了，只要再重新运行一遍该">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[转]Python爬虫实战 抓取图书馆借阅信息 ">
+<meta property="og:url" content="http://blog.duanxu.science/2016/12/19/2016/2016-12-19-转-Python爬虫实战-抓取图书馆借阅信息/index.html">
+<meta property="og:site_name" content="MAY THE FORCE BE WITH YOU">
+<meta property="og:description" content="content{:toc}  原文链接：Python爬虫实战—抓取图书馆借阅信息 　　前段时间在图书馆借了很多书，借得多了就容易忘记每本书的应还日期，老是担心自己会违约，影响日后借书，而自己又懒得总是登录到学校图书馆借阅系统查看，于是就打算写一个爬虫来抓取自己的借阅信息，把每本书的应还日期给爬下来，并写入txt文件，这样每次忘了就可以打开该txt文件查看，每次借阅信息改变了，只要再重新运行一遍该">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://blog.duanxu.science/images/201612/2016121901.png">
+<meta property="og:image" content="http://blog.duanxu.science/images/201612/2016121902.png">
+<meta property="og:image" content="http://blog.duanxu.science/images/201612/2016121903.png">
+<meta property="og:image" content="http://blog.duanxu.science/images/201612/2016121904.png">
+<meta property="og:image" content="http://blog.duanxu.science/images/201612/2016121905.png">
+<meta property="og:image" content="http://blog.duanxu.science/images/201612/2016121906.png">
+<meta property="og:updated_time" content="2018-12-07T12:36:35.359Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[转]Python爬虫实战 抓取图书馆借阅信息 ">
+<meta name="twitter:description" content="content{:toc}  原文链接：Python爬虫实战—抓取图书馆借阅信息 　　前段时间在图书馆借了很多书，借得多了就容易忘记每本书的应还日期，老是担心自己会违约，影响日后借书，而自己又懒得总是登录到学校图书馆借阅系统查看，于是就打算写一个爬虫来抓取自己的借阅信息，把每本书的应还日期给爬下来，并写入txt文件，这样每次忘了就可以打开该txt文件查看，每次借阅信息改变了，只要再重新运行一遍该">
+<meta name="twitter:image" content="http://blog.duanxu.science/images/201612/2016121901.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="MAY THE FORCE BE WITH YOU" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon_64.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Duan Xu</h5>
+          <a href="mailto:duanxu@outlook.com" title="duanxu@outlook.com" class="mail">duanxu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/doodle777" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/2886472974" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">[转]Python爬虫实战 抓取图书馆借阅信息 </div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">[转]Python爬虫实战 抓取图书馆借阅信息 </h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-12-19T01:48:30.000Z" itemprop="datePublished" class="page-time">
+  2016-12-19
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Repost/">Repost</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-用到的技术"><span class="post-toc-number">1.</span> <span class="post-toc-text">1 用到的技术</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-抓取一个页面"><span class="post-toc-number">2.</span> <span class="post-toc-text">2 抓取一个页面</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-Cookie的使用"><span class="post-toc-number">3.</span> <span class="post-toc-text">3 Cookie的使用</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-登录图书馆系统"><span class="post-toc-number">4.</span> <span class="post-toc-text">4 登录图书馆系统</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5-获取借阅信息"><span class="post-toc-number">5.</span> <span class="post-toc-text">5 获取借阅信息</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#6-大功告成"><span class="post-toc-number">6.</span> <span class="post-toc-text">6 大功告成</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-2016/2016-12-19-转-Python爬虫实战-抓取图书馆借阅信息" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">[转]Python爬虫实战 抓取图书馆借阅信息 </h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-12-19 09:48:30" datetime="2016-12-19T01:48:30.000Z" itemprop="datePublished">2016-12-19</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Repost/">Repost</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <ul>
+<li>content<br>{:toc}</li>
+</ul>
+<p><a href="http://www.cnblogs.com/KGoing/p/6150555.html" target="_blank" rel="noopener">原文链接：Python爬虫实战—抓取图书馆借阅信息</a></p>
+<p>　　前段时间在图书馆借了很多书，借得多了就容易忘记每本书的应还日期，老是担心自己会违约，影响日后借书，而自己又懒得总是登录到学校图书馆借阅系统查看，于是就打算写一个爬虫来抓取自己的借阅信息，把每本书的应还日期给爬下来，并写入txt文件，这样每次忘了就可以打开该txt文件查看，每次借阅信息改变了，只要再重新运行一遍该程序，原txt文件就会被新文件覆盖，里面的内容得到更新。</p>
+<h3 id="1-用到的技术"><a href="#1-用到的技术" class="headerlink" title="1 用到的技术"></a>1 用到的技术</h3><p>　　Python版本是 2.7 ，同时用到了urllib2、cookielib、re三个模块。urllib2用于创建请求(request)，并抓取网页信息，返回一个类似于文件类型的response对象；cookielib用于储存cookie对象，以实现模拟登录功能；re模块提供对正则表达式的支持，用于对抓取到的页面信息进行匹配，以得到自己想要的信息。</p>
+<h3 id="2-抓取一个页面"><a href="#2-抓取一个页面" class="headerlink" title="2 抓取一个页面"></a>2 抓取一个页面</h3><p>　　使用urllib2简单抓取一个网页的过程非常简单：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib2</span><br><span class="line">response = urllib2.urlopen(<span class="string">"http://www.baidu.com"</span>)</span><br><span class="line">html = response.read()</span><br></pre></td></tr></table></figure>
+<p> 　　urllib2中的urlopen()方法，看其字面意思就知道是打开一个URL(uniform resource locator)地址，上面例子传入的时百度首页的地址，遵循HTTP协议，除了http协议外，urlopen()方法还可以打开遵循ftp、file协议的地址，如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">response = urllib2.urlopen(<span class="string">"ftp://example.com"</span>)</span><br></pre></td></tr></table></figure>
+<p>　　除URL参数外，urlopen()方法还接受data和timeout参数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">response = urllib2.urlopen(url ,data ,timeout)</span><br></pre></td></tr></table></figure>
+<p>　　其中data是打开一个网页时需要传入的数据，比如打开一个登录界面时往往需要传入用户名和密码等信息，在下文登录图书馆系统时将会看到其用法；timeout是设置超时时间，即超过一定时间页面无响应即报错；在urlopen()方法中，data和timeout不是必须的，即可填可不填，注意：当页面需要有数据传入时，data是必需的。</p>
+<p>　　可以看到，在打开一个网页时，有时往往需要传入多个参数，再加上HTTP协议是基于请求(request)和应答(response)的，即客户端发出请求(request)，服务器端返回应答(response)，所以在使用urlopen()方法时，往往是构造一个request对象作为参数传入，该request对象包括url、data、timeout、headers等信息：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib2</span><br><span class="line">request = urllib2.Request(<span class="string">"http://www.baidu.com"</span>)</span><br><span class="line">response = urllib2.urlopen(request)</span><br><span class="line">html = response.read()</span><br></pre></td></tr></table></figure>
+<p>　　这段代码得到的结果和上面得到的结果一样，但是在逻辑上显得更明确、清晰。</p>
+<h3 id="3-Cookie的使用"><a href="#3-Cookie的使用" class="headerlink" title="3 Cookie的使用"></a>3 Cookie的使用</h3><p>　　在访问某些网站时，该网站需要在客户端本地储存一些数据、信息(经过加密)，并在接下来的请求(request)中返回给服务器，否则服务器将拒绝该请求，这些数据即存储在本地的cookie中。例如，访问学校图书馆系统时，需进行登录，等登录完成之后，服务器端将会在本地储存一些经过加密的数据在cookie中，当客户端发送查询借阅信息的请求(request)时，会连带cookie里面的数据一起发送给服务器，服务器确定cookie信息后允许访问，否则拒绝该请求。</p>
+<p>　　Cookielib模块提供了CookieJar类用于捕捉和储存HTTP 的cookie数据，所以要创建一个cookie只要创建一个CookieJar实例即可：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cookielib</span><br><span class="line">cookie = coolielib.CookieJar()</span><br></pre></td></tr></table></figure>
+<p> 　　创建cookie了就万事大吉了吗？没那么简单，我们要完成的操作是发送登录请求、记录cookie、再发送读取借阅信息的请求并向服务器反馈cookie信息，要完成这一系列的操作，原来的urlopen()方法已不能胜任，幸运的是，urllib2模块还提供了一个OpenerDirector类，可以接受一个cookie处理器为参数，实现上述功能，而这个cookie处理器则可以通过HTTPCookieProcessor类接受一个cookie对象实例化后得到。即先通过HTTPCookieProcessor实例化得到一个cookie处理器handler，再将此处理器headler作为参数传入OpenDirector实例化得到一个能捕捉cookie数据的opener，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib2</span><br><span class="line"><span class="keyword">import</span> cookielib</span><br><span class="line"></span><br><span class="line">cookie = cookielib.CookieJar()</span><br><span class="line">handler = urllib2.HTTPCookieProcessor(cookie)</span><br><span class="line">opener = urllib2.build_opener(handler)</span><br><span class="line">response = opener.open(<span class="string">"http://www.baidu.com"</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="4-登录图书馆系统"><a href="#4-登录图书馆系统" class="headerlink" title="4 登录图书馆系统"></a>4 登录图书馆系统</h3><p>　　至此，我们就可以进行图书馆借阅信息的抓取了。来看看<a href="http://202.118.250.131/lib/opacAction.do?method=login" target="_blank" rel="noopener">HIT图书馆登录界面</a>：</p>
+<div style="text-align: center"><br><img src="/images/201612/2016121901.png"><br></div>
+
+<p>　　首先，在Firefox浏览器下，借助httpfox插件进行网络监听，看看登录此页面需要向服务器发送哪些数据：</p>
+<div style="text-align: center"><br><img src="/images/201612/2016121902.png"><br></div>
+
+<p>　　输入登录账号和密码，打开httpfox插件，点击start开始监听，然后点击登陆按钮进行登陆：</p>
+<div style="text-align: center"><br><img src="/images/201612/2016121903.png"><br></div>
+
+<p>　　上图便是登陆之后的页面，以及整个登陆过程捕捉到的信息。选择第一条捕捉到的信息，点击下方数据头(Headers)选项卡，可以看见登录此页面需要发送的一些数据。有一些网站，对于访问它们的请求需要检查数据头(Headers)，只有数据头信息符合要求才允许访问。在登录图书馆系统时，可以先尝试不发数据头，如果能顺利访问则说明没有Headers检查这一环节。数据发送的方法为GET，即只需要将要发送的数据信息加在登陆请求的后面。在Headers选项卡的Request-Line属性中，问号前面的即为登陆请求”GET /lib/opacAction.do”，加上IP地址之后真实的请求URL为”<a href="http://202.118.250.131/lib/opacAction.do&quot;，问号后面的即为登陆需要的数据，包括账号、密码等信息。" target="_blank" rel="noopener">http://202.118.250.131/lib/opacAction.do&quot;，问号后面的即为登陆需要的数据，包括账号、密码等信息。</a></p>
+<p>　　接下来点开QueryString选项卡，查看由GET方法传送的数据：</p>
+<div style="text-align: center"><br><img src="/images/201612/2016121904.png"><br></div>
+
+<p>　　需要传送的数据包括5项，以字典类型将其储存，经过urlencode()方法编码之后直接加在登陆URL之后即可，所以最后向服务器发送的请求(request)为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line"> </span><br><span class="line">loginURL = <span class="string">'http://202.118.250.131/lib/opacAction.do'</span></span><br><span class="line">queryString = urllib.urlencode(&#123;</span><br><span class="line">            <span class="string">'method'</span>:<span class="string">'DoAjax'</span>,</span><br><span class="line">            <span class="string">'dispatch'</span>:<span class="string">'login'</span>,</span><br><span class="line">            <span class="string">'registerName'</span>:<span class="string">''</span>,</span><br><span class="line">            <span class="string">'rcardNo'</span>:<span class="string">'16S137028 0'</span>,</span><br><span class="line">            <span class="string">'pwd'</span>:<span class="string">'******'</span></span><br><span class="line">        &#125;)</span><br><span class="line">requestURL = self.loginURL + <span class="string">'?'</span> + self.queryString</span><br></pre></td></tr></table></figure>
+<p>　　得到请求URL之后就可以模拟登陆图书馆系统了，在模拟登陆的过程中需要用到前面讲到的cookie，否则无法进行后续的访问。在编代码过程中，定义一个library类，使访问过程变成一个面向对象的过程，可以根据需要实例化多个library对象，分别对多个实例进行操作。首先分析，该library类应该有一个初始化方法(<strong>init</strong>)以及一个获取页面的方法(getPage)，在打开网页是，应使用上文提到opener实例，自动捕获并储存cookie:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line"><span class="keyword">import</span> urllib2</span><br><span class="line"><span class="keyword">import</span> cookielib</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">library</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.loginURL=<span class="string">'http://202.118.250.131/lib/opacAction.do'</span></span><br><span class="line">        self.queryString = urllib.urlencode(&#123;</span><br><span class="line">            <span class="string">'method'</span>:<span class="string">'DoAjax'</span>,</span><br><span class="line">            <span class="string">'dispatch'</span>:<span class="string">'login'</span>,</span><br><span class="line">            <span class="string">'registerName'</span>:<span class="string">''</span>,</span><br><span class="line">            <span class="string">'rcardNo'</span>:<span class="string">'16S137028 0'</span>,</span><br><span class="line">            <span class="string">'pwd'</span>:<span class="string">'114477yan'</span></span><br><span class="line">        &#125;)</span><br><span class="line">        self.requestURL = self.loginURL + <span class="string">'?'</span> + self.queryString</span><br><span class="line">        self.cookies=cookielib.CookieJar()</span><br><span class="line">        self.handler=urllib2.HTTPCookieProcessor(self.cookies)</span><br><span class="line">        self.opener=urllib2.build_opener(self.handler)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getPage</span><span class="params">(self)</span>:</span></span><br><span class="line">        request1 = urllib2.Request(self.requestURL)</span><br><span class="line">        request2 = urllib2.Request(<span class="string">' http://202.118.250.131/lib/opacAction.do?method=init&amp;seq=301 '</span>)</span><br><span class="line">        result = self.opener.open(request1)</span><br><span class="line">        result = self.opener.open(request2)</span><br><span class="line">        <span class="keyword">return</span> result.read()</span><br><span class="line"></span><br><span class="line">lib = library()</span><br><span class="line"><span class="keyword">print</span> lib.getPage()</span><br></pre></td></tr></table></figure>
+<p>　　上述代码中，先是进行登录<code>result = self.opener.open(request1)</code> ,登录没有异常，说明登录过程不用检查数据头；然后再用此<code>self.opener</code>打开借阅查询页面<br><code>http://202.118.250.131/lib/opacAction.do?method=init&amp;seq=301</code>，所以这段代码将打印借阅查询界面的HTML代码，下图是部分打印结果：</p>
+<div style="text-align: center"><br><img src="/images/201612/2016121905.png"><br></div>
+
+<h3 id="5-获取借阅信息"><a href="#5-获取借阅信息" class="headerlink" title="5 获取借阅信息"></a>5 获取借阅信息</h3><p>　　抓取了页面信息之后，接下来就是根据自己的需要匹配、储存信息了。在匹配页面信息时，这里用的是正则表达式的方式进行匹配，正则表达式的支持由Python的Re模块提供支持，关于如何使用正则表达式，可以参考这里：Python正则表达式指南</p>
+<p>　　使用Re模块进行匹配时，往往先将正则表达式字符串编译(compile)成一个Pattern实例，再利用Re模块中的re.findall(pattern , string)，将字符串string中和正则表达式匹配的数据以列表的形式返回。如果在pattern中有超过一个组(group)，则返回的结果将是一个元组列表，如此正则表达式：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;table.*?id="tb.*?width="50%"&gt;&lt;font size=2&gt;(.*?)&lt;/font&gt;.*?&lt;tr&gt;.*?&lt;tr&gt;.*?&lt;font size=2&gt;(.*?)&lt;/font&gt;.*?&lt;font size=2&gt;(.*?)&lt;/font&gt;.*?&lt;/TABLE&gt;</span><br></pre></td></tr></table></figure></p>
+<p>式中，每一个<code>(.*?)</code>代表一个组，即此式中有3个组，则匹配时，返回一个元组列表，其中每一个元组又有3个数据。</p>
+<p>　　在library类中，定义一个获取信息的方法(getInformation)，以通过正则表达式匹配的方式获取所需数据：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getInformation</span><span class="params">(self)</span>:</span></span><br><span class="line">        page = self.getPage()</span><br><span class="line">        pattern = re.compile(<span class="string">'&lt;table.*?id="tb.*?width="50%"&gt;&lt;font size=2&gt;(.*?)&lt;/font&gt;.*?&lt;tr&gt;.*?&lt;tr&gt;.*?'</span>+</span><br><span class="line">                        <span class="string">'&lt;font size=2&gt;(.*?)&lt;/font&gt;.*?&lt;font size=2&gt;(.*?)&lt;/font&gt;.*?&lt;/TABLE&gt;'</span>,re.S)</span><br><span class="line">        items = re.findall(pattern,page)</span><br></pre></td></tr></table></figure>
+<p>　　获取所需数据之后，接下来就是将数据写入文本文件(txt)储存，以读写模式(W+)打开一个文件(library.txt)，然后通过write()方法将数据一条一条的写入文件。不过，在信息写入之前，需要对抓取到的信息做一些小处理，刚才说过了，findall()方法返回的是一个元组列表，即<code>[[a,b,c],[d,e,f],[g,h,i]]</code>的形式，write()方法是不能对元组进行操作的，所以需要手动将元组翻译成一条条字符串，再保存到一个列表里，通过遍历将每条字符串写入文件：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getInformation</span><span class="params">(self)</span>:</span></span><br><span class="line">        page = self.getPage()</span><br><span class="line">        pattern = re.compile(<span class="string">'&lt;table.*?id="tb.*?width="50%"&gt;&lt;font size=2&gt;(.*?)&lt;/font&gt;.*?&lt;tr&gt;.*?&lt;tr&gt;.*?'</span>+</span><br><span class="line">                        <span class="string">'&lt;font size=2&gt;(.*?)&lt;/font&gt;.*?&lt;font size=2&gt;(.*?)&lt;/font&gt;.*?&lt;/TABLE&gt;'</span>,re.S)</span><br><span class="line">        items = re.findall(pattern,page)</span><br><span class="line"></span><br><span class="line">        contents = []</span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> items:</span><br><span class="line">            content = item[<span class="number">0</span>]+<span class="string">'    from   '</span>+item[<span class="number">1</span>]+<span class="string">'   to   '</span>+item[<span class="number">2</span>]+<span class="string">'\n'</span></span><br><span class="line">            contents.append(content)</span><br><span class="line">        self.writeData(contents)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">writeData</span><span class="params">(self,contents)</span>:</span></span><br><span class="line">        file = open(<span class="string">'libraryBooks.txt'</span>,<span class="string">'w+'</span>)</span><br><span class="line">        <span class="keyword">for</span> content <span class="keyword">in</span> contents:</span><br><span class="line">            file.write(content)</span><br><span class="line">        file.close()</span><br></pre></td></tr></table></figure>
+<p>　　至此，整个爬虫就算完成了，下面贴上完整代码：</p>
+<h3 id="6-大功告成"><a href="#6-大功告成" class="headerlink" title="6 大功告成"></a>6 大功告成</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">__author__=<span class="string">'Victor'</span></span><br><span class="line"><span class="comment">#_*_ coding:'utf-8' _*_</span></span><br><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line"><span class="keyword">import</span> urllib2</span><br><span class="line"><span class="keyword">import</span> cookielib</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">library</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.loginURL=<span class="string">'http://202.118.250.131/lib/opacAction.do'</span></span><br><span class="line">        self.queryString = urllib.urlencode(&#123;</span><br><span class="line">            <span class="string">'method'</span>:<span class="string">'DoAjax'</span>,</span><br><span class="line">            <span class="string">'dispatch'</span>:<span class="string">'login'</span>,</span><br><span class="line">            <span class="string">'registerName'</span>:<span class="string">''</span>,</span><br><span class="line">            <span class="string">'rcardNo'</span>:<span class="string">'16S137028 0'</span>,</span><br><span class="line">            <span class="string">'pwd'</span>:<span class="string">'******'</span></span><br><span class="line">        &#125;)</span><br><span class="line">        self.requestURL = self.loginURL + <span class="string">'?'</span> + self.queryString</span><br><span class="line">        self.cookies=cookielib.CookieJar()</span><br><span class="line">        self.handler=urllib2.HTTPCookieProcessor(self.cookies)</span><br><span class="line">        self.opener=urllib2.build_opener(self.handler)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getPage</span><span class="params">(self)</span>:</span></span><br><span class="line">        request1 = urllib2.Request(self.requestURL)</span><br><span class="line">        request2 = urllib2.Request(<span class="string">'http://202.118.250.131/lib/opacAction.do?method=init&amp;seq=301'</span>)</span><br><span class="line">        result = self.opener.open(request1)</span><br><span class="line">        result = self.opener.open(request2)</span><br><span class="line">        <span class="keyword">return</span> result.read()</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getInformation</span><span class="params">(self)</span>:</span></span><br><span class="line">        page = self.getPage()</span><br><span class="line">        pattern = re.compile(<span class="string">'&lt;table.*?id="tb.*?width="50%"&gt;&lt;font size=2&gt;(.*?)&lt;/font&gt;.*?&lt;tr&gt;.*?&lt;tr&gt;.*?'</span>+</span><br><span class="line">                        <span class="string">'&lt;font size=2&gt;(.*?)&lt;/font&gt;.*?&lt;font size=2&gt;(.*?)&lt;/font&gt;.*?&lt;/TABLE&gt;'</span>,re.S)</span><br><span class="line">        items = re.findall(pattern,page)</span><br><span class="line"></span><br><span class="line">        contents = []</span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> items:</span><br><span class="line">            content = item[<span class="number">0</span>]+<span class="string">'    from   '</span>+item[<span class="number">1</span>]+<span class="string">'   to   '</span>+item[<span class="number">2</span>]+<span class="string">'\n'</span></span><br><span class="line">            contents.append(content)</span><br><span class="line">        self.writeData(contents)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">writeData</span><span class="params">(self,contents)</span>:</span></span><br><span class="line">        file = open(<span class="string">'libraryBooks.txt'</span>,<span class="string">'w+'</span>)</span><br><span class="line">        <span class="keyword">for</span> content <span class="keyword">in</span> contents:</span><br><span class="line">            file.write(content)</span><br><span class="line">        file.close()</span><br><span class="line"></span><br><span class="line">lib = library()</span><br><span class="line">lib.getInformation()</span><br></pre></td></tr></table></figure>
+<p>　　下面就是抓到的借阅信息，不得不说效果不怎么样，不过还是凑合着看把：</p>
+<div style="text-align: center"><br><img src="/images/201612/2016121906.png"><br></div>
+
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-12-07T12:36:35.359Z" itemprop="dateUpdated">2018-12-07 20:36:35</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2016/12/19/2016/2016-12-19-转-Python爬虫实战-抓取图书馆借阅信息/" target="_blank" rel="external">http://blog.duanxu.science/2016/12/19/2016/2016-12-19-转-Python爬虫实战-抓取图书馆借阅信息/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.duanxu.science">
+            <img src="/img/avatar.jpg" alt="Duan Xu">
+            Duan Xu
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.science/2016/12/19/2016/2016-12-19-转-Python爬虫实战-抓取图书馆借阅信息/&title=《[转]Python爬虫实战 抓取图书馆借阅信息 》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.science/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.science/2016/12/19/2016/2016-12-19-转-Python爬虫实战-抓取图书馆借阅信息/&title=《[转]Python爬虫实战 抓取图书馆借阅信息 》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.science/2016/12/19/2016/2016-12-19-转-Python爬虫实战-抓取图书馆借阅信息/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《[转]Python爬虫实战 抓取图书馆借阅信息 》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.science/2016/12/19/2016/2016-12-19-转-Python爬虫实战-抓取图书馆借阅信息/&via=http://blog.duanxu.science" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.science/2016/12/19/2016/2016-12-19-转-Python爬虫实战-抓取图书馆借阅信息/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2016/12/20/2016/2016-12-20-转-Java中的反射总结/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">[转]Java中的反射总结</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/11/23/2016/2016-11-23-转-用更合理的方式写 JavaScript/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">[转]用更合理的方式写 JavaScript</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Duan Xu &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.science/2016/12/19/2016/2016-12-19-转-Python爬虫实战-抓取图书馆借阅信息/&title=《[转]Python爬虫实战 抓取图书馆借阅信息 》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.science/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.science/2016/12/19/2016/2016-12-19-转-Python爬虫实战-抓取图书馆借阅信息/&title=《[转]Python爬虫实战 抓取图书馆借阅信息 》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.science/2016/12/19/2016/2016-12-19-转-Python爬虫实战-抓取图书馆借阅信息/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《[转]Python爬虫实战 抓取图书馆借阅信息 》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.science/2016/12/19/2016/2016-12-19-转-Python爬虫实战-抓取图书馆借阅信息/&via=http://blog.duanxu.science" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.science/2016/12/19/2016/2016-12-19-转-Python爬虫实战-抓取图书馆借阅信息/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADHklEQVR42u3aW3LbMBAEQN3/0s4BYsszu0hFgppfKpIi0VCV1/t4POLja3Hkz//pXX/f89N3Dx/Y2NjYb8JOFt0u5SfMZj2bq9+8HRsbG/s6dr7ofAvyJbbbdCDIYWNjY38wuw1+7aKfP+f5GWxsbGzsNoAloes5Oy8wJc/BxsbG/mR2kjbkacAsLTn13cO1NGxsbOyXZ88asa/5+Z/0t7GxsbFfmD0bvmlfn5SBTiU2kQIbGxv7InYeANrm7mwQZxZK2/VjY2Nj38duyzFFkFikPW3pv20JY2NjY9/Bzr+QF+7zoNU2J9rQFQUtbGxs7OvYm4QhT0L29+Q/2y+1NGxsbOwr2PuhmbPhql1PfR4bGxv7OnbdIi3/9Z8FnnxgKL+66wxjY2NjvyJ700BN0pi2R9EGtn1rARsbG/sO9ma5s8JT3hJoN6W4HxsbG/sK9qkhmLwklCCTq/nnb85gY2NjX8eeDb7kWzBr67bPLDYCGxsb+yL2sP4Uh5x8GChPP04FQmxsbOw72LMiTj6Ok4/pPA9UZxMVbGxs7PvY7SI2SznV1t2EW2xsbOxb2fnj8ns2V5PC0+wHw8bGxr6VvUlLorBRNn03reJfNggbGxv7OnbyT3/76LYglW/NbEwHGxsb+1Z2e9Os9JMDNs+ZBTZsbGzsO9jtqM0smO3DVTtwiY2Njf0J7NkrZ2WgYqSmbOu25SdsbGzsu9ntME27TfmWDZu4SVqFjY2NfR17VipKCkCbROVUO/mb89jY2NgXsWdt2rbROwtLZ0eCHu2isbGxsd+KPVtcnqjMQmA+ptMWv7CxsbFvZZ8t6J9qBudDPHVpDBsbG/tS9ilYvlmzJyRre8wqW9jY2Nhvxf4qj2QReWN4Foo2jQRsbGzs+9izv/mb9sAqeYhbAvlVbGxs7DvYm6DVtoTbYLMZAKpHMLGxsbHfnH2qrJNvRJ6u7JsT2NjY2NjtopMC074ZvGpIY2NjY38w++x4zSw5+W9xGxsbG/uF2UlRKQknbYLRNhiSFCgqUWFjY2NfxM4bvZuSfZuitFuZJCrY2NjY17H/AM8b2YUsQH10AAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '失去灵魂(╯‵□′)╯︵┻━┻';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Blog | Duan Xu';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

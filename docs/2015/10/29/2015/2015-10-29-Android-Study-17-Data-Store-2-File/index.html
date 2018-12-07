@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Android开发手记(17) 数据存储二 文件存储数据 | MAY THE FORCE BE WITH YOU</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Android,DataStore,File">
+    <meta name="description" content="content{:toc}  Android为数据存储提供了五种方式： 1、SharedPreferences 2、文件存储 3、SQLite数据库 4、ContentProvider 5、网络存储 　　本文主要介绍如何使用文件来存储数据。Android文件操作用到的是Java.IO中的FileOutputStream和FileInputStream类。 一、存储文件　　首先实例化一个FileO">
+<meta name="keywords" content="Android,DataStore,File">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android开发手记(17) 数据存储二 文件存储数据">
+<meta property="og:url" content="http://blog.duanxu.science/2015/10/29/2015/2015-10-29-Android-Study-17-Data-Store-2-File/index.html">
+<meta property="og:site_name" content="MAY THE FORCE BE WITH YOU">
+<meta property="og:description" content="content{:toc}  Android为数据存储提供了五种方式： 1、SharedPreferences 2、文件存储 3、SQLite数据库 4、ContentProvider 5、网络存储 　　本文主要介绍如何使用文件来存储数据。Android文件操作用到的是Java.IO中的FileOutputStream和FileInputStream类。 一、存储文件　　首先实例化一个FileO">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-07T12:43:26.825Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android开发手记(17) 数据存储二 文件存储数据">
+<meta name="twitter:description" content="content{:toc}  Android为数据存储提供了五种方式： 1、SharedPreferences 2、文件存储 3、SQLite数据库 4、ContentProvider 5、网络存储 　　本文主要介绍如何使用文件来存储数据。Android文件操作用到的是Java.IO中的FileOutputStream和FileInputStream类。 一、存储文件　　首先实例化一个FileO">
+    
+        <link rel="alternate" type="application/atom+xml" title="MAY THE FORCE BE WITH YOU" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon_64.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Duan Xu</h5>
+          <a href="mailto:duanxu@outlook.com" title="duanxu@outlook.com" class="mail">duanxu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/doodle777" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/2886472974" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android开发手记(17) 数据存储二 文件存储数据</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android开发手记(17) 数据存储二 文件存储数据</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2015-10-29T09:10:00.000Z" itemprop="datePublished" class="page-time">
+  2015-10-29
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#一、存储文件"><span class="post-toc-number">1.</span> <span class="post-toc-text">一、存储文件</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#二、读取文件"><span class="post-toc-number">2.</span> <span class="post-toc-text">二、读取文件</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#三、完整代码"><span class="post-toc-number">3.</span> <span class="post-toc-text">三、完整代码</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#activity-main-xml"><span class="post-toc-number">4.</span> <span class="post-toc-text">activity_main.xml</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-2015/2015-10-29-Android-Study-17-Data-Store-2-File" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android开发手记(17) 数据存储二 文件存储数据</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2015-10-29 17:10:00" datetime="2015-10-29T09:10:00.000Z" itemprop="datePublished">2015-10-29</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <ul>
+<li>content<br>{:toc}</li>
+</ul>
+<p>Android为数据存储提供了五种方式：</p>
+<p>1、SharedPreferences</p>
+<p><strong>2、文件存储</strong></p>
+<p>3、SQLite数据库</p>
+<p>4、ContentProvider</p>
+<p>5、网络存储</p>
+<p>　　本文主要介绍如何使用文件来存储数据。Android文件操作用到的是Java.IO中的FileOutputStream和FileInputStream类。</p>
+<h4 id="一、存储文件"><a href="#一、存储文件" class="headerlink" title="一、存储文件"></a><strong>一、存储文件</strong></h4><p>　　首先实例化一个FileOutputStream。</p>
+<blockquote>
+<p>FileOutputStream foStream = openFileOutput(fileName, MODE_PRIVATE);<br>// fileName: 要写入文件的名称<br>// MODE_PRIVATE: 为默认操作模式,代表该文件是私有数据,只能被应用本身访问,在该模式下,写入的内容会覆盖原文件的内容<br>// MODE_APPEND: 模式会检查文件是否存在,存在就往文件追加内容,否则就创建新文件.<br>// MODE_WORLD_READABLE: 表示当前文件可以被其他应用读取，不推荐使用<br>// MODE_WORLD_WRITEABLE: 表示当前文件可以被其他应用写入，不推荐使用  </p>
+</blockquote>
+<p>　　然后调用foStream.write()即可完成写入。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">byte</span>[] buffer = fileContent.getBytes();</span><br><span class="line">foStream.write(buffer);</span><br><span class="line">Toast.makeText(MainActivity.<span class="keyword">this</span>, <span class="string">"写入成功"</span>,Toast.LENGTH_SHORT).show();</span><br></pre></td></tr></table></figure>
+<p>　　最后进行一些清理工作，刷新写出流和关闭流。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">foStream.flush();</span><br><span class="line">foStream.close();</span><br></pre></td></tr></table></figure>
+<h4 id="二、读取文件"><a href="#二、读取文件" class="headerlink" title="二、读取文件"></a><strong>二、读取文件</strong></h4><p>　　同样的，首先实例化一个FileInputStream。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FileInputStream fiStream = openFileInput(fileName);</span><br></pre></td></tr></table></figure>
+<p>　　然后调用fiStream.read()即可</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> len = fiStream.available();</span><br><span class="line"><span class="keyword">byte</span>[] buffer = <span class="keyword">new</span> <span class="keyword">byte</span>[len];</span><br><span class="line">fiStream.read(buffer);</span><br></pre></td></tr></table></figure>
+<p>　　最后，将文本显示并关闭读文件流</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">etContent.setText(<span class="keyword">new</span> String(buffer));</span><br><span class="line">Toast.makeText(MainActivity.<span class="keyword">this</span>, <span class="string">"读取成功"</span>,Toast.LENGTH_SHORT).show();</span><br><span class="line">fiStream.close();</span><br></pre></td></tr></table></figure>
+<h4 id="三、完整代码"><a href="#三、完整代码" class="headerlink" title="三、完整代码"></a><strong>三、完整代码</strong></h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.support.v7.app.AppCompatActivity;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"><span class="keyword">import</span> android.widget.Button;</span><br><span class="line"><span class="keyword">import</span> android.widget.EditText;</span><br><span class="line"><span class="keyword">import</span> android.widget.Toast;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.FileInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> EditText etName;</span><br><span class="line">    <span class="keyword">private</span> EditText etContent;</span><br><span class="line">    <span class="keyword">private</span> Button btnWrite;</span><br><span class="line">    <span class="keyword">private</span> Button btnRead;</span><br><span class="line">    <span class="keyword">private</span> String fileName = <span class="string">""</span>;</span><br><span class="line">    <span class="keyword">private</span> String fileContent = <span class="string">""</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">        etName = (EditText)findViewById(R.id.etName);</span><br><span class="line">        etContent = (EditText)findViewById(R.id.etContent);</span><br><span class="line">        btnWrite = (Button)findViewById(R.id.btnWrite);</span><br><span class="line">        btnRead = (Button)findViewById(R.id.btnRead);</span><br><span class="line"></span><br><span class="line">        btnWrite.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">                fileName = etName.getText().toString();</span><br><span class="line">                fileContent = etContent.getText().toString();</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    FileOutputStream foStream = openFileOutput(fileName, MODE_PRIVATE);</span><br><span class="line">                    <span class="keyword">byte</span>[] buffer = fileContent.getBytes();</span><br><span class="line">                    foStream.write(buffer);</span><br><span class="line">                    Toast.makeText(MainActivity.<span class="keyword">this</span>, <span class="string">"写入成功"</span>,Toast.LENGTH_SHORT).show();</span><br><span class="line">                    foStream.flush();</span><br><span class="line">                    foStream.close();</span><br><span class="line">                &#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        btnRead.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">                fileName = etName.getText().toString();</span><br><span class="line">                <span class="keyword">try</span>&#123;</span><br><span class="line">                    FileInputStream fiStream = openFileInput(fileName);</span><br><span class="line">                    <span class="keyword">int</span> len = fiStream.available();</span><br><span class="line">                    <span class="keyword">byte</span>[] buffer = <span class="keyword">new</span> <span class="keyword">byte</span>[len];</span><br><span class="line">                    fiStream.read(buffer);</span><br><span class="line">                    etContent.setText(<span class="keyword">new</span> String(buffer));</span><br><span class="line">                    Toast.makeText(MainActivity.<span class="keyword">this</span>, <span class="string">"读取成功"</span>,Toast.LENGTH_SHORT).show();</span><br><span class="line">                    fiStream.close();</span><br><span class="line">                &#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="activity-main-xml"><a href="#activity-main-xml" class="headerlink" title="activity_main.xml"></a>activity_main.xml</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">RelativeLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:tools</span>=<span class="string">"http://schemas.android.com/tools"</span> <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span> <span class="attr">android:paddingLeft</span>=<span class="string">"@dimen/activity_horizontal_margin"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:paddingRight</span>=<span class="string">"@dimen/activity_horizontal_margin"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:paddingTop</span>=<span class="string">"@dimen/activity_vertical_margin"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:paddingBottom</span>=<span class="string">"@dimen/activity_vertical_margin"</span> <span class="attr">tools:context</span>=<span class="string">".MainActivity"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">EditText</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/etName"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_alignParentTop</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_alignParentLeft</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_alignParentStart</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_alignParentRight</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_alignParentEnd</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:text</span>=<span class="string">"文件名"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">EditText</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/etContent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_below</span>=<span class="string">"@+id/etName"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_alignParentLeft</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_alignParentStart</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_alignParentRight</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_alignParentEnd</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:text</span>=<span class="string">"文件内容"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">Button</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:text</span>=<span class="string">"保存"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/btnWrite"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_alignTop</span>=<span class="string">"@+id/btnRead"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_toLeftOf</span>=<span class="string">"@+id/btnRead"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_toStartOf</span>=<span class="string">"@+id/btnRead"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">Button</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:text</span>=<span class="string">"读取"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/btnRead"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_below</span>=<span class="string">"@+id/etContent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_alignParentRight</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_alignParentEnd</span>=<span class="string">"true"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-12-07T12:43:26.825Z" itemprop="dateUpdated">2018-12-07 20:43:26</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2015/10/29/2015/2015-10-29-Android-Study-17-Data-Store-2-File/" target="_blank" rel="external">http://blog.duanxu.science/2015/10/29/2015/2015-10-29-Android-Study-17-Data-Store-2-File/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.duanxu.science">
+            <img src="/img/avatar.jpg" alt="Duan Xu">
+            Duan Xu
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DataStore/">DataStore</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/File/">File</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.science/2015/10/29/2015/2015-10-29-Android-Study-17-Data-Store-2-File/&title=《Android开发手记(17) 数据存储二 文件存储数据》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.science/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.science/2015/10/29/2015/2015-10-29-Android-Study-17-Data-Store-2-File/&title=《Android开发手记(17) 数据存储二 文件存储数据》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.science/2015/10/29/2015/2015-10-29-Android-Study-17-Data-Store-2-File/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android开发手记(17) 数据存储二 文件存储数据》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.science/2015/10/29/2015/2015-10-29-Android-Study-17-Data-Store-2-File/&via=http://blog.duanxu.science" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.science/2015/10/29/2015/2015-10-29-Android-Study-17-Data-Store-2-File/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2015/10/29/2015/2015-10-29-Android-Study-18-Data-Store-3-SQLite/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android开发手记(18) 数据存储三 SQLite存储数据</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2015/10/28/2015/2015-10-28-Android-Study-16-Data-Store-1-SharedPreferences/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android开发手记(16) 数据存储一 SharedPreferences</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Duan Xu &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.science/2015/10/29/2015/2015-10-29-Android-Study-17-Data-Store-2-File/&title=《Android开发手记(17) 数据存储二 文件存储数据》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.science/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.science/2015/10/29/2015/2015-10-29-Android-Study-17-Data-Store-2-File/&title=《Android开发手记(17) 数据存储二 文件存储数据》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.science/2015/10/29/2015/2015-10-29-Android-Study-17-Data-Store-2-File/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android开发手记(17) 数据存储二 文件存储数据》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.science/2015/10/29/2015/2015-10-29-Android-Study-17-Data-Store-2-File/&via=http://blog.duanxu.science" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.science/2015/10/29/2015/2015-10-29-Android-Study-17-Data-Store-2-File/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADNklEQVR42u3awW7qUAwE0P7/T7fS27bAjG94AnOyqgIKObcLyx5/fcXX97/r1t+z6/fzf39667du3bn4wsbGxn4TdvJyOfXksO4fQXsQ95+DjY2NvY89K1onVWN2iPnhPjBiY2NjfyT7/jfbgjQrackhYmNjY2MnhSEZDCWH1TYt7XtiY2Njfw67LUL3W5G2OLXHfT7wwsbGxt7EPg96X+fv/5pvY2NjY78A+/sJV9QGxIFuW1CjN8TGxsZexJ4Ft+0rPqM5SSKEByJsbGzsFew8vs2PYBYM58d6QQnExsbGXsrOV2TyOyeLO7NIIHp/bGxs7HXs2bJOO07Km4cEMFvouWBHCRsbG/uF2bM1l3x83zYqV33/ZjCAjY2NvYLdPnQ2lD8JDJLINokE6qAXGxsb+03YyZBoFv2eBMnt8/N3KGZj2NjY2G/LPlmvyQtVUg7zT/MwAxsbG3sfuw0G2vuzdqIdYOXjLWxsbOzd7Ha4f1VRaVd2TkKIOvTFxsbGfnl2PmRPql9ekGZlrI2Ni6KFjY2N/ebsk+F+XjaS0VLbOeUDLGxsbOzd7HaUPxv3z36xLXgXrOxgY2NjvyE7KVHt6KcdTp2v+CRPw8bGxt7Hni3utNT80zYwbsNpbGxs7H3s/BVn+Ges77QHejPTxsbGxl7BnkW/s3j4qtZltkJ0QeKNjY2N/ZLsa2PaWcyQl678QB/8S7CxsbEXsdvVnBkvB8wCgLZNwsbGxt7Evmo004bE+XioXdmJDgUbGxt7NTsvGHkwnC/TtGOpYQyMjY2NvYh98tLtECovP7Py2S76YGNjY29l56P2+wOmNu69H1ckd4oFHWxsbOyl7Px1kzvJiCo/jpM7dXOFjY2N/bbsfE0nj3jz4CFvhE6CYWxsbOx97FmByVdz2jYjH3LNjgkbGxt7H3sW4ubLPbNDnK3jzMowNjY29g72SdGaIU8akrZE3Tw+bGxs7HXstpGYLdDMfvEkvn2wrIONjY39kewckDces7an7bT+aEWwsbGxP4x9PuLPA4CT4lcv62BjY2OvYM+KRHtk7a/kY6y60GJjY2MvYp+HqXnDkBfI58UV2NjY2IvYP3+/84d5muctAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '失去灵魂(╯‵□′)╯︵┻━┻';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Blog | Duan Xu';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Android开发手记(14) 使用MediaPlayer播放mp3 | MAY THE FORCE BE WITH YOU</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Android,MediaPlayer">
+    <meta name="description" content="content{:toc}  1、获取MediaPlayer实例（1.1）可以直接通过new或者create方式：　　调用setDataSource和create的区别是，create时已经执行了MediaPlayer.prepare()，而setDataSource需要手动执行。 123MediaPlayer mPlayer = new MediaPlayer();mPlayer.setDat">
+<meta name="keywords" content="Android,MediaPlayer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android开发手记(14) 使用MediaPlayer播放mp3">
+<meta property="og:url" content="http://blog.duanxu.science/2015/10/22/2015/2015-10-22-Android-Study-14-MediaPlayer/index.html">
+<meta property="og:site_name" content="MAY THE FORCE BE WITH YOU">
+<meta property="og:description" content="content{:toc}  1、获取MediaPlayer实例（1.1）可以直接通过new或者create方式：　　调用setDataSource和create的区别是，create时已经执行了MediaPlayer.prepare()，而setDataSource需要手动执行。 123MediaPlayer mPlayer = new MediaPlayer();mPlayer.setDat">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-07T12:42:20.603Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android开发手记(14) 使用MediaPlayer播放mp3">
+<meta name="twitter:description" content="content{:toc}  1、获取MediaPlayer实例（1.1）可以直接通过new或者create方式：　　调用setDataSource和create的区别是，create时已经执行了MediaPlayer.prepare()，而setDataSource需要手动执行。 123MediaPlayer mPlayer = new MediaPlayer();mPlayer.setDat">
+    
+        <link rel="alternate" type="application/atom+xml" title="MAY THE FORCE BE WITH YOU" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon_64.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Duan Xu</h5>
+          <a href="mailto:duanxu@outlook.com" title="duanxu@outlook.com" class="mail">duanxu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/doodle777" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/2886472974" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android开发手记(14) 使用MediaPlayer播放mp3</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android开发手记(14) 使用MediaPlayer播放mp3</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2015-10-22T02:28:00.000Z" itemprop="datePublished" class="page-time">
+  2015-10-22
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、获取MediaPlayer实例"><span class="post-toc-number">1.</span> <span class="post-toc-text">1、获取MediaPlayer实例</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#（1-1）可以直接通过new或者create方式："><span class="post-toc-number">2.</span> <span class="post-toc-text">（1.1）可以直接通过new或者create方式：</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#（1-2）获取用户事先导入到-res的资源文件"><span class="post-toc-number">3.</span> <span class="post-toc-text">（1.2）获取用户事先导入到/res的资源文件</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#（1-3）获取存储在SD卡或者其他路径下的文件"><span class="post-toc-number">4.</span> <span class="post-toc-text">（1.3）获取存储在SD卡或者其他路径下的文件</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#（1-4）获取网络媒体文件"><span class="post-toc-number">5.</span> <span class="post-toc-text">（1.4）获取网络媒体文件</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2、播放、暂停"><span class="post-toc-number">6.</span> <span class="post-toc-text">2、播放、暂停</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3、停止播放"><span class="post-toc-number">7.</span> <span class="post-toc-text">3、停止播放</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4、通过SeekBar控制播放进度"><span class="post-toc-number">8.</span> <span class="post-toc-text">4、通过SeekBar控制播放进度</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5、将播放时间反馈给SeekBar"><span class="post-toc-number">9.</span> <span class="post-toc-text">5、将播放时间反馈给SeekBar</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#6、小结"><span class="post-toc-number">10.</span> <span class="post-toc-text">6、小结</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#android-Mediaplayer各种属性和方法简单介绍"><span class="post-toc-number">11.</span> <span class="post-toc-text">android Mediaplayer各种属性和方法简单介绍</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#7、完整代码"><span class="post-toc-number">12.</span> <span class="post-toc-text">7、完整代码</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-2015/2015-10-22-Android-Study-14-MediaPlayer" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android开发手记(14) 使用MediaPlayer播放mp3</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2015-10-22 10:28:00" datetime="2015-10-22T02:28:00.000Z" itemprop="datePublished">2015-10-22</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <ul>
+<li>content<br>{:toc}</li>
+</ul>
+<h4 id="1、获取MediaPlayer实例"><a href="#1、获取MediaPlayer实例" class="headerlink" title="1、获取MediaPlayer实例"></a><strong>1、获取MediaPlayer实例</strong></h4><h4 id="（1-1）可以直接通过new或者create方式："><a href="#（1-1）可以直接通过new或者create方式：" class="headerlink" title="（1.1）可以直接通过new或者create方式："></a>（1.1）可以直接通过new或者create方式：</h4><p>　　调用setDataSource和create的区别是，create时已经执行了MediaPlayer.prepare()，而setDataSource需要手动执行。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MediaPlayer mPlayer = <span class="keyword">new</span> MediaPlayer();</span><br><span class="line">mPlayer.setDataSource();</span><br><span class="line">MediaPlayer mPlayer = MediaPlayer.create();</span><br></pre></td></tr></table></figure>
+<h4 id="（1-2）获取用户事先导入到-res的资源文件"><a href="#（1-2）获取用户事先导入到-res的资源文件" class="headerlink" title="（1.2）获取用户事先导入到/res的资源文件"></a>（1.2）获取用户事先导入到/res的资源文件</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> MediaPlayer mPlayer;</span><br><span class="line">mPlayer = MediaPlayer.create(<span class="keyword">this</span>, R.raw.leessang);</span><br></pre></td></tr></table></figure>
+<h4 id="（1-3）获取存储在SD卡或者其他路径下的文件"><a href="#（1-3）获取存储在SD卡或者其他路径下的文件" class="headerlink" title="（1.3）获取存储在SD卡或者其他路径下的文件"></a>（1.3）获取存储在SD卡或者其他路径下的文件</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MediaPlayer mPlayer = <span class="keyword">new</span> MediaPlayer();</span><br><span class="line">mPlayer.setDataSource(<span class="string">"/sdcard/leesang.mp3"</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="（1-4）获取网络媒体文件"><a href="#（1-4）获取网络媒体文件" class="headerlink" title="（1.4）获取网络媒体文件"></a>（1.4）获取网络媒体文件</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MediaPlayer mPlayer = <span class="keyword">new</span> MediaPlayer();</span><br><span class="line">mPlayer.setDataSource(<span class="string">"http://www.xxxx.com/yyyy.mp3"</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="2、播放、暂停"><a href="#2、播放、暂停" class="headerlink" title="2、播放、暂停"></a><strong>2、播放、暂停</strong></h4><p>　　对于通过create调用的媒体，无需在播放时调用prepare方法，而对于通过new创建的媒体，则需要调用一次prepare方法才可完成start的启动。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">        btnStart.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="keyword">if</span> (mPlayer != <span class="keyword">null</span>) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (mPlayer.isPlaying()) &#123;</span><br><span class="line">                            mPlayer.pause();</span><br><span class="line">                            btnStart.setText(<span class="string">"播放"</span>);</span><br><span class="line">                        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"><span class="comment">//                          mPlayer.prepare();</span></span><br><span class="line">                            mPlayer.start();</span><br><span class="line">                            btnStart.setText(<span class="string">"暂停"</span>);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="3、停止播放"><a href="#3、停止播放" class="headerlink" title="3、停止播放"></a><strong>3、停止播放</strong></h4><p>　　当Mediaplayer对象在播放时，可以进行暂停和停止操作，pause方法暂停播放，stop方法停止播放。处于暂停暂停时可通过start方法恢复播放，但是处于停止状态时则必须先调用prepare方法使其处于准备状态，再调用start方法。 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">btnStop.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (mPlayer != <span class="keyword">null</span>) &#123;</span><br><span class="line">                mPlayer.stop();</span><br><span class="line">                seekBar.setProgress(mPlayer.getCurrentPosition());</span><br><span class="line">                btnStart.setText(<span class="string">"播放"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="4、通过SeekBar控制播放进度"><a href="#4、通过SeekBar控制播放进度" class="headerlink" title="4、通过SeekBar控制播放进度"></a><strong>4、通过SeekBar控制播放进度</strong></h4><p>　　通过MediaPlayer.getDuration()可以得到媒体文件的长度（单位毫秒），可以将此作为SeekBar的最大值。</p>
+<p>　　通过MediaPlayer.seekTo(int i)可以定位媒体文件的任意位置（单位毫秒），mPlayer.seekTo(seekBar.getProgress()); </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">seekBar.setMax(mPlayer.getDuration());</span><br><span class="line">seekBar.setOnSeekBarChangeListener(<span class="keyword">new</span> SeekBar.OnSeekBarChangeListener() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onProgressChanged</span><span class="params">(SeekBar seekBar, <span class="keyword">int</span> i, <span class="keyword">boolean</span> b)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStartTrackingTouch</span><span class="params">(SeekBar seekBar)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStopTrackingTouch</span><span class="params">(SeekBar seekBar)</span> </span>&#123;</span><br><span class="line">        mPlayer.seekTo(seekBar.getProgress());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="5、将播放时间反馈给SeekBar"><a href="#5、将播放时间反馈给SeekBar" class="headerlink" title="5、将播放时间反馈给SeekBar"></a><strong>5、将播放时间反馈给SeekBar</strong></h4><p>　　由于Android没有提供播放时间反馈方法，所以只能使用定时器或者线程来进行播放反馈。即每隔一定时间来检查播放进度，按照此进度来调节SeekBar。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mTimer = <span class="keyword">new</span> Timer();</span><br><span class="line">mTimerTask = <span class="keyword">new</span> TimerTask() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        seekBar.setProgress(mPlayer.getCurrentPosition());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">mTimer.schedule(mTimerTask, <span class="number">0</span>, <span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="6、小结"><a href="#6、小结" class="headerlink" title="6、小结"></a><strong>6、小结</strong></h4><p>　　此处转载自<a href="http://www.cnblogs.com/dyllove98/p/3192090.html" target="_blank" rel="noopener">博客园</a></p>
+<blockquote>
+<h4 id="android-Mediaplayer各种属性和方法简单介绍"><a href="#android-Mediaplayer各种属性和方法简单介绍" class="headerlink" title="android Mediaplayer各种属性和方法简单介绍"></a>android Mediaplayer各种属性和方法简单介绍</h4><p>（1） 当一个MediaPlayer对象被创建或者调用 reset() 方法之后，它处于空闲状态，调用 release() 方法后处于结束状态<br>　　　　1、一个MediaPlayer对象调用了 reset() 方法后，再调用其它方法可能会触发 OnErrorListener.onError() 事件，未调用 reset() 方法则不会触发<br>　　　　2、当Mediaplayer对象不再被使用时，最好调用 release() 方法对其进行释放，使其处于结束状态，此时它不能被使用<br>　　　　3、Mediaplayer对象被创建时（调用构造方法）处于空闲状态，若使用 create() 方法创建后则处于准备状态。<br>（2） 一般情况下，一些常用的播放控制操作可能因为音频、视频的格式不被支持或者质量较差以及流超时，也有可能由于开发者的疏忽使得Mediaplayer对象处于无效状态等而导致错误。此时可通过注册setOnErrorListener方法实现监控。如果发生了错误，Mediaplayer对象将处于多雾状态，可以使用 reset() 方法来恢复错误。<br>（3） 任何Mediaplayer对象都必须先处于准备状态，然后才开始播放<br>（4） 要开始播放Mediaplayer对象都必须成功调用 start() 方法，可通过 isPlaying() 方法来检测是否正在播放<br>（5） 当Mediaplayer对象在播放时，可以进行暂停和停止操作， pause() 方法暂停播放， stop() 方法停止播放。处于暂停暂停时可通过 start() 方法恢复播放，但是处于停止状态时则必须先调用 prepare() 方法使其处于准备状态，再调用 start() 方法。   </p>
+</blockquote>
+<h4 id="7、完整代码"><a href="#7、完整代码" class="headerlink" title="7、完整代码"></a><strong>7、完整代码</strong></h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.media.MediaPlayer;</span><br><span class="line"><span class="keyword">import</span> android.support.v7.app.AppCompatActivity;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"><span class="keyword">import</span> android.widget.Button;</span><br><span class="line"><span class="keyword">import</span> android.widget.SeekBar;</span><br><span class="line"><span class="keyword">import</span> android.widget.TextView;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Timer;</span><br><span class="line"><span class="keyword">import</span> java.util.TimerTask;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Button btnStart;</span><br><span class="line">    <span class="keyword">private</span> Button btnStop;</span><br><span class="line">    <span class="keyword">private</span> TextView textView;</span><br><span class="line">    <span class="keyword">private</span> MediaPlayer mPlayer;</span><br><span class="line">    <span class="keyword">private</span> SeekBar seekBar;</span><br><span class="line">    <span class="keyword">private</span> Timer mTimer;</span><br><span class="line">    <span class="keyword">private</span> TimerTask mTimerTask;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">        mPlayer = MediaPlayer.create(<span class="keyword">this</span>, R.raw.leessang);</span><br><span class="line">        textView = (TextView) findViewById(R.id.textView);</span><br><span class="line">        textView.setText(<span class="string">"MP3播放器"</span>);</span><br><span class="line">        btnStart = (Button) findViewById(R.id.btnStart);</span><br><span class="line">        btnStop = (Button) findViewById(R.id.btnStop);</span><br><span class="line">        seekBar = (SeekBar) findViewById(R.id.seekBar);</span><br><span class="line"></span><br><span class="line">        mPlayer.setOnCompletionListener(<span class="keyword">new</span> MediaPlayer.OnCompletionListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCompletion</span><span class="params">(MediaPlayer mediaPlayer)</span> </span>&#123;</span><br><span class="line">                btnStart.setText(<span class="string">"播放"</span>);</span><br><span class="line">                mPlayer.seekTo(<span class="number">0</span>);</span><br><span class="line">                seekBar.setProgress(<span class="number">0</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        mTimer = <span class="keyword">new</span> Timer();</span><br><span class="line">        mTimerTask = <span class="keyword">new</span> TimerTask() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                seekBar.setProgress(mPlayer.getCurrentPosition());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        mTimer.schedule(mTimerTask, <span class="number">0</span>, <span class="number">10</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        seekBar.setMax(mPlayer.getDuration());</span><br><span class="line">        seekBar.setOnSeekBarChangeListener(<span class="keyword">new</span> SeekBar.OnSeekBarChangeListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onProgressChanged</span><span class="params">(SeekBar seekBar, <span class="keyword">int</span> i, <span class="keyword">boolean</span> b)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStartTrackingTouch</span><span class="params">(SeekBar seekBar)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStopTrackingTouch</span><span class="params">(SeekBar seekBar)</span> </span>&#123;</span><br><span class="line">                mPlayer.seekTo(seekBar.getProgress());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        btnStart.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="keyword">if</span> (mPlayer != <span class="keyword">null</span>) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (mPlayer.isPlaying()) &#123;</span><br><span class="line">                            mPlayer.pause();</span><br><span class="line">                            btnStart.setText(<span class="string">"播放"</span>);</span><br><span class="line">                        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"><span class="comment">//                            mPlayer.prepare();</span></span><br><span class="line">                            mPlayer.start();</span><br><span class="line">                            btnStart.setText(<span class="string">"暂停"</span>);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        btnStop.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="keyword">if</span> (mPlayer != <span class="keyword">null</span>) &#123;</span><br><span class="line">                        mPlayer.stop();</span><br><span class="line">                        seekBar.setProgress(mPlayer.getCurrentPosition());</span><br><span class="line">                        btnStart.setText(<span class="string">"播放"</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-12-07T12:42:20.603Z" itemprop="dateUpdated">2018-12-07 20:42:20</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2015/10/22/2015/2015-10-22-Android-Study-14-MediaPlayer/" target="_blank" rel="external">http://blog.duanxu.science/2015/10/22/2015/2015-10-22-Android-Study-14-MediaPlayer/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.duanxu.science">
+            <img src="/img/avatar.jpg" alt="Duan Xu">
+            Duan Xu
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MediaPlayer/">MediaPlayer</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.science/2015/10/22/2015/2015-10-22-Android-Study-14-MediaPlayer/&title=《Android开发手记(14) 使用MediaPlayer播放mp3》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.science/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.science/2015/10/22/2015/2015-10-22-Android-Study-14-MediaPlayer/&title=《Android开发手记(14) 使用MediaPlayer播放mp3》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.science/2015/10/22/2015/2015-10-22-Android-Study-14-MediaPlayer/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android开发手记(14) 使用MediaPlayer播放mp3》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.science/2015/10/22/2015/2015-10-22-Android-Study-14-MediaPlayer/&via=http://blog.duanxu.science" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.science/2015/10/22/2015/2015-10-22-Android-Study-14-MediaPlayer/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2015/10/26/2015/2015-10-26-Android-Study-15-Phone-and-Message/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android开发手记(15) 拨打电话和收发短信</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2015/10/20/2015/2015-10-20-Android-Study-13-AlertDialog/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android开发手记(13) 几种Alertdialog的使用</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Duan Xu &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.science/2015/10/22/2015/2015-10-22-Android-Study-14-MediaPlayer/&title=《Android开发手记(14) 使用MediaPlayer播放mp3》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.science/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.science/2015/10/22/2015/2015-10-22-Android-Study-14-MediaPlayer/&title=《Android开发手记(14) 使用MediaPlayer播放mp3》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.science/2015/10/22/2015/2015-10-22-Android-Study-14-MediaPlayer/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android开发手记(14) 使用MediaPlayer播放mp3》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.science/2015/10/22/2015/2015-10-22-Android-Study-14-MediaPlayer/&via=http://blog.duanxu.science" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.science/2015/10/22/2015/2015-10-22-Android-Study-14-MediaPlayer/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACt0lEQVR42u3aQW7jMAwF0N7/0tPNLAoEVT5JMTCK51XhJJaeCkg0ya+v+Pr3cr3eT+78vP/z0/OI529euPDw8PDGU69O8XX483PO4+bU6Al4eHh4a7xkusminH+bHA/5cp/njIeHh/c03pl9jm+rITIeHh7e3+AloXD1t8mBgYeHh/ccXjVEzlMPzWkVkx0Xci14eHh4MS8Pap/z90p9Dw8PD29cVU9K/pM2giTp0Jvn/yfg4eHhLfCq4Wy1lepWWWsyTzw8PLw9Xq816m5EnzcZFGaCh4eHt8DLN/peHiAPpvPlLi8uHh4e3iVeUrjKw+VqsSpJN+RL/CaYxsPDw7vKq778J0F2NXHQa9t6o8DDw8Nb4OVFpkmlfhIWT5q98PDw8D7JOw9W3ZR7wXT1MHjzz8DDw8Nb4EWv94Opz8PrSYsYHh4e3id5SVp2/oRqivZC+wIeHh5ei1fdspPUaq9dYFIq+xWJh4eHt8Cbb76TAn+1WWGUbsbDw8O7xEu28rzINInoq6NEhxAeHh7eGm9+SFTD6Gro3Etz4OHh4W3zemFrtSGgejwkSxnlWvDw8PCu8vJtvTr1CWzSxNDMK+Ph4eHFPVT5djxP2k7KZr0gGw8PD2+bNyli9RqteimPpAUBDw8Pb493K4Hb61zoJYiTCw8PD2+Pl2+4yafV9oIk0dA7ovDw8PA+w0uGz4PpJFjvhdr5AYaHh4e3x6uWwSaJjFsHQ3Rc4eHh4V3l9V7v82A6aRSYlNPePBkPDw9vgdd77Z8gq01XUdAcLxAeHh7eLd7kMMifkwfQ1TREoV0ADw8P7yqvOsyZVA2INxITeHh4eM/k9ZK5kxRGHl7j4eHhPY1X3b6rR0KvXRUPDw/vk7wkGZHfrwbT+Z1y6QsPDw9vgTd5o5/U1m61AlxIXuDh4eGl434DP6DFOmGNs9IAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '失去灵魂(╯‵□′)╯︵┻━┻';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Blog | Duan Xu';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

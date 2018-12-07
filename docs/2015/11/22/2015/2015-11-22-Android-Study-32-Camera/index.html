@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Android开发手记(32) 使用摄像头拍照 | MAY THE FORCE BE WITH YOU</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Android,Camera">
+    <meta name="description" content="content{:toc}  　　在Android中，使用摄像头拍照一般有两种方法， 一种是调用系统自带的Camera，另一种是自己写一个摄像的界面。 　　我们要添加如下权限： 12&amp;lt;uses-permission android:name=&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot;/&amp;gt;&amp;lt;uses-permission android">
+<meta name="keywords" content="Android,Camera">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android开发手记(32) 使用摄像头拍照">
+<meta property="og:url" content="http://blog.duanxu.science/2015/11/22/2015/2015-11-22-Android-Study-32-Camera/index.html">
+<meta property="og:site_name" content="MAY THE FORCE BE WITH YOU">
+<meta property="og:description" content="content{:toc}  　　在Android中，使用摄像头拍照一般有两种方法， 一种是调用系统自带的Camera，另一种是自己写一个摄像的界面。 　　我们要添加如下权限： 12&amp;lt;uses-permission android:name=&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot;/&amp;gt;&amp;lt;uses-permission android">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-07T12:47:28.988Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android开发手记(32) 使用摄像头拍照">
+<meta name="twitter:description" content="content{:toc}  　　在Android中，使用摄像头拍照一般有两种方法， 一种是调用系统自带的Camera，另一种是自己写一个摄像的界面。 　　我们要添加如下权限： 12&amp;lt;uses-permission android:name=&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot;/&amp;gt;&amp;lt;uses-permission android">
+    
+        <link rel="alternate" type="application/atom+xml" title="MAY THE FORCE BE WITH YOU" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon_64.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Duan Xu</h5>
+          <a href="mailto:duanxu@outlook.com" title="duanxu@outlook.com" class="mail">duanxu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/doodle777" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/2886472974" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android开发手记(32) 使用摄像头拍照</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android开发手记(32) 使用摄像头拍照</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2015-11-22T14:27:00.000Z" itemprop="datePublished" class="page-time">
+  2015-11-22
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、调用系统Camera"><span class="post-toc-number">1.</span> <span class="post-toc-text">1、调用系统Camera</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2、自己写一个摄像界面"><span class="post-toc-number">2.</span> <span class="post-toc-text">2、自己写一个摄像界面</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-2015/2015-11-22-Android-Study-32-Camera" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android开发手记(32) 使用摄像头拍照</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2015-11-22 22:27:00" datetime="2015-11-22T14:27:00.000Z" itemprop="datePublished">2015-11-22</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <ul>
+<li>content<br>{:toc}</li>
+</ul>
+<p>　　在Android中，使用摄像头拍照一般有两种方法， 一种是调用系统自带的Camera，另一种是自己写一个摄像的界面。</p>
+<p>　　我们要添加如下权限：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.WRITE_EXTERNAL_STORAGE"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.CAMERA"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="1、调用系统Camera"><a href="#1、调用系统Camera" class="headerlink" title="1、调用系统Camera"></a><strong>1、调用系统Camera</strong></h4><p>　　调用系统自带的Camera主要的步骤为：</p>
+<p>　　（1）构造图片存储的路径名</p>
+<p>　　（2）使用Intent启动Camera Activity</p>
+<p>　　（3）将拍摄的图片写入到文件</p>
+<p>　　（4）将图片显示在MainActivity中</p>
+<p>　　首先，构造图片名：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">File filePath = <span class="keyword">new</span> File(Environment.getExternalStorageDirectory(), <span class="string">"myCamera"</span>);</span><br><span class="line"><span class="keyword">if</span>(!filePath.exists())&#123;</span><br><span class="line">    filePath.mkdirs();</span><br><span class="line">&#125;</span><br><span class="line">fileName = <span class="keyword">new</span> File(filePath, System.currentTimeMillis() + <span class="string">".jpg"</span>);</span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!fileName.exists())&#123;</span><br><span class="line">        fileName.createNewFile();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　然后，启动Camera Activity：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// intent用来启动系统自带的Camera</span></span><br><span class="line">  Intent intent = <span class="keyword">new</span> Intent(MediaStore.ACTION_IMAGE_CAPTURE);</span><br><span class="line"><span class="comment">// 将系统Camera的拍摄结果写入到文件</span></span><br><span class="line">  intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(fileName));</span><br><span class="line"><span class="comment">// 启动intent对应的Activity，返回默认消息</span></span><br><span class="line">  startActivityForResult(intent, Activity.DEFAULT_KEYS_DIALER);</span><br></pre></td></tr></table></figure>
+<p>　　最后，将图片显示在MainActivity内。这时，我们通过重载onActivityResult()方法来获取Camera返回的消息。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onActivityResult</span><span class="params">(<span class="keyword">int</span> requestCode, <span class="keyword">int</span> resultCode, Intent data)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(requestCode == Activity.DEFAULT_KEYS_DIALER)&#123;</span><br><span class="line">        <span class="comment">// MainActivity接收Camera返回的消息，然后将已经写入的图片显示在ImageView内</span></span><br><span class="line">        imageView.setImageURI(Uri.fromFile(fileName));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　完整代码为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.app.Activity;</span><br><span class="line"><span class="keyword">import</span> android.content.Intent;</span><br><span class="line"><span class="keyword">import</span> android.net.Uri;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.os.Environment;</span><br><span class="line"><span class="keyword">import</span> android.provider.MediaStore;</span><br><span class="line"><span class="keyword">import</span> android.util.Log;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"><span class="keyword">import</span> android.widget.Button;</span><br><span class="line"><span class="keyword">import</span> android.widget.ImageView;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">private</span> File fileName = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">private</span> Button button;</span><br><span class="line">    <span class="keyword">private</span> ImageView imageView;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"> </span><br><span class="line">        button = (Button)findViewById(R.id.button);</span><br><span class="line">        imageView = (ImageView)findViewById(R.id.imageView);</span><br><span class="line">        button.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">                File filePath = <span class="keyword">new</span> File(Environment.getExternalStorageDirectory(), <span class="string">"myCamera"</span>);</span><br><span class="line">                <span class="keyword">if</span>(!filePath.exists())&#123;</span><br><span class="line">                    filePath.mkdirs();</span><br><span class="line">                &#125;</span><br><span class="line">                fileName = <span class="keyword">new</span> File(filePath, System.currentTimeMillis() + <span class="string">".jpg"</span>);</span><br><span class="line">                <span class="keyword">try</span>&#123;</span><br><span class="line">                    <span class="keyword">if</span>(!fileName.exists())&#123;</span><br><span class="line">                        fileName.createNewFile();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line"> </span><br><span class="line">                <span class="comment">// intent用来启动系统自带的Camera</span></span><br><span class="line">                Intent intent = <span class="keyword">new</span> Intent(MediaStore.ACTION_IMAGE_CAPTURE);</span><br><span class="line">                <span class="comment">// 将系统Camera的拍摄结果写入到文件</span></span><br><span class="line">                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(fileName));</span><br><span class="line">                <span class="comment">// 启动intent对应的Activity，返回默认消息</span></span><br><span class="line">                startActivityForResult(intent, Activity.DEFAULT_KEYS_DIALER);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"> </span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onActivityResult</span><span class="params">(<span class="keyword">int</span> requestCode, <span class="keyword">int</span> resultCode, Intent data)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(requestCode == Activity.DEFAULT_KEYS_DIALER)&#123;</span><br><span class="line">            <span class="comment">// MainActivity接收Camera返回的消息，然后将已经写入的图片显示在ImageView内</span></span><br><span class="line">            imageView.setImageURI(Uri.fromFile(fileName));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2、自己写一个摄像界面"><a href="#2、自己写一个摄像界面" class="headerlink" title="2、自己写一个摄像界面"></a><strong>2、自己写一个摄像界面</strong></h4><p>　　自己写摄像的界面，主要应用了SurfaceView来显示摄像机的画面。然后通过一个Button来保存当前的画面。</p>
+<p>　　同样的，我们需要添加camera和SDCard权限：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.WRITE_EXTERNAL_STORAGE"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.CAMERA"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>　　首先，我们初始化这个SurfaceView，为这个SurfaceView添加一个对应的Callback即可：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> SurfaceView surfaceView;</span><br><span class="line"><span class="keyword">private</span> SurfaceHolder.Callback callback;</span><br><span class="line">surfaceView = (SurfaceView)findViewById(R.id.surfaceView);</span><br><span class="line">callback = <span class="keyword">new</span> SurfaceHolder.Callback()&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">surfaceCreated</span><span class="params">(SurfaceHolder holder)</span> </span>&#123;</span><br><span class="line">        startCamera();   <span class="comment">// 用于启动摄像头</span></span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">surfaceChanged</span><span class="params">(SurfaceHolder holder, <span class="keyword">int</span> format, <span class="keyword">int</span> width, <span class="keyword">int</span> height)</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">surfaceDestroyed</span><span class="params">(SurfaceHolder holder)</span> </span>&#123;</span><br><span class="line">        stopCamera();    <span class="comment">// 用于关闭摄像头</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">surfaceView.getHolder().addCallback(callback); <span class="comment">// 将Callback绑定到SurfaceView</span></span><br></pre></td></tr></table></figure>
+<p>　　在启动摄像头的时候，首先打开摄像头连接，然后将其图像输出到SurfaceView上，然后启动摄像头预览即可在SurfaceView上显示摄像头的画面，这里的画面和实际画面相差有90度，所以我们需要将图像旋转90度之后才可以和拍摄的物体方向一致。</p>
+<p>　　在关闭摄像头时，只要停止预览，然后释放摄像头资源即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">startCamera</span><span class="params">()</span></span>&#123;</span><br><span class="line">    camera = Camera.open();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        camera.setPreviewDisplay(surfaceView.getHolder());</span><br><span class="line">        camera.setDisplayOrientation(<span class="number">90</span>);</span><br><span class="line">        camera.startPreview();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stopCamera</span><span class="params">()</span></span>&#123;</span><br><span class="line">    camera.stopPreview();</span><br><span class="line">    camera.release();</span><br><span class="line">    camera = <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　最后，是将拍摄到的图片保存到SDCard，我们单击Button来拍摄图片，调用Camera.takePicture()方法，其原型为：</p>
+<blockquote>
+<p>   /**  </p>
+<pre><code>* Equivalent to takePicture(shutter, raw, null, jpeg).  
+*  
+* @see #takePicture(ShutterCallback, PictureCallback, PictureCallback, PictureCallback)  
+*/  
+</code></pre><p>   public final void takePicture(ShutterCallback shutter, PictureCallback raw, PictureCallback jpeg) {<br>       takePicture(shutter, raw, null, jpeg);<br>   }  </p>
+</blockquote>
+<p>　　其中，shutter为按快门瞬间的回调，就是说按快门瞬间会调用ShutterCallback.onShutter()方法。raw是未压缩的图像的回调，即处理图像原始数据的时候会调用PictureCallback.onPictureTaken()方法。jpeg为处理JPEG图片时候的回调，即我们需要将图像数据按照jpg格式保存的时候会调用这个方法，PictureCallback.onPIctureTaken()。这里我们就调用了这个方法，从而将jpg图片存储到SDCard上。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">button.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">      <span class="meta">@Override</span></span><br><span class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">          camera.takePicture(<span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">new</span> Camera.PictureCallback() &#123;</span><br><span class="line">              <span class="meta">@Override</span></span><br><span class="line">              <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPictureTaken</span><span class="params">(<span class="keyword">byte</span>[] data, Camera camera)</span> </span>&#123;</span><br><span class="line">                  <span class="keyword">try</span> &#123;</span><br><span class="line">                      File filePath = <span class="keyword">new</span> File(Environment.getExternalStorageDirectory(), <span class="string">"myCamera"</span>);</span><br><span class="line">                      <span class="keyword">if</span>(!filePath.exists()) &#123;</span><br><span class="line">                          filePath.mkdirs();</span><br><span class="line">                      &#125;</span><br><span class="line">                      File fileName = <span class="keyword">new</span> File(filePath, System.currentTimeMillis() + <span class="string">".jpg"</span>);</span><br><span class="line">                      fileName.createNewFile();</span><br><span class="line">                      FileOutputStream fos = <span class="keyword">new</span> FileOutputStream(fileName);</span><br><span class="line">                      fos.write(data);</span><br><span class="line">                      fos.flush();</span><br><span class="line">                      fos.close();</span><br><span class="line">                  &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                      e.printStackTrace();</span><br><span class="line">                  &#125;</span><br><span class="line"> </span><br><span class="line">              &#125;</span><br><span class="line">          &#125;);</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<p>　　这样，我们便实现了用SurfaceView预览摄像头画面，点击Button将当前预览保存到SDCard中。</p>
+<p>　　完整代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.app.Activity;</span><br><span class="line"><span class="keyword">import</span> android.hardware.Camera;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.os.Environment;</span><br><span class="line"><span class="keyword">import</span> android.view.SurfaceHolder;</span><br><span class="line"><span class="keyword">import</span> android.view.SurfaceView;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"><span class="keyword">import</span> android.widget.Button;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">private</span> Camera camera;</span><br><span class="line">    <span class="keyword">private</span> Button button;</span><br><span class="line">    <span class="keyword">private</span> SurfaceView surfaceView;</span><br><span class="line">    <span class="keyword">private</span> SurfaceHolder.Callback callback;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"> </span><br><span class="line">        button = (Button)findViewById(R.id.button);</span><br><span class="line">        surfaceView = (SurfaceView)findViewById(R.id.surfaceView);</span><br><span class="line">        callback = <span class="keyword">new</span> SurfaceHolder.Callback()&#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">surfaceCreated</span><span class="params">(SurfaceHolder holder)</span> </span>&#123;</span><br><span class="line">                startCamera();</span><br><span class="line">            &#125;</span><br><span class="line"> </span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">surfaceChanged</span><span class="params">(SurfaceHolder holder, <span class="keyword">int</span> format, <span class="keyword">int</span> width, <span class="keyword">int</span> height)</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">            &#125;</span><br><span class="line"> </span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">surfaceDestroyed</span><span class="params">(SurfaceHolder holder)</span> </span>&#123;</span><br><span class="line">                stopCamera();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        surfaceView.getHolder().addCallback(callback);</span><br><span class="line"> </span><br><span class="line">        button.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">                camera.takePicture(<span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">new</span> Camera.PictureCallback() &#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPictureTaken</span><span class="params">(<span class="keyword">byte</span>[] data, Camera camera)</span> </span>&#123;</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            File filePath = <span class="keyword">new</span> File(Environment.getExternalStorageDirectory(), <span class="string">"myCamera"</span>);</span><br><span class="line">                            <span class="keyword">if</span>(!filePath.exists()) &#123;</span><br><span class="line">                                filePath.mkdirs();</span><br><span class="line">                            &#125;</span><br><span class="line">                            File fileName = <span class="keyword">new</span> File(filePath, System.currentTimeMillis() + <span class="string">".jpg"</span>);</span><br><span class="line">                            fileName.createNewFile();</span><br><span class="line">                            FileOutputStream fos = <span class="keyword">new</span> FileOutputStream(fileName);</span><br><span class="line">                            fos.write(data);</span><br><span class="line">                            fos.flush();</span><br><span class="line">                            fos.close();</span><br><span class="line">                        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                            e.printStackTrace();</span><br><span class="line">                        &#125;</span><br><span class="line"> </span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"> </span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">startCamera</span><span class="params">()</span></span>&#123;</span><br><span class="line">        camera = Camera.open();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            camera.setPreviewDisplay(surfaceView.getHolder());</span><br><span class="line">            camera.setDisplayOrientation(<span class="number">90</span>);</span><br><span class="line">            camera.startPreview();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stopCamera</span><span class="params">()</span></span>&#123;</span><br><span class="line">        camera.stopPreview();</span><br><span class="line">        camera.release();</span><br><span class="line">        camera = <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">     </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-12-07T12:47:28.988Z" itemprop="dateUpdated">2018-12-07 20:47:28</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2015/11/22/2015/2015-11-22-Android-Study-32-Camera/" target="_blank" rel="external">http://blog.duanxu.science/2015/11/22/2015/2015-11-22-Android-Study-32-Camera/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.duanxu.science">
+            <img src="/img/avatar.jpg" alt="Duan Xu">
+            Duan Xu
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Camera/">Camera</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.science/2015/11/22/2015/2015-11-22-Android-Study-32-Camera/&title=《Android开发手记(32) 使用摄像头拍照》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.science/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.science/2015/11/22/2015/2015-11-22-Android-Study-32-Camera/&title=《Android开发手记(32) 使用摄像头拍照》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.science/2015/11/22/2015/2015-11-22-Android-Study-32-Camera/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android开发手记(32) 使用摄像头拍照》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.science/2015/11/22/2015/2015-11-22-Android-Study-32-Camera/&via=http://blog.duanxu.science" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.science/2015/11/22/2015/2015-11-22-Android-Study-32-Camera/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2016/04/24/2016/2016-04-25-LaTeX-MathEquation/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">LaTeX 中插入数学公式</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2015/11/22/2015/2015-11-22-Android-Study-31-MediaRecorder/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android开发手记(31) 使用MediaRecorder录音</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Duan Xu &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.science/2015/11/22/2015/2015-11-22-Android-Study-32-Camera/&title=《Android开发手记(32) 使用摄像头拍照》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.science/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.science/2015/11/22/2015/2015-11-22-Android-Study-32-Camera/&title=《Android开发手记(32) 使用摄像头拍照》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.science/2015/11/22/2015/2015-11-22-Android-Study-32-Camera/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android开发手记(32) 使用摄像头拍照》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.science/2015/11/22/2015/2015-11-22-Android-Study-32-Camera/&via=http://blog.duanxu.science" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.science/2015/11/22/2015/2015-11-22-Android-Study-32-Camera/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACs0lEQVR42u3a0WrjQAwF0P7/T2dhnwrF8ZU0clo4fjLJ2J7jwEjR6OsrPl7/j+/n3z/5+Xky5v39r+75tXHg4eHhtab+fnLvH3k1PpnWq3jkc8DDw8Pb5iXB4P3Ue5PIQ8jV+Y0FDw8P76O8nJSEgeTpeHh4eH+ddzW+VzKoBgw8PDy838abPyxBJsl08uJWai14eHh4Ma+3AfbZ8/X9PTw8PLxDm0/Jln/v2t7dbp6Fh4eHt8DLU9tJQSEJNtWWrELAwMPDwzvKSwqyk4aAXomhWsK4fB14eHh4a7xJ60Dv20nAyFsN8PDw8PZ41SU4YSfp8qltrXJKjYeHh7fMyxnV4kJhiS/WFvDw8PCe4VUX5XzMPMzk317WWvDw8PAO8c62ZFUfmRdn8y26wzA8PDy8H085VVZI7nC2oSpKx/Hw8PAWePkSnL+IXgNBko5XE3o8PDy8Z3i9okOvReBUm9fNz4OHh4f3CK+aRp9a1jeuwsPDwzt7VW9yPUyvASvvpCpEPDw8PLwBL0+I8w3+Sam3l5pH4/Hw8PAWeJOSbt5eUA0P1Xarm1nh4eHhPcLLH5wv8Xm59mzqj4eHhzfnJQnxpAErP+8l9zc/Ax4eHt4Cr9oOVZ10b1rzhgM8PDy8bV7vr35yVd4+lSzr+bd4eHh427wcOS+wVsPMqF0ADw8Pb42XF157ZYv8vFf+uAkteHh4eI/w8laAvCmq2iCVz+QmgOHh4eEd5b2KR69JqwqujrwMFXh4eHgLvOqCOx/TS7J7BQs8PDy8PV4SDCYTmhd5q4EBDw8P7xlevnznVyWflHfqqmEJDw8P7xfzqglx3s6VFyAu263w8PDwPsSbNGNVk/Vq6wAeHh7e87x8Ie5tRE1GJq+y0OOAh4eHN+b1tqySloJqOEnKtfnrxsPDw1vg/QNJWYi9/auORAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '失去灵魂(╯‵□′)╯︵┻━┻';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Blog | Duan Xu';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>MySQL中文乱码问号问题 | MAY THE FORCE BE WITH YOU</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Ubuntu,MySQL">
+    <meta name="description" content="content{:toc}  有时候，向MySQL数据库表插入中文，然后在查找的时候 会出现中文文字变成问号（？？？）的情况。这是由于数据库编码问题导致的。 1 问题描述向表内插入数据，然后再 select 的时候，发现中文都变成了问号。 首先，查看原编码： 1234567891011121314mysql&amp;gt; show variables like &apos;character%&apos;;+------">
+<meta name="keywords" content="Ubuntu,MySQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL中文乱码问号问题">
+<meta property="og:url" content="http://blog.duanxu.science/2016/10/10/2016/2016-10-10-MySQL中文乱码问号问题/index.html">
+<meta property="og:site_name" content="MAY THE FORCE BE WITH YOU">
+<meta property="og:description" content="content{:toc}  有时候，向MySQL数据库表插入中文，然后在查找的时候 会出现中文文字变成问号（？？？）的情况。这是由于数据库编码问题导致的。 1 问题描述向表内插入数据，然后再 select 的时候，发现中文都变成了问号。 首先，查看原编码： 1234567891011121314mysql&amp;gt; show variables like &apos;character%&apos;;+------">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-07T12:51:47.211Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL中文乱码问号问题">
+<meta name="twitter:description" content="content{:toc}  有时候，向MySQL数据库表插入中文，然后在查找的时候 会出现中文文字变成问号（？？？）的情况。这是由于数据库编码问题导致的。 1 问题描述向表内插入数据，然后再 select 的时候，发现中文都变成了问号。 首先，查看原编码： 1234567891011121314mysql&amp;gt; show variables like &apos;character%&apos;;+------">
+    
+        <link rel="alternate" type="application/atom+xml" title="MAY THE FORCE BE WITH YOU" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon_64.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Duan Xu</h5>
+          <a href="mailto:duanxu@outlook.com" title="duanxu@outlook.com" class="mail">duanxu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/doodle777" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/2886472974" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">MySQL中文乱码问号问题</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">MySQL中文乱码问号问题</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-10-10T10:25:30.000Z" itemprop="datePublished" class="page-time">
+  2016-10-10
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Ubuntu/">Ubuntu</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-问题描述"><span class="post-toc-number">1.</span> <span class="post-toc-text">1 问题描述</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-解决方法"><span class="post-toc-number">2.</span> <span class="post-toc-text">2 解决方法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-1-临时解决方法"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">2.1 临时解决方法</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-2-一劳永逸解决方法"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">2.2 一劳永逸解决方法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2-2-1-Linux-环境"><span class="post-toc-number">2.2.1.</span> <span class="post-toc-text">2.2.1 Linux 环境</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2-2-2-Windows-环境"><span class="post-toc-number">2.2.2.</span> <span class="post-toc-text">2.2.2 Windows 环境</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-2016/2016-10-10-MySQL中文乱码问号问题" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">MySQL中文乱码问号问题</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-10-10 18:25:30" datetime="2016-10-10T10:25:30.000Z" itemprop="datePublished">2016-10-10</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Ubuntu/">Ubuntu</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <ul>
+<li>content<br>{:toc}</li>
+</ul>
+<p>有时候，向MySQL数据库表插入中文，然后在查找的时候 会出现中文文字变成问号（？？？）的情况。这是由于数据库编码问题导致的。</p>
+<h3 id="1-问题描述"><a href="#1-问题描述" class="headerlink" title="1 问题描述"></a>1 问题描述</h3><p>向表内插入数据，然后再 select 的时候，发现中文都变成了问号。</p>
+<p>首先，查看原编码：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> show variables like <span class="string">'character%'</span>;</span></span><br><span class="line">+--------------------------+----------------------------+ </span><br><span class="line">| Variable_name | Value | </span><br><span class="line">+--------------------------+----------------------------+ </span><br><span class="line">| character_set_client | utf8 | </span><br><span class="line">| character_set_connection | utf8 | </span><br><span class="line">| character_set_database | latin1 | </span><br><span class="line">| character_set_filesystem | binary | </span><br><span class="line">| character_set_results | utf8 | </span><br><span class="line">| character_set_server | latin1 | </span><br><span class="line">| character_set_system | utf8 | </span><br><span class="line">| character_sets_dir | /usr/share/mysql/charsets/ | </span><br><span class="line">+--------------------------+----------------------------+</span><br></pre></td></tr></table></figure>
+<p>发现，<code>character_set_database</code> 和 <code>character_set_server</code> 使用的都是 <code>latin1</code> 编码，因此导致中文在存取过程中的编码错误。</p>
+<h3 id="2-解决方法"><a href="#2-解决方法" class="headerlink" title="2 解决方法"></a>2 解决方法</h3><h4 id="2-1-临时解决方法"><a href="#2-1-临时解决方法" class="headerlink" title="2.1 临时解决方法"></a>2.1 临时解决方法</h4><p>既然上述两个变量值错误，那么将其改成正确的值即可：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> <span class="built_in">set</span> character_set_database=utf8;</span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> <span class="built_in">set</span> character_set_server=utf8;</span></span><br></pre></td></tr></table></figure>
+<p>之后，<strong>将乱码的表drop，然后重新插入即可。</strong></p>
+<p>如果还是乱码，就：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> SET NAMES <span class="string">'utf8'</span>;</span></span><br></pre></td></tr></table></figure>
+<p>然后，应该可以得到正确的结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> show variables like <span class="string">'character%'</span>;</span></span><br><span class="line">+--------------------------+----------------------------------------+</span><br><span class="line">| Variable_name            | Value                                  |</span><br><span class="line">+--------------------------+----------------------------------------+</span><br><span class="line">| character_set_client     | utf8                                   |</span><br><span class="line">| character_set_connection | utf8                                   |</span><br><span class="line">| character_set_database   | utf8                                   |</span><br><span class="line">| character_set_filesystem | binary                                 |</span><br><span class="line">| character_set_results    | utf8                                   |</span><br><span class="line">| character_set_server     | utf8                                   |</span><br><span class="line">| character_set_system     | utf8                                   |</span><br><span class="line">| character_sets_dir       | /usr/local/mysql/share/mysql/charsets/ |</span><br><span class="line">+--------------------------+----------------------------------------+</span><br></pre></td></tr></table></figure>
+<p>问题一般会得到解决。</p>
+<h4 id="2-2-一劳永逸解决方法"><a href="#2-2-一劳永逸解决方法" class="headerlink" title="2.2 一劳永逸解决方法"></a>2.2 一劳永逸解决方法</h4><p>上述解决方法有个缺陷，就是在每次数据库重启之后，所有的工作都丢失了，会发现查找的表依旧是乱码。于是有了如下方案，直接修改 MySQL 的配置文件：</p>
+<h5 id="2-2-1-Linux-环境"><a href="#2-2-1-Linux-环境" class="headerlink" title="2.2.1 Linux 环境"></a>2.2.1 Linux 环境</h5><p>在 Ubuntu 16.04 + MySQL 5.7 环境下，修改 <code>/etc/mysql/my.cnf</code> 配置文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo vim /etc/mysql/my.cnf</span><br><span class="line">----------------------------------</span><br><span class="line">[client]</span><br><span class="line">default-character-set=utf8</span><br><span class="line"></span><br><span class="line">[mysqld]</span><br><span class="line">character-set-server=utf8</span><br><span class="line"></span><br><span class="line">[mysql]</span><br><span class="line">no-auto-rehash</span><br><span class="line">default-character-set=utf8</span><br></pre></td></tr></table></figure>
+<p>之后重启数据库，然后<strong>重新导入数据</strong>即可：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo service mysql restart</span><br></pre></td></tr></table></figure>
+<h5 id="2-2-2-Windows-环境"><a href="#2-2-2-Windows-环境" class="headerlink" title="2.2.2 Windows 环境"></a>2.2.2 Windows 环境</h5><p>在 Windows + MySQL 5.7 环境下，修改 <code>%PROGRAMDATA%\MySQL\MySQL Server 5.7\my.ini</code> 配置文件：</p>
+<p>这里的 <code>%PROGRAMDATA%</code> 一般为：<code>C:\ProgramData\</code>，可以通过<code>echo %PROGRAMDATA%</code>查看。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">[client]</span><br><span class="line">default-character-set=utf8</span><br><span class="line"></span><br><span class="line">[mysqld]</span><br><span class="line">character-set-server=utf8</span><br><span class="line"></span><br><span class="line">[mysql]</span><br><span class="line">no-auto-rehash</span><br><span class="line">default-character-set=utf8</span><br></pre></td></tr></table></figure>
+<p>之后重启数据库，然后<strong>重新导入数据</strong>即可：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">net stop mysql</span><br><span class="line">net start mysql</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-12-07T12:51:47.211Z" itemprop="dateUpdated">2018-12-07 20:51:47</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2016/10/10/2016/2016-10-10-MySQL中文乱码问号问题/" target="_blank" rel="external">http://blog.duanxu.science/2016/10/10/2016/2016-10-10-MySQL中文乱码问号问题/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.duanxu.science">
+            <img src="/img/avatar.jpg" alt="Duan Xu">
+            Duan Xu
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ubuntu/">Ubuntu</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.science/2016/10/10/2016/2016-10-10-MySQL中文乱码问号问题/&title=《MySQL中文乱码问号问题》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.science/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.science/2016/10/10/2016/2016-10-10-MySQL中文乱码问号问题/&title=《MySQL中文乱码问号问题》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.science/2016/10/10/2016/2016-10-10-MySQL中文乱码问号问题/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《MySQL中文乱码问号问题》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.science/2016/10/10/2016/2016-10-10-MySQL中文乱码问号问题/&via=http://blog.duanxu.science" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.science/2016/10/10/2016/2016-10-10-MySQL中文乱码问号问题/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2016/10/10/2016/2016-10-10-MySQL时区问题 /" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">MySQL时区问题</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/09/16/2016/2016-09-16-Ubuntu16.04-配置openCV环境/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Ubuntu 16.04 配置 openCV 环境</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Duan Xu &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.science/2016/10/10/2016/2016-10-10-MySQL中文乱码问号问题/&title=《MySQL中文乱码问号问题》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.science/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.science/2016/10/10/2016/2016-10-10-MySQL中文乱码问号问题/&title=《MySQL中文乱码问号问题》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.science/2016/10/10/2016/2016-10-10-MySQL中文乱码问号问题/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《MySQL中文乱码问号问题》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.science/2016/10/10/2016/2016-10-10-MySQL中文乱码问号问题/&via=http://blog.duanxu.science" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.science/2016/10/10/2016/2016-10-10-MySQL中文乱码问号问题/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACsklEQVR42u3aQW7cMBAEQP//087VgCNv9wy5cYDSaSHQokoCxHFzPj7i4/PL8XTm6/nvY55Gfj//NObnkasDDw8Pb3HrT5drGcnjyOeazYiHh4d3m5dfbrYAJA/06co//35hwcPDw/sFvGTBaBebtvjGw8PD+194eZSQhAhJmY6Hh4f3m3mzKGFWUucP8a1ZCx4eHl7My3eRfs/vK/t7eHh4eOtd9eSz2y4h7TKzuk88PDy8C7z2ozwb2TZpzeLgxweKh4eHd5R3KoRNSDNGG/s+vjc8PDy8Q7w2Ts0nOBX75gX6ME3Bw8PDG/Haxqk23t0Ex0kB/WJ2PDw8vKO8JDDdbP/PIom2qStqt8LDw8M7yptNM9uOyj/0bVwSZS14eHh413hFPR5PfKotoFjA8PDw8N7Oy9sFZg1Yebnc/gOAh4eHd5vXYlaZcbxL1Ya5jyU1Hh4e3lHe7PPdtlvlrQbtI8DDw8N7Py8pqdswdxZe5OFs/jjw8PDw7vHawjpvL0jOtNFw0bKAh4eHd41XtDHFYUF+hXbxKCJdPDw8vLfw2oB1Bt6HFEVKjYeHh3eU1w690ViwCTWixQwPDw/vLbxN9NA2Xe2XhHphwMPDw1vw8oi2La/PNmMdjnHx8PDw1rzN1n40Tfm3eTPWi5F4eHh4F3ibDf4bDQT1rScvCQ8PD+8oL49uE1J7Jp83OVM3XeHh4eGNeLPCui2+T2FW6x4eHh7eId5nebTNT/nV8vav5GXg4eHh3ePlR85ItsTaq80CYjw8PLx7vOTzvWfM2q1yRvQfAx4eHt5RXhIutICkIM4fwbH9PTw8PLw38tpYdt+k1TY6/OV+8PDw8P4pb78l1n7086giugk8PDy8o7xTYcSpajYJkaOXgYeHh3eBt188zpbF+4VnuL+Hh4eH93quPz/Uac4Trkt+AAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '失去灵魂(╯‵□′)╯︵┻━┻';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Blog | Duan Xu';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

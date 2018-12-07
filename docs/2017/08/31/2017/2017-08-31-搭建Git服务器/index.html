@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>搭建Git服务器 | MAY THE FORCE BE WITH YOU</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Linux,Git">
+    <meta name="description" content="content{:toc}  GitHub就是一个免费托管开源代码的远程仓库。托管在GitHUb上的。 搭建Git服务器需要准备一台运行Linux的机器，强烈推荐用Ubuntu或Debian，这样，通过几条简单的apt命令就可以完成安装。 假设你已经有sudo权限的用户账号，下面，正式开始安装。 Step1 安装git1$ sudo apt-get install git Step2 创建一个g">
+<meta name="keywords" content="Linux,Git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="搭建Git服务器">
+<meta property="og:url" content="http://blog.duanxu.science/2017/08/31/2017/2017-08-31-搭建Git服务器/index.html">
+<meta property="og:site_name" content="MAY THE FORCE BE WITH YOU">
+<meta property="og:description" content="content{:toc}  GitHub就是一个免费托管开源代码的远程仓库。托管在GitHUb上的。 搭建Git服务器需要准备一台运行Linux的机器，强烈推荐用Ubuntu或Debian，这样，通过几条简单的apt命令就可以完成安装。 假设你已经有sudo权限的用户账号，下面，正式开始安装。 Step1 安装git1$ sudo apt-get install git Step2 创建一个g">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-07T12:53:27.561Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="搭建Git服务器">
+<meta name="twitter:description" content="content{:toc}  GitHub就是一个免费托管开源代码的远程仓库。托管在GitHUb上的。 搭建Git服务器需要准备一台运行Linux的机器，强烈推荐用Ubuntu或Debian，这样，通过几条简单的apt命令就可以完成安装。 假设你已经有sudo权限的用户账号，下面，正式开始安装。 Step1 安装git1$ sudo apt-get install git Step2 创建一个g">
+    
+        <link rel="alternate" type="application/atom+xml" title="MAY THE FORCE BE WITH YOU" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon_64.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Duan Xu</h5>
+          <a href="mailto:duanxu@outlook.com" title="duanxu@outlook.com" class="mail">duanxu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/doodle777" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/2886472974" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">搭建Git服务器</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">搭建Git服务器</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-08-31T06:55:30.000Z" itemprop="datePublished" class="page-time">
+  2017-08-31
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Linux/">Linux</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Step1-安装git"><span class="post-toc-number">1.</span> <span class="post-toc-text">Step1 安装git</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Step2-创建一个git用户，用来运行git服务"><span class="post-toc-number">2.</span> <span class="post-toc-text">Step2 创建一个git用户，用来运行git服务</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Step3-创建证书登录："><span class="post-toc-number">3.</span> <span class="post-toc-text">Step3 创建证书登录：</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Step5-禁用shell登录"><span class="post-toc-number">4.</span> <span class="post-toc-text">Step5 禁用shell登录</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Step6-克隆远程仓库"><span class="post-toc-number">5.</span> <span class="post-toc-text">Step6 克隆远程仓库</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-2017/2017-08-31-搭建Git服务器" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">搭建Git服务器</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-08-31 14:55:30" datetime="2017-08-31T06:55:30.000Z" itemprop="datePublished">2017-08-31</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Linux/">Linux</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <ul>
+<li>content<br>{:toc}</li>
+</ul>
+<p>GitHub就是一个免费托管开源代码的远程仓库。托管在GitHUb上的。</p>
+<p>搭建Git服务器需要准备一台运行Linux的机器，强烈推荐用Ubuntu或Debian，这样，通过几条简单的apt命令就可以完成安装。</p>
+<p>假设你已经有sudo权限的用户账号，下面，正式开始安装。</p>
+<h4 id="Step1-安装git"><a href="#Step1-安装git" class="headerlink" title="Step1 安装git"></a>Step1 安装git</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> sudo apt-get install git</span><br></pre></td></tr></table></figure>
+<h4 id="Step2-创建一个git用户，用来运行git服务"><a href="#Step2-创建一个git用户，用来运行git服务" class="headerlink" title="Step2 创建一个git用户，用来运行git服务"></a>Step2 创建一个git用户，用来运行git服务</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> sudo adduser git</span><br></pre></td></tr></table></figure>
+<h4 id="Step3-创建证书登录："><a href="#Step3-创建证书登录：" class="headerlink" title="Step3 创建证书登录："></a>Step3 创建证书登录：</h4><p>对于每个需要登录的用户，需要收集用户的公钥。输入命令：<figure class="highlight ls"><figcaption><span>-al ~/.ssh```，如果列表中有文件```id_rsa.pub```或```id_dsa.pub```，那么这个文件就是用户的公钥，否则需要生成一个公钥：</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">```shell</span><br><span class="line">$ ssh-keygen -t rsa -C "xxx@yyy.com"</span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file in which to save the key (/Users/xxxx/.ssh/id_rsa):</span><br><span class="line">Enter passphrase (empty for no passphrase):</span><br><span class="line">Enter same passphrase again:</span><br><span class="line">Your identification has been saved in /Users/xxxx/.ssh/id_rsa.</span><br><span class="line">Your public key has been saved in /Users/xxxx/.ssh/id_rsa.pub.</span><br><span class="line">The key fingerprint is:</span><br><span class="line">-------------------------------------- xxxx@yyy.com</span><br></pre></td></tr></table></figure></p>
+<p>之后，在<figure class="highlight plain"><figcaption><span>id_rsa.pub```等文件，其中```id_rsa.pub```便是我们需要的公钥文件。收集所有需要登录的用户的公钥，把所有公钥导入到服务器的```/home/git/.ssh/authorized_keys```文件里，一行一个。</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### Step4 初始化Git仓库</span><br><span class="line"></span><br><span class="line">先选定一个目录作为Git仓库，假定是```/gitRepo/sample.git```，在```/gitRepo```目录下输入命令：</span><br><span class="line">```shell</span><br><span class="line">$ sudo git init --bare sample.git</span><br></pre></td></tr></table></figure></p>
+<p>Git就会创建一个裸仓库，裸仓库没有工作区，因为服务器上的Git仓库纯粹是为了共享，所以不让用户直接登录到服务器上去改工作区，并且服务器上的Git仓库通常都以.git结尾。然后，把owner改为git：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> sudo chown -R git:git sample.git</span><br></pre></td></tr></table></figure></p>
+<h4 id="Step5-禁用shell登录"><a href="#Step5-禁用shell登录" class="headerlink" title="Step5 禁用shell登录"></a>Step5 禁用shell登录</h4><p>出于安全考虑，第二步创建的git用户不允许登录shell，这可以通过编辑<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">```shell</span><br><span class="line">git:x:1001:1001:,,,:/home/git:/bin/bash</span><br></pre></td></tr></table></figure></p>
+<p>改为：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git:x:1001:1001:,,,:/home/git:/usr/bin/git-shell</span><br></pre></td></tr></table></figure></p>
+<p>这样，git用户可以正常通过ssh使用git，但无法登录shell，因为我们为git用户指定的git-shell每次一登录就自动退出。</p>
+<h4 id="Step6-克隆远程仓库"><a href="#Step6-克隆远程仓库" class="headerlink" title="Step6 克隆远程仓库"></a>Step6 克隆远程仓库</h4><p>现在，可以通过git clone命令克隆远程仓库了，在各自的电脑上运行：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> git clone git@server:/gitRepo/sample.git</span><br><span class="line">Cloning into 'sample'...</span><br><span class="line">warning: You appear to have cloned an empty repository.</span><br></pre></td></tr></table></figure></p>
+<p>剩下的push操作就像我们平时用GitHub一样了。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-12-07T12:53:27.561Z" itemprop="dateUpdated">2018-12-07 20:53:27</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2017/08/31/2017/2017-08-31-搭建Git服务器/" target="_blank" rel="external">http://blog.duanxu.science/2017/08/31/2017/2017-08-31-搭建Git服务器/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.duanxu.science">
+            <img src="/img/avatar.jpg" alt="Duan Xu">
+            Duan Xu
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git/">Git</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.science/2017/08/31/2017/2017-08-31-搭建Git服务器/&title=《搭建Git服务器》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.science/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.science/2017/08/31/2017/2017-08-31-搭建Git服务器/&title=《搭建Git服务器》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.science/2017/08/31/2017/2017-08-31-搭建Git服务器/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《搭建Git服务器》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.science/2017/08/31/2017/2017-08-31-搭建Git服务器/&via=http://blog.duanxu.science" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.science/2017/08/31/2017/2017-08-31-搭建Git服务器/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/08/20/2017/2017-08-20-Ubuntu下Thunderbird邮件ExQuilla插件license过期解决办法/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Ubuntu下Thunderbird邮件ExQuilla插件license过期解决办法</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Duan Xu &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.science/2017/08/31/2017/2017-08-31-搭建Git服务器/&title=《搭建Git服务器》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.science/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.science/2017/08/31/2017/2017-08-31-搭建Git服务器/&title=《搭建Git服务器》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.science/2017/08/31/2017/2017-08-31-搭建Git服务器/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《搭建Git服务器》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.science/2017/08/31/2017/2017-08-31-搭建Git服务器/&via=http://blog.duanxu.science" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.science/2017/08/31/2017/2017-08-31-搭建Git服务器/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACrUlEQVR42u3a0W7jMAwEwPz/T/eei5zdJSm6KTB+ChBH1jiATK/4esXH19vx/u37mVfjXI1cve6xAw8PD2889ffhqpNIbsfVVe5vXD5nPDw8vG3e/SJ+T71fspMFPb8p+Zzx8PDwPofXA8zHx8PDw/vrvGrcsFFS4+Hh4f0uLwkj8vI6CTXyAvqhrAUPDw8v5k3K39/6vLK/h4eHhzfeVc8L3/n4SaFcni0eHh7eAq+3QTXZyuq1Z/WujoeHh7fN6wWmk8W9FxaXx8HDw8Nb4OWhQ69pNV/cJ61XUaGPh4eHd4hXeLEfTOLsmIWiHw8PD+8oL48D8rt1NmKoPh5evang4eHhHXo3fyZ0yMOIpIXr26/w8PDwHuEly3Rvoc+L6fxahZ09PDw8vAVeL8xtFrutkcuNXHh4eHgLvOr62dvcSs6vLvqFbTA8PDy8o7xJk9MElhTT+beXSDw8PLxlXq+ozVuyTm2S5S0OeHh4eM/z8kdFNaLNt83ysLiQUuPh4eENePMItRrd5uxqBPzDf4iHh4d3lFf9wWSbqtqw1Qt/8fDw8PZ4SQmb34L81vTiibwoj/q88PDw8Fq8pJD9Kh6TiCEvyvNbj4eHh3eWl8cQefmbl+NVWB5b4OHh4e3xJjFrrzErL+LzdoHyn4SHh4c35uWv+pMLFzargoih+V/h4eHhHeXlwWt14793ZhUW5St4eHh4C7zeo6L6ba9wr0YkeHh4eBu83ut9vqFVbQXIy+toZDw8PLwFXm/BPRs9TEbrPZDw8PDw5rz5RO8DhXmQkY/8HyQeHh7eGm/jMr1NssMHHh4e3sfwJptSvWaCZD6XJTUeHh7ex/CqpN751dgCDw8P7xnefNNrPvKkZeHyt3h4eHgLvOobfV74zpuu8uatY4EFHh4e3t05/wARgivwCHMx5AAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '失去灵魂(╯‵□′)╯︵┻━┻';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Blog | Duan Xu';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

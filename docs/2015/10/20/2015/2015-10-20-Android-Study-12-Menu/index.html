@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Android开发手记(12) Menu的使用 | MAY THE FORCE BE WITH YOU</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Android,Menu">
+    <meta name="description" content="content{:toc}  　　Android中的Menu分为三种，分别为：OptionsMenu（选项菜单）、ContextMenu（上下文菜单）、SubMenu（子菜单）。 1、OptionsMenu　　按Menu键就会显示，用于当前的Activity。 　　在Activity里面，一般通过以下函数来使用options menu： Activity::onCreateOptionsMenu">
+<meta name="keywords" content="Android,Menu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android开发手记(12) Menu的使用">
+<meta property="og:url" content="http://blog.duanxu.science/2015/10/20/2015/2015-10-20-Android-Study-12-Menu/index.html">
+<meta property="og:site_name" content="MAY THE FORCE BE WITH YOU">
+<meta property="og:description" content="content{:toc}  　　Android中的Menu分为三种，分别为：OptionsMenu（选项菜单）、ContextMenu（上下文菜单）、SubMenu（子菜单）。 1、OptionsMenu　　按Menu键就会显示，用于当前的Activity。 　　在Activity里面，一般通过以下函数来使用options menu： Activity::onCreateOptionsMenu">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://blog.duanxu.science/images/201510/2015102001.png">
+<meta property="og:image" content="http://blog.duanxu.science/images/201510/2015102002.png">
+<meta property="og:updated_time" content="2018-12-07T12:41:39.435Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android开发手记(12) Menu的使用">
+<meta name="twitter:description" content="content{:toc}  　　Android中的Menu分为三种，分别为：OptionsMenu（选项菜单）、ContextMenu（上下文菜单）、SubMenu（子菜单）。 1、OptionsMenu　　按Menu键就会显示，用于当前的Activity。 　　在Activity里面，一般通过以下函数来使用options menu： Activity::onCreateOptionsMenu">
+<meta name="twitter:image" content="http://blog.duanxu.science/images/201510/2015102001.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="MAY THE FORCE BE WITH YOU" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon_64.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Duan Xu</h5>
+          <a href="mailto:duanxu@outlook.com" title="duanxu@outlook.com" class="mail">duanxu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/doodle777" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/2886472974" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android开发手记(12) Menu的使用</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android开发手记(12) Menu的使用</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2015-10-20T11:25:00.000Z" itemprop="datePublished" class="page-time">
+  2015-10-20
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、OptionsMenu"><span class="post-toc-number">1.</span> <span class="post-toc-text">1、OptionsMenu</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2、ContextMenu"><span class="post-toc-number">2.</span> <span class="post-toc-text">2、ContextMenu</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3、SubMenu"><span class="post-toc-number">3.</span> <span class="post-toc-text">3、SubMenu</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4、XML定义菜单"><span class="post-toc-number">4.</span> <span class="post-toc-text">4、XML定义菜单</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#（4-1）XML定义OptionsMenu"><span class="post-toc-number">5.</span> <span class="post-toc-text">（4.1）XML定义OptionsMenu</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#（4-2）XML定义ContextMenu"><span class="post-toc-number">6.</span> <span class="post-toc-text">（4.2）XML定义ContextMenu</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-2015/2015-10-20-Android-Study-12-Menu" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android开发手记(12) Menu的使用</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2015-10-20 19:25:00" datetime="2015-10-20T11:25:00.000Z" itemprop="datePublished">2015-10-20</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <ul>
+<li>content<br>{:toc}</li>
+</ul>
+<p>　　Android中的Menu分为三种，分别为：OptionsMenu（选项菜单）、ContextMenu（上下文菜单）、SubMenu（子菜单）。</p>
+<h4 id="1、OptionsMenu"><a href="#1、OptionsMenu" class="headerlink" title="1、OptionsMenu"></a><strong>1、OptionsMenu</strong></h4><p>　　按Menu键就会显示，用于当前的Activity。</p>
+<p>　　在Activity里面，一般通过以下函数来使用options menu：</p>
+<pre><code>Activity::onCreateOptionsMenu (Menu menu)   创建options menu，这个函数只会在menu第一次显示时调用。
+Activity::onPrepareOptionsMenu (Menu menu)  更新改变options menu的内容，这个函数会在menu每次显示时调用。
+Activity::onOptionsItemSelected (MenuItem item) 处理选中的菜单项。
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//menu.add(groupId, itemId, order, title); 通过add()增加menuItem，每个menuItem有groupId，itemId，Order。这三个属性是相互独立，没有关联。  </span></span><br><span class="line"> MenuItem redMenu = menu.add(MENU_GROUP_1, <span class="number">0</span>, <span class="number">0</span>, <span class="string">"Red"</span>);</span><br><span class="line"> MenuItem OrangedMenu = menu.add(MENU_GROUP_1, <span class="number">1</span>, <span class="number">1</span>, <span class="string">"Orange"</span>);</span><br><span class="line"> MenuItem YellowMenu = menu.add(MENU_GROUP_2, <span class="number">2</span>, <span class="number">2</span>, <span class="string">"Yellow"</span>);</span><br><span class="line"> MenuItem GreenMenu = menu.add(MENU_GROUP_2, <span class="number">3</span>, <span class="number">3</span>, <span class="string">"Green"</span>);</span><br><span class="line"> MenuItem BlueMenu = menu.add(MENU_GROUP_2, <span class="number">4</span>, <span class="number">4</span>, <span class="string">"Blue"</span>);</span><br><span class="line"> MenuItem CyangonMenu = menu.add(MENU_GROUP_3, <span class="number">5</span>, <span class="number">5</span>, <span class="string">"Cyangon"</span>);</span><br><span class="line"> MenuItem PurpleMenu = menu.add(MENU_GROUP_3, <span class="number">6</span>, <span class="number">6</span>, <span class="string">"Purple"</span>);</span><br><span class="line"></span><br><span class="line"> menu.setGroupCheckable(MENU_GROUP_2, <span class="keyword">true</span> <span class="comment">/*isCheckable*/</span>, <span class="keyword">false</span>);<span class="comment">//第三个参数true为单选，false为多选</span></span><br><span class="line"> menu.setGroupEnabled(MENU_GROUP_2, <span class="keyword">true</span><span class="comment">/*isEnabled*/</span>);</span><br><span class="line"> menu.setGroupVisible(MENU_GROUP_2, <span class="keyword">true</span><span class="comment">/*isVisible*/</span>);</span><br><span class="line"> menu.setGroupCheckable(MENU_GROUP_3, <span class="keyword">true</span>, <span class="keyword">true</span>);</span><br></pre></td></tr></table></figure>
+<p>完整代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.support.v7.app.AppCompatActivity;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.view.Menu;</span><br><span class="line"><span class="keyword">import</span> android.view.MenuItem;</span><br><span class="line"><span class="keyword">import</span> android.widget.Toast;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> MENU_GROUP_1 = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> MENU_GROUP_2 = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> MENU_GROUP_3 = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onCreateOptionsMenu</span><span class="params">(Menu menu)</span> </span>&#123;</span><br><span class="line">        MenuItem redMenu = menu.add(MENU_GROUP_1, <span class="number">0</span>, <span class="number">0</span>, <span class="string">"Red"</span>);</span><br><span class="line">        MenuItem OrangedMenu = menu.add(MENU_GROUP_1, <span class="number">1</span>, <span class="number">1</span>, <span class="string">"Orange"</span>);</span><br><span class="line">        MenuItem YellowMenu = menu.add(MENU_GROUP_2, <span class="number">2</span>, <span class="number">2</span>, <span class="string">"Yellow"</span>);</span><br><span class="line">        MenuItem GreenMenu = menu.add(MENU_GROUP_2, <span class="number">3</span>, <span class="number">3</span>, <span class="string">"Green"</span>);</span><br><span class="line">        MenuItem BlueMenu = menu.add(MENU_GROUP_2, <span class="number">4</span>, <span class="number">4</span>, <span class="string">"Blue"</span>);</span><br><span class="line">        MenuItem CyangonMenu = menu.add(MENU_GROUP_3, <span class="number">5</span>, <span class="number">5</span>, <span class="string">"Cyangon"</span>);</span><br><span class="line">        MenuItem PurpleMenu = menu.add(MENU_GROUP_3, <span class="number">6</span>, <span class="number">6</span>, <span class="string">"Purple"</span>);</span><br><span class="line"></span><br><span class="line">        menu.setGroupCheckable(MENU_GROUP_2, <span class="keyword">true</span> <span class="comment">/*isCheckable*/</span>, <span class="keyword">false</span>);<span class="comment">//第三个参数true为单选，false为多选</span></span><br><span class="line">        menu.setGroupEnabled(MENU_GROUP_2, <span class="keyword">true</span><span class="comment">/*isEnabled*/</span>);</span><br><span class="line">        menu.setGroupVisible(MENU_GROUP_2, <span class="keyword">true</span><span class="comment">/*isVisible*/</span>);</span><br><span class="line">        menu.setGroupCheckable(MENU_GROUP_3, <span class="keyword">true</span>, <span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.onCreateOptionsMenu(menu);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onOptionsItemSelected</span><span class="params">(MenuItem item)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onOptionsItemSelected(item);</span><br><span class="line">        <span class="keyword">switch</span> (item.getItemId()) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">                Toast.makeText(<span class="keyword">this</span>, <span class="string">"Red"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">                Toast.makeText(<span class="keyword">this</span>, <span class="string">"Orange"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">                <span class="keyword">if</span>(item.isCheckable())&#123;</span><br><span class="line">                    item.setChecked(!item.isChecked());</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">                <span class="keyword">if</span>(item.isCheckable())&#123;</span><br><span class="line">                    item.setChecked(!item.isChecked());</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">4</span>:</span><br><span class="line">                <span class="keyword">if</span>(item.isCheckable())&#123;</span><br><span class="line">                    item.setChecked(!item.isChecked());</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">5</span>:</span><br><span class="line">                <span class="keyword">if</span>(item.isCheckable())&#123;</span><br><span class="line">                    item.setChecked(<span class="keyword">true</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">6</span>:</span><br><span class="line">                <span class="keyword">if</span>(item.isCheckable())&#123;</span><br><span class="line">                    item.setChecked(<span class="keyword">true</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<div style="text-align: center"><br><img src="/images/201510/2015102001.png"><br><img src="/images/201510/2015102002.png"><br></div>
+
+<h4 id="2、ContextMenu"><a href="#2、ContextMenu" class="headerlink" title="2、ContextMenu"></a><strong>2、ContextMenu</strong></h4><p>　　要在相应的view上按几秒后才显示的，用于view，跟某个具体的view绑定在一起。这类型的菜单不支持icon和快捷键！</p>
+<p>　　在Activity里面，一般通过以下函数来使用context menu：</p>
+<p>　　Activity::registerForContextMenu(View view) 为某个view注册context menu，一般在Activity::onCreate里面调用。</p>
+<p>　　Activity::onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) 创建context menu，和options menu不同，context meun每次显示时都会调用这个函数。</p>
+<p>　　Activity::onContextItemSelected(MenuItem item) 处理选中的菜单项。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">menu.setHeaderTitle(<span class="string">"ContextMenu"</span>);</span><br><span class="line">menu.add(GROUP_COLOR, <span class="number">0</span>, <span class="number">0</span>, <span class="string">"Red"</span>);</span><br><span class="line">menu.add(GROUP_COLOR, <span class="number">1</span>, <span class="number">1</span>, <span class="string">"Green"</span>);</span><br><span class="line">menu.add(GROUP_COLOR, <span class="number">2</span>, <span class="number">2</span>, <span class="string">"Blue"</span>);</span><br></pre></td></tr></table></figure>
+<p>　　菜单响应事件处理和OptionMenu类似。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> TextView colorText;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> GROUP_COLOR = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">        colorText = (TextView) findViewById(R.id.textView);</span><br><span class="line">        registerForContextMenu(colorText);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreateContextMenu</span><span class="params">(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreateContextMenu(menu, v, menuInfo);</span><br><span class="line"></span><br><span class="line">        menu.setHeaderTitle(<span class="string">"ContextMenu"</span>);</span><br><span class="line">        menu.add(GROUP_COLOR, <span class="number">0</span>, <span class="number">0</span>, <span class="string">"Red"</span>);</span><br><span class="line">        menu.add(GROUP_COLOR, <span class="number">1</span>, <span class="number">1</span>, <span class="string">"Green"</span>);</span><br><span class="line">        menu.add(GROUP_COLOR, <span class="number">2</span>, <span class="number">2</span>, <span class="string">"Blue"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onContextItemSelected</span><span class="params">(MenuItem item)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onContextItemSelected(item);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">switch</span> (item.getItemId()) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">                colorText.setTextColor(Color.RED);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">                colorText.setTextColor(Color.GREEN);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">                colorText.setTextColor( Color.BLUE);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="3、SubMenu"><a href="#3、SubMenu" class="headerlink" title="3、SubMenu"></a><strong>3、SubMenu</strong></h4><p>　　SubMenu可以和OptionMenu、ContextMenu配合使用，但子菜单不能嵌套子菜单，这意味着在Android系统，菜单只有两层。同时子菜单不支持icon。</p>
+<p>　　可以在onCreateOptionMenu或者onCreateContextMenu内定义SubMenu：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreateContextMenu</span><span class="params">(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreateContextMenu(menu, v, menuInfo);</span><br><span class="line"></span><br><span class="line">    menu.setHeaderTitle(<span class="string">"ContextMenu"</span>);</span><br><span class="line">    menu.add(GROUP_COLOR, <span class="number">0</span>, <span class="number">0</span>, <span class="string">"Red"</span>);</span><br><span class="line">    menu.add(GROUP_COLOR, <span class="number">1</span>, <span class="number">1</span>, <span class="string">"Green"</span>);</span><br><span class="line">    menu.add(GROUP_COLOR, <span class="number">2</span>, <span class="number">2</span>, <span class="string">"Blue"</span>);</span><br><span class="line"></span><br><span class="line">    SubMenu subMenu = menu.addSubMenu(Menu.NONE, <span class="number">10</span>, <span class="number">10</span>, <span class="string">"Text Size"</span>);</span><br><span class="line">    subMenu.add(Menu.NONE, <span class="number">11</span>, <span class="number">11</span>, <span class="string">"Large"</span>);</span><br><span class="line">    subMenu.add(Menu.NONE, <span class="number">12</span>, <span class="number">12</span>, <span class="string">"Small"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　完整代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.graphics.Color;</span><br><span class="line"><span class="keyword">import</span> android.support.v7.app.AppCompatActivity;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.view.ContextMenu;</span><br><span class="line"><span class="keyword">import</span> android.view.Menu;</span><br><span class="line"><span class="keyword">import</span> android.view.MenuItem;</span><br><span class="line"><span class="keyword">import</span> android.view.SubMenu;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"><span class="keyword">import</span> android.widget.TextView;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> TextView colorText;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> GROUP_COLOR = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">        colorText = (TextView) findViewById(R.id.textView);</span><br><span class="line">        registerForContextMenu(colorText);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreateContextMenu</span><span class="params">(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreateContextMenu(menu, v, menuInfo);</span><br><span class="line"></span><br><span class="line">        menu.setHeaderTitle(<span class="string">"ContextMenu"</span>);</span><br><span class="line">        menu.add(GROUP_COLOR, <span class="number">0</span>, <span class="number">0</span>, <span class="string">"Red"</span>);</span><br><span class="line">        menu.add(GROUP_COLOR, <span class="number">1</span>, <span class="number">1</span>, <span class="string">"Green"</span>);</span><br><span class="line">        menu.add(GROUP_COLOR, <span class="number">2</span>, <span class="number">2</span>, <span class="string">"Blue"</span>);</span><br><span class="line"></span><br><span class="line">        SubMenu subMenu = menu.addSubMenu(Menu.NONE, <span class="number">10</span>, <span class="number">10</span>, <span class="string">"Text Size"</span>);</span><br><span class="line">        subMenu.add(Menu.NONE, <span class="number">11</span>, <span class="number">11</span>, <span class="string">"Large"</span>);</span><br><span class="line">        subMenu.add(Menu.NONE, <span class="number">12</span>, <span class="number">12</span>, <span class="string">"Small"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onContextItemSelected</span><span class="params">(MenuItem item)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onContextItemSelected(item);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">switch</span> (item.getItemId()) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">                colorText.setTextColor(Color.RED);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">                colorText.setTextColor(Color.GREEN);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">                colorText.setTextColor( Color.BLUE);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">11</span>:</span><br><span class="line">                colorText.setTextSize(<span class="number">30</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">12</span>:</span><br><span class="line">                colorText.setTextSize(<span class="number">20</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="4、XML定义菜单"><a href="#4、XML定义菜单" class="headerlink" title="4、XML定义菜单"></a><strong>4、XML定义菜单</strong></h4><p>　　首先在/res/menu新建一个menu_main.xml，在其中定义相关Menu</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">menu</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:tools</span>=<span class="string">"http://schemas.android.com/tools"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">tools:context</span>=<span class="string">".MainActivity"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:id</span>=<span class="string">"@+id/subMenu"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:title</span>=<span class="string">"SubMenu"</span> &gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">menu</span>&gt;</span>  <span class="comment">&lt;!--定义子菜单--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:id</span>=<span class="string">"@+id/subLarge"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:title</span>=<span class="string">"Large"</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:id</span>=<span class="string">"@+id/subSmall"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:title</span>=<span class="string">"Small"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">menu</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--定义菜单组1--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">group</span> <span class="attr">android:id</span>=<span class="string">"@+id/group1"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:checkableBehavior</span>=<span class="string">"single"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:enabled</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:id</span>=<span class="string">"@+id/redMenu"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:title</span>=<span class="string">"Red"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:id</span>=<span class="string">"@+id/blueMenu"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:title</span>=<span class="string">"Blue"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">group</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--定义菜单组2--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">group</span> <span class="attr">android:id</span>=<span class="string">"@+id/group2"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:checkableBehavior</span>=<span class="string">"all"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:enabled</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:id</span>=<span class="string">"@+id/greenMenu"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:title</span>=<span class="string">"Green"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:id</span>=<span class="string">"@+id/purpleMenu"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:title</span>=<span class="string">"Purple"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">group</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">menu</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="（4-1）XML定义OptionsMenu"><a href="#（4-1）XML定义OptionsMenu" class="headerlink" title="（4.1）XML定义OptionsMenu"></a>（4.1）XML定义OptionsMenu</h4><p>　　重载onCreateOptionsMenu即可：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onCreateOptionsMenu</span><span class="params">(Menu menu)</span></span>&#123;</span><br><span class="line">    MenuInflater menuInflater = <span class="keyword">new</span> MenuInflater(getApplication());</span><br><span class="line">    menuInflater.inflate(R.menu.menu_main, menu);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">super</span>.onCreateOptionsMenu(menu);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　完整代码为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.support.v7.app.AppCompatActivity;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.view.Menu;</span><br><span class="line"><span class="keyword">import</span> android.view.MenuInflater;</span><br><span class="line"><span class="keyword">import</span> android.widget.TextView;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> TextView colorText;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onCreateOptionsMenu</span><span class="params">(Menu menu)</span></span>&#123;</span><br><span class="line">        MenuInflater menuInflater = <span class="keyword">new</span> MenuInflater(getApplication());</span><br><span class="line">        menuInflater.inflate(R.menu.menu_main, menu);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.onCreateOptionsMenu(menu);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="（4-2）XML定义ContextMenu"><a href="#（4-2）XML定义ContextMenu" class="headerlink" title="（4.2）XML定义ContextMenu"></a>（4.2）XML定义ContextMenu</h4><p>　　首先为ContextMenu注册菜单项</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">colorText = (TextView)findViewById(R.id.textView);</span><br><span class="line">registerForContextMenu(colorText);</span><br></pre></td></tr></table></figure>
+<p>　　然后重载onCreateContextMenu即可：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreateContextMenu</span><span class="params">(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreateContextMenu(menu, v, menuInfo);</span><br><span class="line"></span><br><span class="line">    getMenuInflater().inflate(R.menu.menu_main, menu);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　完整代码为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.support.v7.app.AppCompatActivity;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.view.ContextMenu;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"><span class="keyword">import</span> android.widget.TextView;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> TextView colorText;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">        colorText = (TextView)findViewById(R.id.textView);</span><br><span class="line">        registerForContextMenu(colorText);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreateContextMenu</span><span class="params">(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreateContextMenu(menu, v, menuInfo);</span><br><span class="line"></span><br><span class="line">        getMenuInflater().inflate(R.menu.menu_main, menu);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-12-07T12:41:39.435Z" itemprop="dateUpdated">2018-12-07 20:41:39</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2015/10/20/2015/2015-10-20-Android-Study-12-Menu/" target="_blank" rel="external">http://blog.duanxu.science/2015/10/20/2015/2015-10-20-Android-Study-12-Menu/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.duanxu.science">
+            <img src="/img/avatar.jpg" alt="Duan Xu">
+            Duan Xu
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Menu/">Menu</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.science/2015/10/20/2015/2015-10-20-Android-Study-12-Menu/&title=《Android开发手记(12) Menu的使用》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.science/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.science/2015/10/20/2015/2015-10-20-Android-Study-12-Menu/&title=《Android开发手记(12) Menu的使用》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.science/2015/10/20/2015/2015-10-20-Android-Study-12-Menu/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android开发手记(12) Menu的使用》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.science/2015/10/20/2015/2015-10-20-Android-Study-12-Menu/&via=http://blog.duanxu.science" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.science/2015/10/20/2015/2015-10-20-Android-Study-12-Menu/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2015/10/20/2015/2015-10-20-Android-Study-13-AlertDialog/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android开发手记(13) 几种Alertdialog的使用</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2015/10/18/2015/2015-10-18-Android-Study-11-SeekBar/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android开发手记(11) 滑动条SeekBar</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Duan Xu &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.science/2015/10/20/2015/2015-10-20-Android-Study-12-Menu/&title=《Android开发手记(12) Menu的使用》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.science/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.science/2015/10/20/2015/2015-10-20-Android-Study-12-Menu/&title=《Android开发手记(12) Menu的使用》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.science/2015/10/20/2015/2015-10-20-Android-Study-12-Menu/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android开发手记(12) Menu的使用》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.science/2015/10/20/2015/2015-10-20-Android-Study-12-Menu/&via=http://blog.duanxu.science" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.science/2015/10/20/2015/2015-10-20-Android-Study-12-Menu/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACyklEQVR42u3a0W7jMAwEwPz/T6fAPTXoOd2lJLcFxk+FE8saFzAZko9HfDz/HZ///nzm6zevPs3X/7pau+YDDw8P7xjv+fZob/l+nWS1fD/JvfDw8PDO8fKXdX4mXyc5/36dy/N4eHh4P8pLwkO7iTw1x8PDw/uLvCQwvN9Wnnzj4eHh/X7eyo//9tq84HtrrQUPDw8v5q03qO7/+3h/Dw8PD2/UVc9fvkmjK0l/10PRy07w8PDwDvBmY1L5SEGbTLejBlHAwMPDw9vK29XQmj2stuCbX/US9/Dw8PCO8da3Mmt05an2+2svk2k8PDy8rbxZKjxra+XDAeuPAw8PD+80L3/5tqlzW3Roi8LFg8DDw8PbxGtbUO0za4u5eZst2TkeHh7ePbyk9DDb7kqxo12nqI7g4eHhlbw882xvuVJ0mA1+FbVqPDw8vE28fEQgb4PlqfbsLlHAwMPDw9vKW2nkryTleftt1qJ7KUbg4eHhbeW1MaQdLFgvebSNsctiBB4eHt4m3q6SQV5abUvAeaD6psqCh4eHt4k3S6NnaXHCqyfFRt/Hw8PDW+HlP+/bzbUv9CRpTlLq/wxd4eHh4W3l5ZtLjmRbbbk2f2TftMHw8PDwNvF2Jb6zsNG2xNpiBx4eHt4J3mxOaVeqnawwK3/g4eHh3clLFkpe93nSnL/W80/x8PDw7uTlraZ8iKotJeSF2uH/Cg8PD2+ZNytJtOlyvmayclHgwMPDwzvMW7nNrOiQjxq0PwDw8PDwTvCe5TFsO41KwLOg8nIVHh4e3gHebKAqT4jz1fK75AULPDw8vHO89ZR61pTKR6nawICHh4d3Dy9/fa+kxe21s9CFh4eH9zt5K6Elb7m1BYjLBhgeHh7eD/Fm41YtO0+so9CCh4eHd4zXvohzZFuWnYWTx3rUwsPDw9vU+poNCiSPqS3+5oEHDw8P7xjvA7dsQQVFRKIvAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '失去灵魂(╯‵□′)╯︵┻━┻';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Blog | Duan Xu';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
