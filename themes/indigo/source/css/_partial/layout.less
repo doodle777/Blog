@@ -55,11 +55,13 @@
         border-radius: 50%;
         overflow: hidden;
         box-shadow: @boxShadow;
+        margin: auto;
     }
 
     .introduce {
         margin: 1em 0 0;
         color: @textPrimaryColor;
+        text-align: center;
     }
 
     .mail {
@@ -129,6 +131,17 @@
 
 .container {
     width: @contentWidth;
+    margin: 0 auto;
+
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
+.container-post {
+    width: @postContentWidth;
     margin: 0 auto;
 
     &:after {
