@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>MySQL时区问题 | MAY THE FORCE BE WITH YOU</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Ubuntu,MySQL">
+    <meta name="description" content="content{:toc}  1 问题描述Java连接MySQL的出现错误：  ERROR: The server time zone value ‘�й���׼ʱ��’ is unrecognized or represents more than one time zone. You must configure either the server or JDBC driver (via t">
+<meta name="keywords" content="Ubuntu,MySQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL时区问题">
+<meta property="og:url" content="http://blog.duanxu.tech/2016/10/10/2016/2016-10-10-MySQL时区问题 /index.html">
+<meta property="og:site_name" content="MAY THE FORCE BE WITH YOU">
+<meta property="og:description" content="content{:toc}  1 问题描述Java连接MySQL的出现错误：  ERROR: The server time zone value ‘�й���׼ʱ��’ is unrecognized or represents more than one time zone. You must configure either the server or JDBC driver (via t">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-07T12:51:50.436Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL时区问题">
+<meta name="twitter:description" content="content{:toc}  1 问题描述Java连接MySQL的出现错误：  ERROR: The server time zone value ‘�й���׼ʱ��’ is unrecognized or represents more than one time zone. You must configure either the server or JDBC driver (via t">
+    
+        <link rel="alternate" type="application/atom+xml" title="MAY THE FORCE BE WITH YOU" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon_64.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Duan Xu</h5>
+          <a href="mailto:duanxu@outlook.com" title="duanxu@outlook.com" class="mail">duanxu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/doodle777" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/2886472974" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">MySQL时区问题</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">MySQL时区问题</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-10-10T10:57:30.000Z" itemprop="datePublished" class="page-time">
+  2016-10-10
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Ubuntu/">Ubuntu</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container-post body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-问题描述"><span class="post-toc-number">1.</span> <span class="post-toc-text">1 问题描述</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-解决方法"><span class="post-toc-number">2.</span> <span class="post-toc-text">2 解决方法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-1-临时解决方法"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">2.1 临时解决方法</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-2-一劳永逸解决方法"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">2.2 一劳永逸解决方法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2-2-1-Linux-环境"><span class="post-toc-number">2.2.1.</span> <span class="post-toc-text">2.2.1 Linux 环境</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2-2-2-Windows-环境"><span class="post-toc-number">2.2.2.</span> <span class="post-toc-text">2.2.2 Windows 环境</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-2016/2016-10-10-MySQL时区问题 " class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">MySQL时区问题</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-10-10 18:57:30" datetime="2016-10-10T10:57:30.000Z" itemprop="datePublished">2016-10-10</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Ubuntu/">Ubuntu</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <ul>
+<li>content<br>{:toc}</li>
+</ul>
+<h3 id="1-问题描述"><a href="#1-问题描述" class="headerlink" title="1 问题描述"></a>1 问题描述</h3><p>Java连接MySQL的出现错误：</p>
+<blockquote>
+<p>ERROR: The server time zone value ‘�й���׼ʱ��’ is unrecognized or represents more than one time zone. You must configure either the server or JDBC driver (via the serverTimezone configuration property) to use a more specifc time zone value if you want to utilize time zone support.</p>
+</blockquote>
+<p>提示说服务器时区设置错误，首先，查看原编码：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> show variables like <span class="string">'%time_zone%'</span>;</span></span><br><span class="line">+------------------+--------+  </span><br><span class="line">| Variable_name    | Value  |  </span><br><span class="line">+------------------+--------+  </span><br><span class="line">| system_time_zone |        |  </span><br><span class="line">| time_zone        | SYSTEM |  </span><br><span class="line">+------------------+--------+  </span><br><span class="line">2 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+<p>发现，<code>system_time_zone</code>一栏为空，需要修改系统时区设置。</p>
+<h3 id="2-解决方法"><a href="#2-解决方法" class="headerlink" title="2 解决方法"></a>2 解决方法</h3><h4 id="2-1-临时解决方法"><a href="#2-1-临时解决方法" class="headerlink" title="2.1 临时解决方法"></a>2.1 临时解决方法</h4><p>那么将<code>system_time_zone</code>改成正确的值即可：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> <span class="built_in">set</span> system_time_zone=<span class="string">'+8:00'</span>;</span></span><br></pre></td></tr></table></figure>
+<p>之后，便可以正常连接。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> show variables like <span class="string">'%time_zone%'</span>;</span></span><br><span class="line">+------------------+--------+  </span><br><span class="line">| Variable_name    | Value  |  </span><br><span class="line">+------------------+--------+  </span><br><span class="line">| system_time_zone | CST    |  </span><br><span class="line">| time_zone        | +08:00 |  </span><br><span class="line">+------------------+--------+  </span><br><span class="line">2 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-一劳永逸解决方法"><a href="#2-2-一劳永逸解决方法" class="headerlink" title="2.2 一劳永逸解决方法"></a>2.2 一劳永逸解决方法</h4><p>上述解决方法有个缺陷，就是在每次数据库重启之后，所有的工作都丢失了，会发现再次连接依然会提示错误。于是有了如下方案，直接修改 MySQL 的配置文件：</p>
+<h5 id="2-2-1-Linux-环境"><a href="#2-2-1-Linux-环境" class="headerlink" title="2.2.1 Linux 环境"></a>2.2.1 Linux 环境</h5><p>在 Ubuntu 16.04 + MySQL 5.7 环境下，修改 <code>/etc/mysql/my.cnf</code> 配置文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo vim /etc/mysql/my.cnf</span><br><span class="line">----------------------------------</span><br><span class="line">[mysqld]</span><br><span class="line">default-time-zone = '+8:00'</span><br></pre></td></tr></table></figure>
+<p>之后重启数据库即可：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo service mysql restart</span><br></pre></td></tr></table></figure>
+<h5 id="2-2-2-Windows-环境"><a href="#2-2-2-Windows-环境" class="headerlink" title="2.2.2 Windows 环境"></a>2.2.2 Windows 环境</h5><p>在 Windows + MySQL 5.7 环境下，修改 <code>%PROGRAMDATA%\MySQL\MySQL Server 5.7\my.ini</code> 配置文件：</p>
+<p>这里的 <code>%PROGRAMDATA%</code> 一般为：<code>C:\ProgramData\</code>，可以通过<code>echo %PROGRAMDATA%</code>查看。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">[mysqld]</span><br><span class="line">default-time-zone = '+8:00'</span><br></pre></td></tr></table></figure>
+<p>之后重启数据库即可：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">net stop mysql</span><br><span class="line">net start mysql</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <!-- <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-12-07T12:51:50.436Z" itemprop="dateUpdated">2018-12-07 20:51:50</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2016/10/10/2016/2016-10-10-MySQL时区问题 /" target="_blank" rel="external">http://blog.duanxu.tech/2016/10/10/2016/2016-10-10-MySQL时区问题 /</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.duanxu.tech">
+            <img src="/img/avatar.jpg" alt="Duan Xu">
+            Duan Xu
+        </a>
+    </footer>
+</blockquote>
+ -->
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ubuntu/">Ubuntu</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.tech/2016/10/10/2016/2016-10-10-MySQL时区问题 /&title=《MySQL时区问题》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.tech/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.tech/2016/10/10/2016/2016-10-10-MySQL时区问题 /&title=《MySQL时区问题》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.tech/2016/10/10/2016/2016-10-10-MySQL时区问题 /" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《MySQL时区问题》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.tech/2016/10/10/2016/2016-10-10-MySQL时区问题 /&via=http://blog.duanxu.tech" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.tech/2016/10/10/2016/2016-10-10-MySQL时区问题 /" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2016/10/27/2016/2016-10-27-Ubuntu+Django+Nginx+uWSGI+Mysql搭建Python Web服务器/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Ubuntu+Django+Nginx+uWSGI+Mysql搭建Python Web服务器</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/10/10/2016/2016-10-10-MySQL中文乱码问号问题/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">MySQL中文乱码问号问题</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        <p><span>Duan Xu &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.tech/2016/10/10/2016/2016-10-10-MySQL时区问题 /&title=《MySQL时区问题》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.tech/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.tech/2016/10/10/2016/2016-10-10-MySQL时区问题 /&title=《MySQL时区问题》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.tech/2016/10/10/2016/2016-10-10-MySQL时区问题 /" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《MySQL时区问题》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.tech/2016/10/10/2016/2016-10-10-MySQL时区问题 /&via=http://blog.duanxu.tech" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.tech/2016/10/10/2016/2016-10-10-MySQL时区问题 /" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACt0lEQVR42u3aS47dMAwEwLn/pRMgqwTJM7pJyZgA5ZXxPpbKC1Nu8esrPn78Oj6d//7J82+S3//9+ad/HTvw8PDwRlN/nkRy6eQK7eftLfvHPPHw8PCu8ZJi8DyJTxN6Js3KTzJnPDw8vO/Aex4sWSi3S208PDy8/503KyFJlNAGFnh4eHjfgZdHCe0CehYNtxHGgawFDw8Pb/J8PjCVd85f3d/Dw8PDi0tCGxO0v5n9t5gtHh4e3gVeErYmcepzfHDj+kVzAx4eHt4FXhvg5u1Z7ZZYGyK3tw8PDw/vHu9UtJqXgTwgzpMHPDw8vHu8trlq1kxwaqx6Vnh4eHiXeac2xtr9qXyUelw8PDy8o7w8hN080NvIY9Y+FXWT4eHh4a15yeZTfj4LYWdBbXsdPDw8vLO8Nm7IC0nbVjVbjhdNV3h4eHiHeO3UN9tjs4g2Z+Dh4eG9z5tFqHkbwWahfKqo4OHh4W14beTaRr3Pt6a9fUmpwMPDw3uHlzzEkwdx++2NRfkf3+Lh4eFd4OWbWPnASeFJbsHmv1FPAR4eHt6hN/c2Ks2X1PtmgllzAx4eHt5Z3mYjKn/rzyOPPEOICgkeHh7eNV6O2bcUtNtmbXnAw8PDu82bYdpQoJ3ubHOueFfAw8PDW/BmAyfDtw/9vAAU88TDw8O7xmtjghuMfdPVxzcGPDw8vKO8TStVG8jmC+J88ywKmvHw8PCO8vJ2gRzcFoO2vSC/QXh4eHjv82aL4GL4MpY9lrXg4eHhLXj5kZSBPEo425zaLvTx8PDw9rzNIri9f7NQoy0MUQMBHh4e3pq3WQq3m1htaWnZeHh4eN+HN9sY27dbteFvVKnw8PDwXuTlXQlR58I66o06I/Dw8PAu8NqH9Waim222NjjGw8PDu8FrN8Bmj/5NAdg0LuDh4eEd5f0EWk4YPHlYbh4AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '失去灵魂(╯‵□′)╯︵┻━┻';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Blog | Duan Xu';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

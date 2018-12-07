@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>MAY THE FORCE BE WITH YOU</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta property="og:type" content="website">
+<meta property="og:title" content="MAY THE FORCE BE WITH YOU">
+<meta property="og:url" content="http://blog.duanxu.tech/index.html">
+<meta property="og:site_name" content="MAY THE FORCE BE WITH YOU">
+<meta property="og:locale" content="zh-CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MAY THE FORCE BE WITH YOU">
+    
+        <link rel="alternate" type="application/atom+xml" title="MAY THE FORCE BE WITH YOU" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon_64.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Duan Xu</h5>
+          <a href="mailto:duanxu@outlook.com" title="duanxu@outlook.com" class="mail">duanxu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect active">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/doodle777" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/2886472974" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">MAY THE FORCE BE WITH YOU</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header index-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">MAY THE FORCE BE WITH YOU</h1>
+        <h5 class="subtitle">
+            
+                
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+<div class="container body-wrap">
+
+    <ul class="post-list">
+    
+        <li class="post-list-item fade">
+            <article id="post-2017/2017-08-31-搭建Git服务器" class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-08-31 14:55:30" datetime="2017-08-31T06:55:30.000Z" itemprop="datePublished">2017-08-31</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Linux/">Linux</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/08/31/2017/2017-08-31-搭建Git服务器/">搭建Git服务器</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        
+content{:toc}
+
+GitHub就是一个免费托管开源代码的远程仓库。托管在GitHUb上的。
+搭建Git服务器需要准备一台运行Linux的机器，强烈推荐用Ubuntu或Debian，这样，通过几条简单的apt命令就可以完成安装。
+假设你已经有sudo权限的用户账号，下面，正式开始安装。
+Step1 安装git1$ sudo apt-get install git
+Step2 创建...
+    
+
+        <a href="/2017/08/31/2017/2017-08-31-搭建Git服务器/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git/">Git</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-2017/2017-08-20-Ubuntu下Thunderbird邮件ExQuilla插件license过期解决办法" class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-08-20 14:41:30" datetime="2017-08-20T06:41:30.000Z" itemprop="datePublished">2017-08-20</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Ubuntu/">Ubuntu</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/08/20/2017/2017-08-20-Ubuntu下Thunderbird邮件ExQuilla插件license过期解决办法/">Ubuntu下Thunderbird邮件ExQuilla插件license过期解决办法</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        
+content{:toc}
+
+Linux上只用Web版处理邮件，就是因为找不到太好的能支持Exchange的邮件客户端。在网上无意中发现了ExQuilla 这个Thunderbird的插件，试用了一下还是不错的，很方便，不过只能免费试用60天。
+网上能找到的解决办法都是用老版本的Thunderbird，搭配老版本的ExQuilla，但版本都太老了点。
+另外一种办法是破解license，原来...
+    
+
+        <a href="/2017/08/20/2017/2017-08-20-Ubuntu下Thunderbird邮件ExQuilla插件license过期解决办法/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ExQuilla/">ExQuilla</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Thunderbird/">Thunderbird</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ubuntu/">Ubuntu</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-2017/2017-05-01-JAVA集合框架学习笔记(1)-ArrayList" class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-05-01 19:45:30" datetime="2017-05-01T11:45:30.000Z" itemprop="datePublished">2017-05-01</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Java/">Java</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/05/01/2017/2017-05-01-JAVA集合框架学习笔记(1)-ArrayList/">Java集合框架学习笔记(1) ArrayList</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        
+content{:toc}
+
+类定义123public class ArrayList&lt;E&gt; extends AbstractList&lt;E&gt;        implements List&lt;E&gt;, RandomAccess, Cloneable, java.io.Serializable&#123;&#125;
+ArrayList 是Java集合框架中最常...
+    
+
+        <a href="/2017/05/01/2017/2017-05-01-JAVA集合框架学习笔记(1)-ArrayList/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ArrayList/">ArrayList</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Framework/">Framework</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-2017/2017-05-01-JAVA集合框架学习笔记(0)-Overview" class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-05-01 19:29:30" datetime="2017-05-01T11:29:30.000Z" itemprop="datePublished">2017-05-01</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Java/">Java</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/05/01/2017/2017-05-01-JAVA集合框架学习笔记(0)-Overview/">Java集合框架学习笔记(0) Overview</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        
+content{:toc}
+
+
+
+
+Collection
+List
+AbstractList
+Vector
+Stack
+
+
+ArrayList
+LinkedList
+
+
+
+
+Set
+AbstractSet
+HashSet
+LinkedHashSet
+
+
+TreeSet
+
+
+
+
+
+
+Map
+AbstractMap
+HashMap
+LinkedHashMap
+
+
+WeakHashMap
+Has...
+    
+
+        <a href="/2017/05/01/2017/2017-05-01-JAVA集合框架学习笔记(0)-Overview/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Collection/">Collection</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Framework/">Framework</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-2017/2017-03-30-转-Java核心技术点之注解" class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-03-30 20:45:30" datetime="2017-03-30T12:45:30.000Z" itemprop="datePublished">2017-03-30</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Repost/">Repost</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/03/30/2017/2017-03-30-转-Java核心技术点之注解/">[转]Java核心技术点之注解</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        
+content{:toc}
+
+原文链接：Java核心技术点之注解
+本博文是对Java中注解相关知识点的简单总结，若有叙述不清晰或是不准确的地方，希望大家可以指正，谢谢大家：）
+一、什么是注解我们大家都知道Java代码中使用注释是为了向以后阅读这份代码的人解释说明一些事情，注解是注释的升级版，它可以向编译器、虚拟机等解释说明一些事情。比如我们非常熟悉的@Override就是一种元注解，它的作...
+    
+
+        <a href="/2017/03/30/2017/2017-03-30-转-Java核心技术点之注解/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Annotation/">Annotation</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-2017/2017-03-30-转-一起写一个JSON解析器" class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-03-30 20:45:30" datetime="2017-03-30T12:45:30.000Z" itemprop="datePublished">2017-03-30</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Repost/">Repost</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/03/30/2017/2017-03-30-转-一起写一个JSON解析器/">[转]一起写一个JSON解析器</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        
+content{:toc}
+
+原文链接：一起写一个JSON解析器
+【本篇博文会介绍JSON解析的原理与实现，并一步一步写出来一个简单但实用的JSON解析器，项目地址：SimpleJSON。希望通过这篇博文，能让我们以后与JSON打交道时更加得心应手。由于个人水平有限，叙述中难免存在不准确或是不清晰的地方，希望大家可以指正：）】
+一、JSON解析器介绍相信大家在平时的开发中没少与JSON打交...
+    
+
+        <a href="/2017/03/30/2017/2017-03-30-转-一起写一个JSON解析器/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JSON/">JSON</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-2016/2016-12-27-转-三十分钟学会SED" class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2016-12-27 11:37:30" datetime="2016-12-27T03:37:30.000Z" itemprop="datePublished">2016-12-27</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Repost/">Repost</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2016/12/27/2016/2016-12-27-转-三十分钟学会SED/">[转]三十分钟学会SED</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        
+content{:toc}
+
+原文链接：三十分钟学会SED
+
+本文承接之前写的三十分钟学会AWK一文，在学习完AWK之后，趁热打铁又学习了一下SED，不得不说这两个工具真的堪称文本处理神器，谁用谁知道！本文大部分内容依旧是翻译自Tutorialspoint上的入门教程，这次是 Sed Tutorial 一文，内容做了一些删减和补充，增加了一些原文中没有提及到的语法和命令的讲解，并且对原文所...
+    
+
+        <a href="/2016/12/27/2016/2016-12-27-转-三十分钟学会SED/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Sed/">Sed</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-2016/2016-12-27-转-三十分钟学会AWK" class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2016-12-27 11:31:30" datetime="2016-12-27T03:31:30.000Z" itemprop="datePublished">2016-12-27</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Repost/">Repost</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2016/12/27/2016/2016-12-27-转-三十分钟学会AWK/">[转]三十分钟学会AWK</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        
+content{:toc}
+
+原文链接：三十分钟学会AWK
+
+                
+                    
+                    
+                
+                
+            
+本文大部分内容翻译自我开始学习AWK时看到的一篇英文文章 AWK Tutorial ，觉得对AWK入门非常有帮助，所以...
+    
+
+        <a href="/2016/12/27/2016/2016-12-27-转-三十分钟学会AWK/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Awk/">Awk</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-2016/2016-12-20-转-Java中的反射总结" class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2016-12-20 11:48:30" datetime="2016-12-20T03:48:30.000Z" itemprop="datePublished">2016-12-20</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Repost/">Repost</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2016/12/20/2016/2016-12-20-转-Java中的反射总结/">[转]Java中的反射总结</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        
+content{:toc}
+
+原文链接：Java中的反射总结
+刚开始学习java的时候真的很难理解反射到底是个什么东西
+一些书籍，哪怕是很经典的书籍都解释的让人感觉懵懵的，或许的确是我太笨
+况且，网上说在将来学习框架的时候需要经常应用到反射机制，这样一来总让人心里有些不安
+就方才偶然又把讲解反射的章节和视频看了一点，觉得能理解一些了
+现在决定一鼓作气，边看边写，顺便把一些主要的内容和操作都...
+    
+
+        <a href="/2016/12/20/2016/2016-12-20-转-Java中的反射总结/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Reflect/">Reflect</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-2016/2016-12-19-转-Python爬虫实战-抓取图书馆借阅信息" class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2016-12-19 09:48:30" datetime="2016-12-19T01:48:30.000Z" itemprop="datePublished">2016-12-19</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Repost/">Repost</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2016/12/19/2016/2016-12-19-转-Python爬虫实战-抓取图书馆借阅信息/">[转]Python爬虫实战 抓取图书馆借阅信息 </a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        
+content{:toc}
+
+原文链接：Python爬虫实战—抓取图书馆借阅信息
+　　前段时间在图书馆借了很多书，借得多了就容易忘记每本书的应还日期，老是担心自己会违约，影响日后借书，而自己又懒得总是登录到学校图书馆借阅系统查看，于是就打算写一个爬虫来抓取自己的借阅信息，把每本书的应还日期给爬下来，并写入txt文件，这样每次忘了就可以打开该txt文件查看，每次借阅信息改变了，只要再重新运行...
+    
+
+        <a href="/2016/12/19/2016/2016-12-19-转-Python爬虫实战-抓取图书馆借阅信息/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+    </ul>
+
+    
+<nav id="page-nav">
+    <div class="inner">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
+    </div>
+</nav>
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        <p><span>Duan Xu &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.tech/&title=MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.tech/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.tech/&title=MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.tech/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.tech/&via=http://blog.duanxu.tech" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.tech/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAAAAAAZai4+AAABWElEQVR42u3ayw7DIAxE0fz/T9NtpdQwgx1VwZdVlBdnE8cYX5c8RjDuV7/P3I+LByxYB7HGdEQTR2+Yn1fmggWrMyuaLHPPPHAsDLBgwZpOmaHAggWrNkDUJtCwYMHSk2ZlKfuHXB4WrCNYelUnf/xIfQsWrJezhjmU6d2g8OMpWLCasfQP2P25ur9hWLA6s5RFqb5AVQKHEkpgwerGUl6hF5L2Qkb4FCxYbVh6IMiUjdyiMCxY3Vh6W4ACUs4bBSZYsFqylJ+3G1DcwLFYVcOC1YClJ8p7SbPyzkuJSbBgHc3KUzLL1zBphgWrGUu6tbTHYTEjLFhtWJmGg3wyvdjmhAWrDSvfF5cv7Bb0BsKCdQRL/8jzDQdGsRgWrJas55JjNxrAggXLZemFp4JtTliwYMlNeO6CNjTAgtWStVc8cktFRgkJFqxmrL2NkEz9pzjXhgXr3awPiwG7kz7/lzIAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '失去灵魂(╯‵□′)╯︵┻━┻';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Blog | Duan Xu';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

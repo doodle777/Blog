@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Ubuntu+Django+Nginx+uWSGI+Mysql搭建Python Web服务器 | MAY THE FORCE BE WITH YOU</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Ubuntu,MySQL,Django,Nginx,Python Web">
+    <meta name="description" content="content{:toc}  本文转载自SegmentFault 前不久为了部署Django项目，在百度上到处找教程，找到的教程因为这样那样的原因，总是失败，可能是因为作者水平比较高吧，有些细节的东西估计没写出来，造成我这种初学者想照着做都做不成。百度不行就用Google吧，中文不行就找英文的，最后，给我误打误撞的部署成功了。为了加深印象，我用虚拟机再重新部署一次。 1 准备工作我使用的系统是U">
+<meta name="keywords" content="Ubuntu,MySQL,Django,Nginx,Python Web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu+Django+Nginx+uWSGI+Mysql搭建Python Web服务器">
+<meta property="og:url" content="http://blog.duanxu.tech/2016/10/27/2016/2016-10-27-Ubuntu+Django+Nginx+uWSGI+Mysql搭建Python Web服务器/index.html">
+<meta property="og:site_name" content="MAY THE FORCE BE WITH YOU">
+<meta property="og:description" content="content{:toc}  本文转载自SegmentFault 前不久为了部署Django项目，在百度上到处找教程，找到的教程因为这样那样的原因，总是失败，可能是因为作者水平比较高吧，有些细节的东西估计没写出来，造成我这种初学者想照着做都做不成。百度不行就用Google吧，中文不行就找英文的，最后，给我误打误撞的部署成功了。为了加深印象，我用虚拟机再重新部署一次。 1 准备工作我使用的系统是U">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://blog.duanxu.tech/images/201610/2016102701.png">
+<meta property="og:image" content="http://blog.duanxu.tech/images/201610/2016102702.png">
+<meta property="og:image" content="http://blog.duanxu.tech/images/201610/2016102703.png">
+<meta property="og:image" content="http://blog.duanxu.tech/images/201610/2016102704.png">
+<meta property="og:image" content="http://blog.duanxu.tech/images/201610/2016102705.png">
+<meta property="og:image" content="http://blog.duanxu.tech/images/201610/2016102706.png">
+<meta property="og:image" content="http://blog.duanxu.tech/images/201610/2016102707.png">
+<meta property="og:image" content="http://blog.duanxu.tech/images/201610/2016102708.png">
+<meta property="og:updated_time" content="2018-12-07T12:51:53.484Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ubuntu+Django+Nginx+uWSGI+Mysql搭建Python Web服务器">
+<meta name="twitter:description" content="content{:toc}  本文转载自SegmentFault 前不久为了部署Django项目，在百度上到处找教程，找到的教程因为这样那样的原因，总是失败，可能是因为作者水平比较高吧，有些细节的东西估计没写出来，造成我这种初学者想照着做都做不成。百度不行就用Google吧，中文不行就找英文的，最后，给我误打误撞的部署成功了。为了加深印象，我用虚拟机再重新部署一次。 1 准备工作我使用的系统是U">
+<meta name="twitter:image" content="http://blog.duanxu.tech/images/201610/2016102701.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="MAY THE FORCE BE WITH YOU" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon_64.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Duan Xu</h5>
+          <a href="mailto:duanxu@outlook.com" title="duanxu@outlook.com" class="mail">duanxu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/doodle777" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/2886472974" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Ubuntu+Django+Nginx+uWSGI+Mysql搭建Python Web服务器</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Ubuntu+Django+Nginx+uWSGI+Mysql搭建Python Web服务器</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-10-27T14:09:30.000Z" itemprop="datePublished" class="page-time">
+  2016-10-27
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Ubuntu/">Ubuntu</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container-post body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-准备工作"><span class="post-toc-number">1.</span> <span class="post-toc-text">1 准备工作</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-1-更新apt-get"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">1.1 更新apt-get</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-2-安装SSH"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">1.2 安装SSH</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-3-安装Git"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">1.3 安装Git</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-安装配置MySQL"><span class="post-toc-number">2.</span> <span class="post-toc-text">2 安装配置MySQL</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-1-安装"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">2.1 安装</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-2-配置"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">2.2 配置</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-安装配置Python环境"><span class="post-toc-number">3.</span> <span class="post-toc-text">3 安装配置Python环境</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-1-安装python-dev包"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">3.1 安装python-dev包</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-2-安装pip"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">3.2 安装pip</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-3-更换pip源"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">3.3 更换pip源</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-4-安装配置VirtualEnv和VirtualEnvWrapper"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">3.4 安装配置VirtualEnv和VirtualEnvWrapper</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-Django项目配置"><span class="post-toc-number">4.</span> <span class="post-toc-text">4 Django项目配置</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4-1-安装django"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">4.1 安装django</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4-2-下载或拷贝项目"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">4.2 下载或拷贝项目</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4-3-配置django"><span class="post-toc-number">4.3.</span> <span class="post-toc-text">4.3 配置django</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4-4-测试项目"><span class="post-toc-number">4.4.</span> <span class="post-toc-text">4.4 测试项目</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4-5-退出虚拟环境"><span class="post-toc-number">4.5.</span> <span class="post-toc-text">4.5 退出虚拟环境</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5-uWSGI安装和配置"><span class="post-toc-number">5.</span> <span class="post-toc-text">5 uWSGI安装和配置</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5-1-安装uWSGI"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">5.1 安装uWSGI</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5-2-配置uWSGI"><span class="post-toc-number">5.2.</span> <span class="post-toc-text">5.2 配置uWSGI</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#6-反向代理：Nginx的安装和配置"><span class="post-toc-number">6.</span> <span class="post-toc-text">6 反向代理：Nginx的安装和配置</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#6-1-安装"><span class="post-toc-number">6.1.</span> <span class="post-toc-text">6.1 安装</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#6-2-创建配置文件"><span class="post-toc-number">6.2.</span> <span class="post-toc-text">6.2 创建配置文件</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-2016/2016-10-27-Ubuntu+Django+Nginx+uWSGI+Mysql搭建Python Web服务器" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Ubuntu+Django+Nginx+uWSGI+Mysql搭建Python Web服务器</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-10-27 22:09:30" datetime="2016-10-27T14:09:30.000Z" itemprop="datePublished">2016-10-27</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Ubuntu/">Ubuntu</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <ul>
+<li>content<br>{:toc}</li>
+</ul>
+<p><strong>本文转载自<a href="https://segmentfault.com/a/1190000007262187" target="_blank" rel="noopener">SegmentFault</a></strong></p>
+<p>前不久为了部署Django项目，在百度上到处找教程，找到的教程因为这样那样的原因，总是失败，可能是因为作者水平比较高吧，有些细节的东西估计没写出来，造成我这种初学者想照着做都做不成。百度不行就用Google吧，中文不行就找英文的，最后，给我误打误撞的部署成功了。为了加深印象，我用虚拟机再重新部署一次。</p>
+<h3 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="1 准备工作"></a>1 准备工作</h3><p>我使用的系统是Ubuntu14.04.5 LTS(Trusty Tahr) server i386版，官网下载地址：<a href="http://releases.ubuntu.com/14.04.4/ubuntu-14.04.5-server-i386.iso" target="_blank" rel="noopener">http://releases.ubuntu.com/14.04.4/ubuntu-14.04.5-server-i386.iso</a></p>
+<p>安装的时候全部选择英文，记得以前选择中文的时候安装时出了问题，服务器组件一个不选，Ubuntu安装做的很贴心，基本上是一路回车，就不详细说明了。装好以后，首先要更新apt-get，貌似我的ubuntu镜像是在国内站下载的，所以源是国内的地址，所以就不用更换源了。</p>
+<h4 id="1-1-更新apt-get"><a href="#1-1-更新apt-get" class="headerlink" title="1.1 更新apt-get"></a>1.1 更新apt-get</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get upgrade</span><br></pre></td></tr></table></figure>
+<h4 id="1-2-安装SSH"><a href="#1-2-安装SSH" class="headerlink" title="1.2 安装SSH"></a>1.2 安装SSH</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install ssh</span><br></pre></td></tr></table></figure>
+<p>装好以后，用ifconfig查看一下IP地址</p>
+<div style="text-align: center"><br><img src="/images/201610/2016102701.png"><br></div>
+
+
+<p>可以看到IP地址是192.168.0.154，下面我们就使用XSHELL连接192.168.0.154进行操作了。</p>
+<h4 id="1-3-安装Git"><a href="#1-3-安装Git" class="headerlink" title="1.3 安装Git"></a>1.3 安装Git</h4><p>这一步不是必须的，因为我的测试项目是放在git.oschina.com上的，安装git获取项目代码就很方便了</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install git</span><br></pre></td></tr></table></figure>
+<h3 id="2-安装配置MySQL"><a href="#2-安装配置MySQL" class="headerlink" title="2 安装配置MySQL"></a>2 安装配置MySQL</h3><h4 id="2-1-安装"><a href="#2-1-安装" class="headerlink" title="2.1 安装"></a>2.1 安装</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install mysql-server</span><br></pre></td></tr></table></figure>
+<p>安装过程中会提示让你设置root密码</p>
+<div style="text-align: center"><br><img src="/images/201610/2016102702.png"><br></div>
+
+<h4 id="2-2-配置"><a href="#2-2-配置" class="headerlink" title="2.2 配置"></a>2.2 配置</h4><p>2.2.1 数据库初始化：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mysql_install_db</span><br></pre></td></tr></table></figure>
+<p>2.2.2 运行数据库Mysql安全配置向导</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mysql_secure_installation</span><br></pre></td></tr></table></figure>
+<p>输入root密码</p>
+<div style="text-align: center"><br><img src="/images/201610/2016102703.png"><br></div>
+
+<p>是否修改root密码，因为前面已经设置过了，选n</p>
+<div style="text-align: center"><br><img src="/images/201610/2016102704.png"><br></div>
+
+<p>是否移除匿名用户,肯定是要选y的</p>
+<div style="text-align: center"><br><img src="/images/201610/2016102705.png"><br></div>
+
+<p>是否允许远程登陆，如果选n的话，只能在本机访问数据库，建议选y</p>
+<div style="text-align: center"><br><img src="/images/201610/2016102706.png"><br></div>
+
+<p>是否移除test数据库，建议选是</p>
+<div style="text-align: center"><br><img src="/images/201610/2016102707.png"><br></div>
+
+<p>重新加载权限表，选y</p>
+<div style="text-align: center"><br><img src="/images/201610/2016102708.png"><br></div>
+
+<p>All done!</p>
+<h3 id="3-安装配置Python环境"><a href="#3-安装配置Python环境" class="headerlink" title="3 安装配置Python环境"></a>3 安装配置Python环境</h3><h4 id="3-1-安装python-dev包"><a href="#3-1-安装python-dev包" class="headerlink" title="3.1 安装python-dev包"></a>3.1 安装python-dev包</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install python-dev</span><br></pre></td></tr></table></figure>
+<h4 id="3-2-安装pip"><a href="#3-2-安装pip" class="headerlink" title="3.2 安装pip"></a>3.2 安装pip</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install python-pip</span><br></pre></td></tr></table></figure>
+<h4 id="3-3-更换pip源"><a href="#3-3-更换pip源" class="headerlink" title="3.3 更换pip源"></a>3.3 更换pip源</h4><p>因为国内使用默认的pip源速度很慢，所以需要更换,在用户根目录下新建.pip目录，在该目录下新建pip.conf文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir ~/.pip</span><br><span class="line">sudo vi ~/.pip/pip.conf</span><br></pre></td></tr></table></figure>
+<p>然后在文件里写上：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[global]</span><br><span class="line">index-url = http://mirrors.aliyun.com/pypi/simple/</span><br><span class="line"></span><br><span class="line">[install]</span><br><span class="line">trusted-host=mirrors.aliyun.com</span><br></pre></td></tr></table></figure>
+<h4 id="3-4-安装配置VirtualEnv和VirtualEnvWrapper"><a href="#3-4-安装配置VirtualEnv和VirtualEnvWrapper" class="headerlink" title="3.4 安装配置VirtualEnv和VirtualEnvWrapper"></a>3.4 安装配置VirtualEnv和VirtualEnvWrapper</h4><p>VirtualEnv可以管理多个开发环境，VirtualEnvWrapper使得VirtualEnv变得更好用</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pip install virtualenv virtualenvwrapper</span><br></pre></td></tr></table></figure>
+<p>安装完成以后，需要在环境变量中加入一些配置：下面这句话是使用python3才需要执行的，python2不需要</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo "export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3" &gt;&gt; ~/.bashrc</span><br></pre></td></tr></table></figure>
+<p>不管python是什么版本，都要执行下面两句：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo "export WORKON_HOME=~/Env" &gt;&gt; ~/.bashrc</span><br><span class="line">echo "source /usr/local/bin/virtualenvwrapper.sh" &gt;&gt; ~/.bashrc</span><br></pre></td></tr></table></figure>
+<p>可以重启系统激活，也可以运行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure>
+<p>然后就可以开始建立一个虚拟环境：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkvirtualenv first</span><br></pre></td></tr></table></figure>
+<p>你会发现，提示符变成(first)user@hostname:~$,表示现在已经进入first的虚拟环境，在此环境下进行的pip等操作，只会在当前环境下生效,当前虚拟环境在/home/siva/Env/first目录下</p>
+<h3 id="4-Django项目配置"><a href="#4-Django项目配置" class="headerlink" title="4 Django项目配置"></a>4 Django项目配置</h3><h4 id="4-1-安装django"><a href="#4-1-安装django" class="headerlink" title="4.1 安装django"></a>4.1 安装django</h4><p>我使用选择版本来安装：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install django==1.10.1</span><br></pre></td></tr></table></figure>
+<h4 id="4-2-下载或拷贝项目"><a href="#4-2-下载或拷贝项目" class="headerlink" title="4.2 下载或拷贝项目"></a>4.2 下载或拷贝项目</h4><p>安装完成以后，使用git把项目clone下来,此处填写你自己的地址：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://git.oschina.net/xxx/Siva_First.git</span><br></pre></td></tr></table></figure>
+<p>此例子的项目名称是Siva_First，路径是在/home/siva/下</p>
+<h4 id="4-3-配置django"><a href="#4-3-配置django" class="headerlink" title="4.3 配置django"></a>4.3 配置django</h4><p>用Mysql建好项目的数据库，然后进入Siva_First目录，用django应用数据模型：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python manage.py makemigrations</span><br><span class="line">python manage.py migrate</span><br></pre></td></tr></table></figure>
+<p>建立后台超级用户：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py createsuperuser</span><br></pre></td></tr></table></figure>
+<p>静态文件安置：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py collectstatic</span><br></pre></td></tr></table></figure>
+<h4 id="4-4-测试项目"><a href="#4-4-测试项目" class="headerlink" title="4.4 测试项目"></a>4.4 测试项目</h4><p>运行开发服务器测试一下是否可以正常运行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py runserver 0.0.0.0:8000</span><br></pre></td></tr></table></figure>
+<p>这时，用浏览器打开<a href="http://192.168.0.154:8000/可以看到网站" target="_blank" rel="noopener">http://192.168.0.154:8000/可以看到网站</a></p>
+<h4 id="4-5-退出虚拟环境"><a href="#4-5-退出虚拟环境" class="headerlink" title="4.5 退出虚拟环境"></a>4.5 退出虚拟环境</h4><p>因为当前是在first虚拟环境下，为了下一步的安装，必须退出当前的虚拟环境：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deactivate</span><br></pre></td></tr></table></figure>
+<h3 id="5-uWSGI安装和配置"><a href="#5-uWSGI安装和配置" class="headerlink" title="5 uWSGI安装和配置"></a>5 uWSGI安装和配置</h3><h4 id="5-1-安装uWSGI"><a href="#5-1-安装uWSGI" class="headerlink" title="5.1 安装uWSGI"></a>5.1 安装uWSGI</h4><p>pip下安装很简单：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pip install uwsgi</span><br></pre></td></tr></table></figure>
+<p>我们可以测试一下uwsgi是否安装成功</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uwsgi --http :8000 --home /home/siva/Env/first --chdir /home/siva/Siva_First -w Siva_First.wsgi</span><br></pre></td></tr></table></figure>
+<p>上面的命令是使用8000端口，虚拟环境在/home/siva/Env/first，项目在/home/siva/Siva_First下</p>
+<h4 id="5-2-配置uWSGI"><a href="#5-2-配置uWSGI" class="headerlink" title="5.2 配置uWSGI"></a>5.2 配置uWSGI</h4><p>使用上面的命令行来部署网站肯定是不行的，我们需要使用“Emperor mode”，建立一个目录来放配置文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir -p /etc/uwsgi/sites</span><br><span class="line">cd /etc/uwsgi/sites</span><br></pre></td></tr></table></figure>
+<p>以项目名称来命名这个配置文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi Siva_First.ini</span><br></pre></td></tr></table></figure>
+<p>内容如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[uwsgi]</span><br><span class="line">project = Siva_First</span><br><span class="line">base = /home/siva</span><br><span class="line"></span><br><span class="line">chdir = %(base)/%(project)</span><br><span class="line">home = %(base)/Env/%(project)</span><br><span class="line">module = %(project).wsgi:application</span><br><span class="line"></span><br><span class="line">master = true</span><br><span class="line">processes = 5</span><br><span class="line"></span><br><span class="line">socket = %(base)/%(project)/%(project).sock</span><br><span class="line">chmod-socket = 664</span><br><span class="line">vacuum = true</span><br></pre></td></tr></table></figure>
+<p>project是项目名称，base是项目所在位置</p>
+<p>现在，配置文件建好了，但是uwsgi还不能自动运行我们需要在/etc/init目录中建一个启动脚本：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/init/uwsgi.conf</span><br></pre></td></tr></table></figure>
+<p>内容如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">description "uWSGI application server in Emperor mode"</span><br><span class="line"></span><br><span class="line">start on runlevel [2345]</span><br><span class="line">stop on runlevel [!2345]</span><br><span class="line"></span><br><span class="line">setuid siva</span><br><span class="line">setgid www-data</span><br><span class="line"></span><br><span class="line">exec /usr/local/bin/uwsgi --emperor /etc/uwsgi/sites</span><br></pre></td></tr></table></figure>
+<p>这一步完成以后，uwsgi还是不能正常启动，是因为www-data用户组还没有创建，等我们装完nginx以后就可以了。</p>
+<h3 id="6-反向代理：Nginx的安装和配置"><a href="#6-反向代理：Nginx的安装和配置" class="headerlink" title="6 反向代理：Nginx的安装和配置"></a>6 反向代理：Nginx的安装和配置</h3><h4 id="6-1-安装"><a href="#6-1-安装" class="headerlink" title="6.1 安装"></a>6.1 安装</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install nginx</span><br></pre></td></tr></table></figure>
+<h4 id="6-2-创建配置文件"><a href="#6-2-创建配置文件" class="headerlink" title="6.2 创建配置文件"></a>6.2 创建配置文件</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/nginx/sites-available/Siva_First</span><br></pre></td></tr></table></figure>
+<p>内容如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name 192.168.0.154;</span><br><span class="line"></span><br><span class="line">    location = /favicon.ico &#123; access_log off; log_not_found off; &#125;</span><br><span class="line">    location /static/ &#123;</span><br><span class="line">        root /home/siva/Siva_First;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        include         uwsgi_params;</span><br><span class="line">        uwsgi_pass      unix:/home/siva/Siva_First/Siva_First.sock;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后把这个配置文件链接到sites-enabled目录下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ln -s /etc/nginx/sites-available/Siva_First /etc/nginx/sites-enabled/</span><br></pre></td></tr></table></figure>
+<p>检查一下配置文件的语法是否有问题</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service nginx configtest</span><br></pre></td></tr></table></figure>
+<p>如果没问题，那么重启一下nginx和uwsgi的服务就可以访问了</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo service nginx restart</span><br><span class="line">sudo service uwsgi restart</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <!-- <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-12-07T12:51:53.484Z" itemprop="dateUpdated">2018-12-07 20:51:53</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2016/10/27/2016/2016-10-27-Ubuntu+Django+Nginx+uWSGI+Mysql搭建Python Web服务器/" target="_blank" rel="external">http://blog.duanxu.tech/2016/10/27/2016/2016-10-27-Ubuntu+Django+Nginx+uWSGI+Mysql搭建Python Web服务器/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.duanxu.tech">
+            <img src="/img/avatar.jpg" alt="Duan Xu">
+            Duan Xu
+        </a>
+    </footer>
+</blockquote>
+ -->
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/">Nginx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python-Web/">Python Web</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ubuntu/">Ubuntu</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.tech/2016/10/27/2016/2016-10-27-Ubuntu+Django+Nginx+uWSGI+Mysql搭建Python Web服务器/&title=《Ubuntu+Django+Nginx+uWSGI+Mysql搭建Python Web服务器》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.tech/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.tech/2016/10/27/2016/2016-10-27-Ubuntu+Django+Nginx+uWSGI+Mysql搭建Python Web服务器/&title=《Ubuntu+Django+Nginx+uWSGI+Mysql搭建Python Web服务器》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.tech/2016/10/27/2016/2016-10-27-Ubuntu+Django+Nginx+uWSGI+Mysql搭建Python Web服务器/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Ubuntu+Django+Nginx+uWSGI+Mysql搭建Python Web服务器》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.tech/2016/10/27/2016/2016-10-27-Ubuntu+Django+Nginx+uWSGI+Mysql搭建Python Web服务器/&via=http://blog.duanxu.tech" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.tech/2016/10/27/2016/2016-10-27-Ubuntu+Django+Nginx+uWSGI+Mysql搭建Python Web服务器/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2016/11/02/2016/2016-11-02-树莓派手记(1)-查找并连接/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">树莓派手记(1) 查找并连接</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/10/10/2016/2016-10-10-MySQL时区问题 /" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">MySQL时区问题</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        <p><span>Duan Xu &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.tech/2016/10/27/2016/2016-10-27-Ubuntu+Django+Nginx+uWSGI+Mysql搭建Python Web服务器/&title=《Ubuntu+Django+Nginx+uWSGI+Mysql搭建Python Web服务器》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.tech/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.tech/2016/10/27/2016/2016-10-27-Ubuntu+Django+Nginx+uWSGI+Mysql搭建Python Web服务器/&title=《Ubuntu+Django+Nginx+uWSGI+Mysql搭建Python Web服务器》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.tech/2016/10/27/2016/2016-10-27-Ubuntu+Django+Nginx+uWSGI+Mysql搭建Python Web服务器/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Ubuntu+Django+Nginx+uWSGI+Mysql搭建Python Web服务器》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.tech/2016/10/27/2016/2016-10-27-Ubuntu+Django+Nginx+uWSGI+Mysql搭建Python Web服务器/&via=http://blog.duanxu.tech" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.tech/2016/10/27/2016/2016-10-27-Ubuntu+Django+Nginx+uWSGI+Mysql搭建Python Web服务器/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ4AAAEOCAAAAABd2qZ5AAAD/ElEQVR42u3aS27bQBAFQN3/0gqQlQOH9HvdI8uAiytBosiZ4qLZn8cjPp5/j8+fr379eHz+/urMq3PyNdyfc+zAgQMHDhzBVvNlJdu+P6fd3v3a7u+b7xEHDhw4cJzlyIPr/VKuFrQBmoXYJOjiwIEDB473ciQQyfcb6HzDOHDgwIHj53Pcp0NtsjcrRLb0OHDgwIHjXRzJJtuCYN6IatPCWfvqcK0UBw4cOHCkke7RBt2f//mb5jtw4MCB49dzPA8d+fXbkYiklXVqXzhw4MCBY8/R3iZfbj7ikGwp/3Uz3IADBw4cOE5xbIp6sxC7yaqSAmJesoyaTzhw4MCBY8SRFAST27eNpXYAYh+qhw8JBw4cOHAEHElYygny7eVFxhaxHV/4T60UBw4cOHC8gCMfaNgPRrTBO6/j1eVCHDhw4MBxiON+q+3AQVK2y4uA+dpyuMvvceDAgQPHmiNvEc2C36mEcD/GV5QgceDAgQPHgiMPn+24Q9712jyANsRG7x04cODAgWPNkW+yTedmAS8P0km6WCSHOHDgwIFjzdFeLh9T2Iw+5I2l5Ar1IAUOHDhw4FhwtIEtD1f75GpD07464MCBAweOUxyzcJiPKeRkLVBbgsxfLHDgwIEDx54j31g7ppaHz82RFCvrZhUOHDhw4FhwtOMCs3JhO46Qh/x9y+qLvBYHDhw4cBzlaAcX8pQvGi84OtYQvV7gwIEDB44FR9K8ycfd2rRtFobz8N+OWeDAgQMHjlMcs4LdJjFr20LD0YRy5Thw4MCBY89xHyxnN24TrdnAwSwAFw8JBw4cOHCsOfJC4WykIEn8Nslhm84VUx44cODAgSPmaP+QbDUpxuWI7b1mBcToXQMHDhw4cJQcs0QoH2XIN7Mfm8iTvX9WhQMHDhw41hyzUmA74nbqarOt5qVPHDhw4MCx59gEsFeQtQ2q2S5w4MCBA8frOGYtnM3GkiLjrMWVD9hF0Dhw4MCBY8SRjKBtRgeSwJYPsSVFyaTp9UUuiwMHDhw4DnHMUqk23K6Wu3hsUeDHgQMHDhyHOJKFtrfM06fZ1WZBelVlxIEDBw4cZUFwNi6Qj9adCsZ5ale/HODAgQMHjjVH21jKE632mrNz6lCanIkDBw4cOBYcz/KYNYRmDad888ceGw4cOHDgOBkBD9fN8tGHGW6CMjsTBw4cOHDsOWY3niVjeWFx1UAqA3mRyOHAgQMHjkUQnXEkCdvmIW0GLCImHDhw4MDxJo592N4UBNt1FnvBgQMHDhzfyJFsKR9iywfaNm2wPHXEgQMHDhxnOfLQOEuT2hJk8hjaEYoozcOBAwcOHGuOWS+mHUQ71TqaXSd/8Dhw4MCBY8HxB7T5mt28frfiAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '失去灵魂(╯‵□′)╯︵┻━┻';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Blog | Duan Xu';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

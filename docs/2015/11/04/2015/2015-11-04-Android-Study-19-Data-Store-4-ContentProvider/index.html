@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Android开发手记(19) 数据存储四 ContentProvider | MAY THE FORCE BE WITH YOU</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Android,DataStore,ContentProvider">
+    <meta name="description" content="content{:toc}  转载自：博客园 Android为数据存储提供了五种方式： 1、SharedPreferences 2、文件存储 3、SQLite数据库 4、ContentProvider 5、网络存储 1.适用场景1.1) ContentProvider为存储和读取数据提供了统一的接口 1.2) 使用ContentProvider，应用程序可以实现数据共享 1.3) android">
+<meta name="keywords" content="Android,DataStore,ContentProvider">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android开发手记(19) 数据存储四 ContentProvider">
+<meta property="og:url" content="http://blog.duanxu.tech/2015/11/04/2015/2015-11-04-Android-Study-19-Data-Store-4-ContentProvider/index.html">
+<meta property="og:site_name" content="MAY THE FORCE BE WITH YOU">
+<meta property="og:description" content="content{:toc}  转载自：博客园 Android为数据存储提供了五种方式： 1、SharedPreferences 2、文件存储 3、SQLite数据库 4、ContentProvider 5、网络存储 1.适用场景1.1) ContentProvider为存储和读取数据提供了统一的接口 1.2) 使用ContentProvider，应用程序可以实现数据共享 1.3) android">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-07T12:44:09.127Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android开发手记(19) 数据存储四 ContentProvider">
+<meta name="twitter:description" content="content{:toc}  转载自：博客园 Android为数据存储提供了五种方式： 1、SharedPreferences 2、文件存储 3、SQLite数据库 4、ContentProvider 5、网络存储 1.适用场景1.1) ContentProvider为存储和读取数据提供了统一的接口 1.2) 使用ContentProvider，应用程序可以实现数据共享 1.3) android">
+    
+        <link rel="alternate" type="application/atom+xml" title="MAY THE FORCE BE WITH YOU" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon_64.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Duan Xu</h5>
+          <a href="mailto:duanxu@outlook.com" title="duanxu@outlook.com" class="mail">duanxu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/doodle777" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/2886472974" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android开发手记(19) 数据存储四 ContentProvider</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android开发手记(19) 数据存储四 ContentProvider</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2015-11-04T12:59:00.000Z" itemprop="datePublished" class="page-time">
+  2015-11-04
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container-post body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-适用场景"><span class="post-toc-number">1.</span> <span class="post-toc-text">1.适用场景</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-相关概念介绍"><span class="post-toc-number">2.</span> <span class="post-toc-text">2.相关概念介绍</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-1）ContentProvider简介"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">2.1）ContentProvider简介</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-2）Uri类简介"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">2.2）Uri类简介</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-创建ContentProvider"><span class="post-toc-number">3.</span> <span class="post-toc-text">3.创建ContentProvider</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-2015/2015-11-04-Android-Study-19-Data-Store-4-ContentProvider" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android开发手记(19) 数据存储四 ContentProvider</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2015-11-04 20:59:00" datetime="2015-11-04T12:59:00.000Z" itemprop="datePublished">2015-11-04</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <ul>
+<li>content<br>{:toc}</li>
+</ul>
+<p>转载自：<a href="http://www.cnblogs.com/devinzhang/archive/2012/01/20/2327863.html" target="_blank" rel="noopener">博客园</a></p>
+<p>Android为数据存储提供了五种方式：</p>
+<p>1、SharedPreferences</p>
+<p>2、文件存储</p>
+<p>3、SQLite数据库</p>
+<p><strong>4、ContentProvider</strong></p>
+<p>5、网络存储</p>
+<h3 id="1-适用场景"><a href="#1-适用场景" class="headerlink" title="1.适用场景"></a><strong>1.适用场景</strong></h3><p>1.1) ContentProvider为存储和读取数据提供了统一的接口</p>
+<p>1.2) 使用ContentProvider，应用程序可以实现数据共享</p>
+<p>1.3) android内置的许多数据都是使用ContentProvider形式，供开发者调用的(如视频，音频，图片，通讯录等)</p>
+<h3 id="2-相关概念介绍"><a href="#2-相关概念介绍" class="headerlink" title="2.相关概念介绍"></a><strong>2.相关概念介绍</strong></h3><h4 id="2-1）ContentProvider简介"><a href="#2-1）ContentProvider简介" class="headerlink" title="2.1）ContentProvider简介"></a>2.1）ContentProvider简介</h4><p>　　当应用继承ContentProvider类，并重写该类用于提供数据和存储数据的方法，就可以向其他应用共享其数据。虽然使用其他方法也可以对外共享数据，但数据访问方式会因数据存储的方式而不同，如：采用文件方式对外共享数据，需要进行文件操作读写数据；采用sharedpreferences共享数据，需要使用sharedpreferences API读写数据。而使用ContentProvider共享数据的好处是统一了数据访问方式。</p>
+<h4 id="2-2）Uri类简介"><a href="#2-2）Uri类简介" class="headerlink" title="2.2）Uri类简介"></a>2.2）Uri类简介</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Uri uri = Uri.parse(<span class="string">"content://com.changcheng.provider.contactprovider/contact"</span>)</span><br></pre></td></tr></table></figure>
+<p>　　在Content Provider中使用的查询字符串有别于标准的SQL查询。很多诸如select, add, delete, modify等操作我们都使用一种特殊的URI来进行，这种URI由3个部分组成， “content://”, 代表数据的路径，和一个可选的标识数据的ID。以下是一些示例URI:</p>
+<blockquote>
+<p>content://media/internal/images  这个URI将返回设备上存储的所有图片<br>content://contacts/people/  这个URI将返回设备上的所有联系人信息<br>content://contacts/people/45 这个URI返回单个结果（联系人信息中ID为45的联系人记录）  </p>
+</blockquote>
+<p>　　尽管这种查询字符串格式很常见，但是它看起来还是有点令人迷惑。为此，Android提供一系列的帮助类（在android.provider包下），里面包含了很多以类变量形式给出的查询字符串，这种方式更容易让我们理解一点，因此，如上面content://contacts/people/45这个URI就可以写成如下形式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Uri person = ContentUris.withAppendedId(People.CONTENT_URI,  <span class="number">45</span>);</span><br></pre></td></tr></table></figure>
+<p>　　然后执行数据查询:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cursor cur = managedQuery(person, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>);</span><br></pre></td></tr></table></figure>
+<p>　　这个查询返回一个包含所有数据字段的游标，我们可以通过迭代这个游标来获取所有的数据：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.wissen.testApp;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ContentProviderDemo</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.main);</span><br><span class="line">       displayRecords();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">displayRecords</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//该数组中包含了所有要返回的字段</span></span><br><span class="line">     String columns[] = <span class="keyword">new</span> String[] &#123; People.NAME, People.NUMBER &#125;;</span><br><span class="line">       Uri mContacts = People.CONTENT_URI;</span><br><span class="line">       Cursor cur = managedQuery(</span><br><span class="line">          mContacts,</span><br><span class="line">          columns,  <span class="comment">// 要返回的数据字段</span></span><br><span class="line">       　　<span class="keyword">null</span>,          <span class="comment">// WHERE子句</span></span><br><span class="line">       　　<span class="keyword">null</span>,         <span class="comment">// WHERE 子句的参数</span></span><br><span class="line">      　　 <span class="keyword">null</span>         <span class="comment">// Order-by子句</span></span><br><span class="line">     );</span><br><span class="line">       <span class="keyword">if</span> (cur.moveToFirst()) &#123;</span><br><span class="line">           String name = <span class="keyword">null</span>;</span><br><span class="line">           String phoneNo = <span class="keyword">null</span>;</span><br><span class="line">           <span class="keyword">do</span> &#123;</span><br><span class="line">              <span class="comment">// 获取字段的值</span></span><br><span class="line">         　　 name = cur.getString(cur.getColumnIndex(People.NAME));</span><br><span class="line">             phoneNo = cur.getString(cur.getColumnIndex(People.NUMBER));</span><br><span class="line">             Toast.makeText(<span class="keyword">this</span>, name + ” ” + phoneNo, Toast.LENGTH_LONG).show();</span><br><span class="line">          &#125; <span class="keyword">while</span> (cur.moveToNext());</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　上例示范了一个如何依次读取联系人信息表中的指定数据列name和number。</p>
+<p><strong>修改记录:</strong></p>
+<p>　　我们可以使用ContentResolver.update()方法来修改数据，我们来写一个修改数据的方法:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">updateRecord</span><span class="params">(<span class="keyword">int</span> recNo, String name)</span> </span>&#123;</span><br><span class="line">    Uri uri = ContentUris.withAppendedId(People.CONTENT_URI, recNo);</span><br><span class="line">    ContentValues values = <span class="keyword">new</span> ContentValues();</span><br><span class="line">    values.put(People.NAME, name);</span><br><span class="line">    getContentResolver().update(uri, values, <span class="keyword">null</span>, <span class="keyword">null</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　现在你可以调用上面的方法来更新指定记录：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">updateRecord(<span class="number">10</span>, ”XYZ”);   <span class="comment">//更改第10条记录的name字段值为“XYZ”</span></span><br></pre></td></tr></table></figure>
+<p><strong>添加记录:</strong></p>
+<p>　　要增加记录，我们可以调用ContentResolver.insert()方法，该方法接受一个要增加的记录的目标URI，以及一个包含了新记录值的Map对象，调用后的返回值是新记录的URI，包含记录号。</p>
+<p>　　上面的例子中我们都是基于联系人信息簿这个标准的Content Provider，现在我们继续来创建一个insertRecord() 方法以对联系人信息簿中进行数据的添加：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">insertRecords</span><span class="params">(String name, String phoneNo)</span> </span>&#123;</span><br><span class="line">    ContentValues values = <span class="keyword">new</span> ContentValues();</span><br><span class="line">    values.put(People.NAME, name);</span><br><span class="line">    Uri uri = getContentResolver().insert(People.CONTENT_URI, values);</span><br><span class="line">    Log.d(”ANDROID”, uri.toString());</span><br><span class="line">    Uri numberUri = Uri.withAppendedPath(uri, People.Phones.CONTENT_DIRECTORY);</span><br><span class="line">    values.clear();</span><br><span class="line">    values.put(Contacts.Phones.TYPE, People.Phones.TYPE_MOBILE);</span><br><span class="line">    values.put(People.NUMBER, phoneNo);</span><br><span class="line">    getContentResolver().insert(numberUri, values);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　这样我们就可以调用insertRecords(name, phoneNo)的方式来向联系人信息簿中添加联系人姓名和电话号码。</p>
+<p><strong>删除记录:</strong></p>
+<p>　　Content Provider中的getContextResolver.delete()方法可以用来删除记录，下面的记录用来删除设备上所有的联系人信息：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">deleteRecords</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Uri uri = People.CONTENT_URI;</span><br><span class="line">    getContentResolver().delete(uri, <span class="keyword">null</span>, <span class="keyword">null</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　你也可以指定WHERE条件语句来删除特定的记录：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getContentResolver().delete(uri, “NAME=” + “‘XYZ XYZ’”, <span class="keyword">null</span>);</span><br></pre></td></tr></table></figure>
+<p>　　这将会删除name为‘XYZ XYZ’的记录。</p>
+<h3 id="3-创建ContentProvider"><a href="#3-创建ContentProvider" class="headerlink" title="3.创建ContentProvider"></a><strong>3.创建ContentProvider</strong></h3><p>　　要创建我们自己的Content Provider的话，我们需要遵循以下几步：</p>
+<p>a. 创建一个继承了ContentProvider父类的类</p>
+<p>b. 定义一个名为CONTENT_URI，并且是public static final的Uri类型的类变量，你必须为其指定一个唯一的字符串值，最好的方案是以类的全名称， 如:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Uri CONTENT_URI = Uri.parse( “content:<span class="comment">//com.google.android.MyContentProvider”);</span></span><br></pre></td></tr></table></figure>
+<p>c. 定义你要返回给客户端的数据列名。如果你正在使用Android数据库，必须为其定义一个叫_id的列，它用来表示每条记录的唯一性。</p>
+<p>d. 创建你的数据存储系统。大多数Content Provider使用Android文件系统或SQLite数据库来保持数据，但是你也可以以任何你想要的方式来存储。</p>
+<p>e. 如果你要存储字节型数据，比如位图文件等，数据列其实是一个表示实际保存文件的URI字符串，通过它来读取对应的文件数据。处理这种数据类型的Content Provider需要实现一个名为_data的字段，_data字段列出了该文件在Android文件系统上的精确路径。这个字段不仅是供客户端使用，而且也可以供ContentResolver使用。客户端可以调用ContentResolver.openOutputStream()方法来处理该URI指向的文件资源；如果是ContentResolver本身的话，由于其持有的权限比客户端要高，所以它能直接访问该数据文件。</p>
+<p>f. 声明public static String型的变量，用于指定要从游标处返回的数据列。</p>
+<p>g. 查询返回一个Cursor类型的对象。所有执行写操作的方法如insert(), update() 以及delete()都将被监听。我们可以通过使用ContentResover().notifyChange()方法来通知监听器关于数据更新的信息。</p>
+<p>h. 在AndroidMenifest.xml中使用<provider>标签来设置Content Provider。</provider></p>
+<p>i. 如果你要处理的数据类型是一种比较新的类型，你就必须先定义一个新的MIME类型，以供ContentProvider.geType(url)来返回。MIME类型有两种形式:一种是为指定的单个记录的，还有一种是为多条记录的。这里给出一种常用的格式：</p>
+<p>　　vnd.android.cursor.item/vnd.yourcompanyname.contenttype （单个记录的MIME类型）</p>
+<p>　　比如, 一个请求列车信息的URI如content://com.example.transportationprovider/trains/122 可能就会返回typevnd.android.cursor.item/vnd.example.rail这样一个MIME类型。</p>
+<p>　　vnd.android.cursor.dir/vnd.yourcompanyname.contenttype （多个记录的MIME类型）</p>
+<p>　　比如, 一个请求所有列车信息的URI如content://com.example.transportationprovider/trains 可能就会返回vnd.android.cursor.dir/vnd.example.rail这样一个MIME 类型。</p>
+<p>　　下列代码将创建一个Content Provider，它仅仅是存储用户名称并显示所有的用户名称（使用 SQLLite数据库存储这些数据）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyUsers</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String AUTHORITY  = “com.wissen.MyContentProvider”;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// BaseColumn类中已经包含了 _id字段</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> <span class="keyword">implements</span> <span class="title">BaseColumns</span> </span>&#123;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Uri CONTENT_URI  = Uri.parse(”content:<span class="comment">//com.wissen.MyContentProvider”);</span></span><br><span class="line">        <span class="comment">// 表数据列</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String  USER_NAME  = “USER_NAME”;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　上面的类中定义了Content Provider的CONTENT_URI，以及数据列。下面我们将定义基于上面的类来定义实际的Content Provider类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyContentProvider</span> <span class="keyword">extends</span> <span class="title">ContentProvider</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> SQLiteDatabase     sqlDB;</span><br><span class="line">    <span class="keyword">private</span> DatabaseHelper    dbHelper;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String  DATABASE_NAME = “Users.db”;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span>  DATABASE_VERSION= <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TABLE_NAME= “User”;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = “MyContentProvider”;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">DatabaseHelper</span> <span class="keyword">extends</span> <span class="title">SQLiteOpenHelper</span> </span>&#123;</span><br><span class="line">        DatabaseHelper(Context context) &#123;</span><br><span class="line">            <span class="keyword">super</span>(context, DATABASE_NAME, <span class="keyword">null</span>, DATABASE_VERSION);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(SQLiteDatabase db)</span> </span>&#123;</span><br><span class="line">            <span class="comment">//创建用于存储数据的表</span></span><br><span class="line">        db.execSQL(”Create table ” + TABLE_NAME + “( _id INTEGER PRIMARY KEY AUTOINCREMENT, USER_NAME TEXT);”);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onUpgrade</span><span class="params">(SQLiteDatabase db, <span class="keyword">int</span> oldVersion, <span class="keyword">int</span> newVersion)</span> </span>&#123;</span><br><span class="line">            db.execSQL(”DROP TABLE IF EXISTS ” + TABLE_NAME);</span><br><span class="line">            onCreate(db);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">delete</span><span class="params">(Uri uri, String s, String[] as)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getType</span><span class="params">(Uri uri)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Uri <span class="title">insert</span><span class="params">(Uri uri, ContentValues contentvalues)</span> </span>&#123;</span><br><span class="line">        sqlDB = dbHelper.getWritableDatabase();</span><br><span class="line">        <span class="keyword">long</span> rowId = sqlDB.insert(TABLE_NAME, “”, contentvalues);</span><br><span class="line">        <span class="keyword">if</span> (rowId &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            Uri rowUri = ContentUris.appendId(MyUsers.User.CONTENT_URI.buildUpon(), rowId).build();</span><br><span class="line">            getContext().getContentResolver().notifyChange(rowUri, <span class="keyword">null</span>);</span><br><span class="line">            <span class="keyword">return</span> rowUri;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> SQLException(”Failed to insert row into ” + uri);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        dbHelper = <span class="keyword">new</span> DatabaseHelper(getContext());</span><br><span class="line">        <span class="keyword">return</span> (dbHelper == <span class="keyword">null</span>) ? <span class="keyword">false</span> : <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Cursor <span class="title">query</span><span class="params">(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder)</span> </span>&#123;</span><br><span class="line">        SQLiteQueryBuilder qb = <span class="keyword">new</span> SQLiteQueryBuilder();</span><br><span class="line">        SQLiteDatabase db = dbHelper.getReadableDatabase();</span><br><span class="line">        qb.setTables(TABLE_NAME);</span><br><span class="line">        Cursor c = qb.query(db, projection, selection, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>, sortOrder);</span><br><span class="line">        c.setNotificationUri(getContext().getContentResolver(), uri);</span><br><span class="line">        <span class="keyword">return</span> c;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">update</span><span class="params">(Uri uri, ContentValues contentvalues, String s, String[] as)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　一个名为MyContentProvider的Content Provider创建完成了，它用于从Sqlite数据库中添加和读取记录。</p>
+<p>　　Content Provider的入口需要在AndroidManifest.xml中配置:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">provider</span> <span class="attr">android:name</span>=<span class="string">”MyContentProvider”</span> <span class="attr">android:authorities</span>=<span class="string">”com.wissen.MyContentProvider”</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>　　之后，让我们来使用这个定义好的Content Provider:</p>
+<p>1）为应用程序添加ContentProvider的访问权限。</p>
+<p>2）通过getContentResolver()方法得到ContentResolver对象。</p>
+<p>3）调用ContentResolver类的query()方法查询数据，该方法会返回一个Cursor对象。</p>
+<p>4）对得到的Cursor对象进行分析，得到需要的数据。</p>
+<p>5）调用Cursor类的close()方法将Cursor对象关闭。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyContentDemo</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        insertRecord(”MyUser”);</span><br><span class="line">        displayRecords();</span><br><span class="line">    &#125;</span><br><span class="line">   </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">insertRecord</span><span class="params">(String userName)</span> </span>&#123;</span><br><span class="line">        ContentValues values = <span class="keyword">new</span> ContentValues();</span><br><span class="line">        values.put(MyUsers.User.USER_NAME, userName);</span><br><span class="line">        getContentResolver().insert(MyUsers.User.CONTENT_URI, values);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">displayRecords</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String columns[] = <span class="keyword">new</span> String[] &#123; MyUsers.User._ID, MyUsers.User.USER_NAME &#125;;</span><br><span class="line">        Uri myUri = MyUsers.User.CONTENT_URI;</span><br><span class="line">        Cursor cur = managedQuery(myUri, columns,<span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span> );</span><br><span class="line">        <span class="keyword">if</span> (cur.moveToFirst()) &#123;</span><br><span class="line">            String id = <span class="keyword">null</span>;</span><br><span class="line">            String userName = <span class="keyword">null</span>;</span><br><span class="line">            <span class="keyword">do</span> &#123;</span><br><span class="line">                id = cur.getString(cur.getColumnIndex(MyUsers.User._ID));</span><br><span class="line">                userName = cur.getString(cur.getColumnIndex(MyUsers.User.USER_NAME));</span><br><span class="line">                Toast.makeText(<span class="keyword">this</span>, id + ” ” + userName, Toast.LENGTH_LONG).show();</span><br><span class="line">           &#125; <span class="keyword">while</span> (cur.moveToNext());</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <!-- <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-12-07T12:44:09.127Z" itemprop="dateUpdated">2018-12-07 20:44:09</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2015/11/04/2015/2015-11-04-Android-Study-19-Data-Store-4-ContentProvider/" target="_blank" rel="external">http://blog.duanxu.tech/2015/11/04/2015/2015-11-04-Android-Study-19-Data-Store-4-ContentProvider/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.duanxu.tech">
+            <img src="/img/avatar.jpg" alt="Duan Xu">
+            Duan Xu
+        </a>
+    </footer>
+</blockquote>
+ -->
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ContentProvider/">ContentProvider</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DataStore/">DataStore</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.tech/2015/11/04/2015/2015-11-04-Android-Study-19-Data-Store-4-ContentProvider/&title=《Android开发手记(19) 数据存储四 ContentProvider》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.tech/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.tech/2015/11/04/2015/2015-11-04-Android-Study-19-Data-Store-4-ContentProvider/&title=《Android开发手记(19) 数据存储四 ContentProvider》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.tech/2015/11/04/2015/2015-11-04-Android-Study-19-Data-Store-4-ContentProvider/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android开发手记(19) 数据存储四 ContentProvider》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.tech/2015/11/04/2015/2015-11-04-Android-Study-19-Data-Store-4-ContentProvider/&via=http://blog.duanxu.tech" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.tech/2015/11/04/2015/2015-11-04-Android-Study-19-Data-Store-4-ContentProvider/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2015/11/04/2015/2015-11-04-Android-Study-20-Data-Store-5-Network/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android开发手记(20) 数据存储五 网络存储</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2015/10/29/2015/2015-10-29-Android-Study-18-Data-Store-3-SQLite/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android开发手记(18) 数据存储三 SQLite存储数据</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        <p><span>Duan Xu &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.tech/2015/11/04/2015/2015-11-04-Android-Study-19-Data-Store-4-ContentProvider/&title=《Android开发手记(19) 数据存储四 ContentProvider》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.tech/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.tech/2015/11/04/2015/2015-11-04-Android-Study-19-Data-Store-4-ContentProvider/&title=《Android开发手记(19) 数据存储四 ContentProvider》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.tech/2015/11/04/2015/2015-11-04-Android-Study-19-Data-Store-4-ContentProvider/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android开发手记(19) 数据存储四 ContentProvider》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.tech/2015/11/04/2015/2015-11-04-Android-Study-19-Data-Store-4-ContentProvider/&via=http://blog.duanxu.tech" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.tech/2015/11/04/2015/2015-11-04-Android-Study-19-Data-Store-4-ContentProvider/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADHklEQVR42u3awVIjMQwEUP7/p7PXrWIZuq3JVqK8OVEQ7HnmINTy11f8PL49f3//+reSla/3+r5vu8vhg42Njf0m7GSb5CWuj2Oy8vX6yWr/WBMbGxt7HXuyzXV1yIvWT797XTjz98HGxsbGbotHUqLyotgeATY2NjZ2u3Qe9CTlLYmx8pALGxsb+xPY+Wb5AbWY9jj+U5aGjY2N/fLsfCr6+l8/Zb6NjY2N/cLsR/lMhr7Xn8yL0w0KbGxs7EXsNiSa4POWYzISLmIsbGxs7BXss6szbcTfNg9nwVayCzY2NvY+9tl1nHn0n1/0yQthXWKxsbGxF7HzEjK5vjOJlvK2pLVgY2Njb2W3rUW+8V2HO4+3sLGxsbey2/A9L0tJ4zEZGCdNCzY2NvY+9qRstN+ZDHcPQ6KfdsfGxsZexM6Xng9c8/KTF8K2AGNjY2PvY58Vm+Ro2uCpLaJnl42wsbGxd7PbFGp+Uaa9iJOHXL/8CbGxsbFXs9v4PmkVJl+3UVEUimFjY2MvYrdl7Oxo8is7Z6FS+/7Y2NjYm9j5ACApKs8Y7uYNRnEBCBsbG3sdexLQJ687aRjOBsO//BQbGxt7KfvsWsykMUjaknzMXLRD2NjY2IvY7ULJJ/NGYg7OIydsbGzsrewklD9rGOavnodK7ZgBGxsbexO7jY2eMSTIi9kkWoomEtjY2Nhvy85HrXeVn+Q6zlmzkV/0wcbGxt7Hng9ZJ9u3l3LaPwk2Njb2VvZZQWoPKAmDztqY9lixsbGx97HbWCd5obxQ5W1G2zIViRc2Njb2InZSKuafb68B5Su074CNjY29j30W1rfj2/ZA89Cq3hcbGxt7HTv/pz9/ufaSTXslqL08hI2Njb2P/SifpFDlP52PEM4KKjY2NvYmdlsAJi1KW/ByQH64NR4bGxv7TdhJ2ciHwWeFJA+Pbhs8Y2NjY69j523G5GjOCluCb0sdNjY29iez7ypF9wZMbYCFjY2N/cnstnS1w+P2OM5CMWxsbOx97LOLOM8Im553DQgbGxt7KzsvAHc1D/OhQjIYztfHxsbGflv2H1ixKyZmTIKLAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '失去灵魂(╯‵□′)╯︵┻━┻';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Blog | Duan Xu';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

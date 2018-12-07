@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Ubuntu 16.04 配置 openCV 环境 | MAY THE FORCE BE WITH YOU</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Ubuntu,OpenCV">
+    <meta name="description" content="content{:toc}  本问主要描述了在 Ubuntu 16.04(x64) 环境下配置openCV，以及运行示例程序的过程。 1 安装 openCV1.1 下载 openCV首先下载 openCV-2.4.13 安装包，并解压到任意目录 1.2 安装依赖环境编译 openCV包的时候需要安装相应的依赖： 12345sudo apt-get install build-essential">
+<meta name="keywords" content="Ubuntu,OpenCV">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu 16.04 配置 openCV 环境">
+<meta property="og:url" content="http://blog.duanxu.tech/2016/09/16/2016/2016-09-16-Ubuntu16.04-配置openCV环境/index.html">
+<meta property="og:site_name" content="MAY THE FORCE BE WITH YOU">
+<meta property="og:description" content="content{:toc}  本问主要描述了在 Ubuntu 16.04(x64) 环境下配置openCV，以及运行示例程序的过程。 1 安装 openCV1.1 下载 openCV首先下载 openCV-2.4.13 安装包，并解压到任意目录 1.2 安装依赖环境编译 openCV包的时候需要安装相应的依赖： 12345sudo apt-get install build-essential">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-07T12:54:20.261Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ubuntu 16.04 配置 openCV 环境">
+<meta name="twitter:description" content="content{:toc}  本问主要描述了在 Ubuntu 16.04(x64) 环境下配置openCV，以及运行示例程序的过程。 1 安装 openCV1.1 下载 openCV首先下载 openCV-2.4.13 安装包，并解压到任意目录 1.2 安装依赖环境编译 openCV包的时候需要安装相应的依赖： 12345sudo apt-get install build-essential">
+    
+        <link rel="alternate" type="application/atom+xml" title="MAY THE FORCE BE WITH YOU" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon_64.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Duan Xu</h5>
+          <a href="mailto:duanxu@outlook.com" title="duanxu@outlook.com" class="mail">duanxu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/doodle777" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/2886472974" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Ubuntu 16.04 配置 openCV 环境</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Ubuntu 16.04 配置 openCV 环境</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-09-16T07:03:30.000Z" itemprop="datePublished" class="page-time">
+  2016-09-16
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Ubuntu/">Ubuntu</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container-post body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-安装-openCV"><span class="post-toc-number">1.</span> <span class="post-toc-text">1 安装 openCV</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-1-下载-openCV"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">1.1 下载 openCV</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-2-安装依赖环境"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">1.2 安装依赖环境</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-3-编译选项"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">1.3 编译选项</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-4-编译安装"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">1.4 编译安装</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-5-添加-library-path"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">1.5 添加 library path</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-运行示例程序"><span class="post-toc-number">2.</span> <span class="post-toc-text">2 运行示例程序</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-使用-IDE-编译"><span class="post-toc-number">3.</span> <span class="post-toc-text">3 使用 IDE 编译</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-2016/2016-09-16-Ubuntu16.04-配置openCV环境" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Ubuntu 16.04 配置 openCV 环境</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-09-16 15:03:30" datetime="2016-09-16T07:03:30.000Z" itemprop="datePublished">2016-09-16</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Ubuntu/">Ubuntu</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <ul>
+<li>content<br>{:toc}</li>
+</ul>
+<p>本问主要描述了在 Ubuntu 16.04(x64) 环境下配置openCV，以及运行示例程序的过程。</p>
+<h3 id="1-安装-openCV"><a href="#1-安装-openCV" class="headerlink" title="1 安装 openCV"></a>1 安装 openCV</h3><h4 id="1-1-下载-openCV"><a href="#1-1-下载-openCV" class="headerlink" title="1.1 下载 openCV"></a>1.1 下载 openCV</h4><p>首先下载 <a href="https://github.com/Itseez/opencv/archive/2.4.13.zip" target="_blank" rel="noopener">openCV-2.4.13 安装包</a>，并解压到任意目录</p>
+<h4 id="1-2-安装依赖环境"><a href="#1-2-安装依赖环境" class="headerlink" title="1.2 安装依赖环境"></a>1.2 安装依赖环境</h4><p>编译 openCV包的时候需要安装相应的依赖：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo apt-get install build-essential libgtk2.0-dev libjpeg-dev libtiff5-dev libjasper-dev libopenexr-dev cmake python-dev</span><br><span class="line">python-numpy python-tk libtbb-dev libeigen3-dev yasm libfaac-dev libopencore-amrnb-dev libopencore-amrwb-dev libtheora-dev </span><br><span class="line">libvorbis-dev libxvidcore-dev libx264-dev libqt4-dev libqt4-opengl-dev sphinx-common texlive-latex-extra libv4l-dev </span><br><span class="line">libdc1394-22-dev libavcodec-dev libavformat-dev libswscale-dev default-jdk ant libvtk5-qt4-dev</span><br></pre></td></tr></table></figure>
+<h4 id="1-3-编译选项"><a href="#1-3-编译选项" class="headerlink" title="1.3 编译选项"></a>1.3 编译选项</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">mkdir build</span><br><span class="line">cd build</span><br><span class="line">cmake -D WITH_TBB=ON -D BUILD_NEW_PYTHON_SUPPORT=ON -D WITH_V4L=ON -D INSTALL_C_EXAMPLES=ON -D INSTALL_PYTHON_EXAMPLES=ON </span><br><span class="line">-D BUILD_EXAMPLES=ON -D WITH_QT=ON -D WITH_OPENGL=ON -D WITH_VTK=ON ..</span><br></pre></td></tr></table></figure>
+<h4 id="1-4-编译安装"><a href="#1-4-编译安装" class="headerlink" title="1.4 编译安装"></a>1.4 编译安装</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<p>此时，如果提示“无法创建目录 /usr/local/include/opencv2”，那么需要以管理员权限安装：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+<h4 id="1-5-添加-library-path"><a href="#1-5-添加-library-path" class="headerlink" title="1.5 添加 library path"></a>1.5 添加 library path</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo touch /etc/ld.so.conf.d/opencv.conf</span><br><span class="line">sudo vi /etc/ld.so.conf.d/opencv.conf</span><br></pre></td></tr></table></figure>
+<p>文件内容为：</p>
+<blockquote>
+<p>/usr/local/lib</p>
+</blockquote>
+<p>最后应用配置即可：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo ldconfig</span><br></pre></td></tr></table></figure>
+<h3 id="2-运行示例程序"><a href="#2-运行示例程序" class="headerlink" title="2 运行示例程序"></a>2 运行示例程序</h3><p>首先关闭终端，开启一个新的终端并进入“…/opencv-2.4.13/samples/c”目录下。</p>
+<p>这个目录下面有个“build_all.sh”脚本文件，功能是编译链接该目录下的所有 c/cpp 文件，生成二进制可执行程序。</p>
+<p>首先执行此脚本，如果提示不可执行的话，需要对脚本加权限：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">chmod +x build_all.sh</span><br><span class="line">./build_all.sh</span><br></pre></td></tr></table></figure>
+<p>等待编译完成之后，便可执行测试程序。</p>
+<h3 id="3-使用-IDE-编译"><a href="#3-使用-IDE-编译" class="headerlink" title="3 使用 IDE 编译"></a>3 使用 IDE 编译</h3><p>在使用 IDE 编译 openCV 程序的时候，需要修改“CMakeLists.txt”文件，向程序添加 openCV 库的支持：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">cmake_minimum_required(VERSION 3.5)</span><br><span class="line">project(openCV)</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 添加openCV</span></span><br><span class="line">FIND_PACKAGE(OpenCV REQUIRED)</span><br><span class="line"></span><br><span class="line">set(CMAKE_CXX_FLAGS "$&#123;CMAKE_CXX_FLAGS&#125; -std=c++11")</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 设置可执行文件生成路径</span></span><br><span class="line">set(EXECUTABLE_OUTPUT_PATH $&#123;PROJECT_SOURCE_DIR&#125;/bin)</span><br><span class="line">set(CMAKE_LIBRARY_OUTPUT_DIRECTORY $&#123;PROJECT_SOURCE_DIR&#125;/bin)</span><br><span class="line">set(CMAKE_RUNTIME_OUTPUT_DIRECTORY $&#123;PROJECT_SOURCE_DIR&#125;/bin)</span><br><span class="line"></span><br><span class="line">set(SOURCE_FILES main.cpp)</span><br><span class="line">add_executable(openCV $&#123;SOURCE_FILES&#125;)</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 添加openCV</span></span><br><span class="line">target_link_libraries(openCV $&#123;OpenCV_LIBS&#125;)</span><br></pre></td></tr></table></figure>
+<p>需要添加的两行在上面已经注释出来了，添加了库支持之后，便不会提示相应的头文件找不到之类的编译错误了。</p>
+<p>最后，使用编译器自带的编译功能便可运行程序了。</p>
+
+        </div>
+
+        <!-- <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-12-07T12:54:20.261Z" itemprop="dateUpdated">2018-12-07 20:54:20</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2016/09/16/2016/2016-09-16-Ubuntu16.04-配置openCV环境/" target="_blank" rel="external">http://blog.duanxu.tech/2016/09/16/2016/2016-09-16-Ubuntu16.04-配置openCV环境/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.duanxu.tech">
+            <img src="/img/avatar.jpg" alt="Duan Xu">
+            Duan Xu
+        </a>
+    </footer>
+</blockquote>
+ -->
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenCV/">OpenCV</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ubuntu/">Ubuntu</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.tech/2016/09/16/2016/2016-09-16-Ubuntu16.04-配置openCV环境/&title=《Ubuntu 16.04 配置 openCV 环境》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.tech/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.tech/2016/09/16/2016/2016-09-16-Ubuntu16.04-配置openCV环境/&title=《Ubuntu 16.04 配置 openCV 环境》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.tech/2016/09/16/2016/2016-09-16-Ubuntu16.04-配置openCV环境/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Ubuntu 16.04 配置 openCV 环境》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.tech/2016/09/16/2016/2016-09-16-Ubuntu16.04-配置openCV环境/&via=http://blog.duanxu.tech" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.tech/2016/09/16/2016/2016-09-16-Ubuntu16.04-配置openCV环境/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2016/10/10/2016/2016-10-10-MySQL中文乱码问号问题/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">MySQL中文乱码问号问题</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/08/09/2016/2016-08-09-JUnit-学习(2)-JUnit-API/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">JUnit学习(2) JUnit API</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        <p><span>Duan Xu &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.tech/2016/09/16/2016/2016-09-16-Ubuntu16.04-配置openCV环境/&title=《Ubuntu 16.04 配置 openCV 环境》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.tech/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.tech/2016/09/16/2016/2016-09-16-Ubuntu16.04-配置openCV环境/&title=《Ubuntu 16.04 配置 openCV 环境》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.tech/2016/09/16/2016/2016-09-16-Ubuntu16.04-配置openCV环境/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Ubuntu 16.04 配置 openCV 环境》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.tech/2016/09/16/2016/2016-09-16-Ubuntu16.04-配置openCV环境/&via=http://blog.duanxu.tech" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.tech/2016/09/16/2016/2016-09-16-Ubuntu16.04-配置openCV环境/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACqUlEQVR42u3aQU4DMRAEwPz/03BFQiTdM3YAqfYUbZbslA+26fHjEV8fX67vd77ef/7tT88n783/qr7w8PDwFqXPykqefz4EPz3z/fm8Zjw8PLzbvOTnZi/bFN0OBB4eHt5/4SX380HJFx48PDy8/8XbUBNM/hkPDw/vt3hJGLFfMGbfvilrwcPDw5skA4/8p3/385X+Hh4eHt66q97GBPnkvjlwUFSLh4eHd4GXT7j5hrXl5bHCsE48PDy8o7z2aFQeWLQF5ccIkkHHw8PDu8crHtq0oMq4oW2PvVi08PDw8I7y8tc8Pzw6ix7aVla+WcfDw8N7P29W6KyRNgs4osrx8PDwLvBmffZ8g5ssPJvhOHayDA8PD6/k5RHDDPy8uGJyD5aKIpLAw8PDG/FyTPJt2x5LpvvNDhkPDw/vBm8TN7SHCWaxbHvgYJUo4+Hh4cUx7qmIYVZKPij1UOLh4eG9kZeXmL8+b2Xtn3kVv+Dh4eHNeflGOY9Qk8UjDzjagX6BxMPDw1vzZg2qNt7dN9KGSDw8PLxrvHwSP7tU7P+qDiPw8PDw1rxZMJHEEPlRg81wFPXj4eHhHeLlm+B8Qj8VNyRvKVJqPDw8vEO8TdMrvxLAsKE1O1+Gh4eHd4i3XxhmjPZ+vn3Hw8PDu8fLt8hFbLqILVp8lLLg4eHhXeC1m+OkVZbjT4XCUZiLh4eHd4jXBqarybpsa82yWTw8PLwbvFkg2wa17WGpUwOHh4eHd4PXTrgzZPs7+UAcgOHh4eGNePlikLfB2pbYfkF60dnDw8PDu8DLDzPNNsFJCLtfwfDw8PD+Jm9/RGDT+qprw8PDw/tjvLNHCvKtfHK4AQ8PD+8271QQMCuiKLc9iICHh4d3gTf8J79s57dBRvvMY3Ph4eHhpbV9Ag6GzxT94M/1AAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '失去灵魂(╯‵□′)╯︵┻━┻';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Blog | Duan Xu';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

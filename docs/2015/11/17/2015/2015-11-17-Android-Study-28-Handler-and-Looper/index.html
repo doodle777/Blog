@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Android开发手记(28) Handler和Looper | MAY THE FORCE BE WITH YOU</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Android,Handler,Looper">
+    <meta name="description" content="content{:toc}  　　Android的消息处理有三个核心类：Looper,Handler和Message。其实还有一个Message Queue（消息队列），但是MQ被封装到Looper里面了，我们不会直接与MQ打交道。平时我们最常使用的就是Message与Handler了，如果使用过HandlerThread或者自己实现类似HandlerThread的东西可能还会接触到Looper">
+<meta name="keywords" content="Android,Handler,Looper">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android开发手记(28) Handler和Looper">
+<meta property="og:url" content="http://blog.duanxu.tech/2015/11/17/2015/2015-11-17-Android-Study-28-Handler-and-Looper/index.html">
+<meta property="og:site_name" content="MAY THE FORCE BE WITH YOU">
+<meta property="og:description" content="content{:toc}  　　Android的消息处理有三个核心类：Looper,Handler和Message。其实还有一个Message Queue（消息队列），但是MQ被封装到Looper里面了，我们不会直接与MQ打交道。平时我们最常使用的就是Message与Handler了，如果使用过HandlerThread或者自己实现类似HandlerThread的东西可能还会接触到Looper">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://blog.duanxu.tech/images/201511/2015111701.png">
+<meta property="og:image" content="http://blog.duanxu.tech/images/201511/2015111702.png">
+<meta property="og:image" content="http://blog.duanxu.tech/images/201511/2015111703.png">
+<meta property="og:updated_time" content="2018-12-07T12:46:19.244Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android开发手记(28) Handler和Looper">
+<meta name="twitter:description" content="content{:toc}  　　Android的消息处理有三个核心类：Looper,Handler和Message。其实还有一个Message Queue（消息队列），但是MQ被封装到Looper里面了，我们不会直接与MQ打交道。平时我们最常使用的就是Message与Handler了，如果使用过HandlerThread或者自己实现类似HandlerThread的东西可能还会接触到Looper">
+<meta name="twitter:image" content="http://blog.duanxu.tech/images/201511/2015111701.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="MAY THE FORCE BE WITH YOU" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon_64.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Duan Xu</h5>
+          <a href="mailto:duanxu@outlook.com" title="duanxu@outlook.com" class="mail">duanxu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/doodle777" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/2886472974" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android开发手记(28) Handler和Looper</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android开发手记(28) Handler和Looper</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2015-11-17T02:11:00.000Z" itemprop="datePublished" class="page-time">
+  2015-11-17
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container-post body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、Looper"><span class="post-toc-number">1.</span> <span class="post-toc-text">1、Looper</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-Looper-prepare"><span class="post-toc-number">2.</span> <span class="post-toc-text">1) Looper.prepare()</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2）Looper-loop"><span class="post-toc-number">3.</span> <span class="post-toc-text">2）Looper.loop()</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2、Handler"><span class="post-toc-number">4.</span> <span class="post-toc-text">2、Handler</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3、使用Handler发送和处理消息"><span class="post-toc-number">5.</span> <span class="post-toc-text">3、使用Handler发送和处理消息</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-2015/2015-11-17-Android-Study-28-Handler-and-Looper" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android开发手记(28) Handler和Looper</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2015-11-17 10:11:00" datetime="2015-11-17T02:11:00.000Z" itemprop="datePublished">2015-11-17</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <ul>
+<li>content<br>{:toc}</li>
+</ul>
+<p>　　Android的消息处理有三个核心类：Looper,Handler和Message。其实还有一个Message Queue（消息队列），但是MQ被封装到Looper里面了，我们不会直接与MQ打交道。平时我们最常使用的就是Message与Handler了，如果使用过HandlerThread或者自己实现类似HandlerThread的东西可能还会接触到Looper，而MessageQueue是Looper内部使用的，对于标准的SDK，我们是无法实例化并使用的（构造函数是包可见性）。</p>
+<p>　　在Android中，消息处理的大体过程为：</p>
+<ul>
+<li>（1）首先，要有消息的内容，我们将其放到一个Bundle中来存储消息的内容。  </li>
+<li>（2）然后通过此Bundle来实例化一个Message，并将此Message作为消息发送的基本单位。  </li>
+<li>（3）之后可以将Message放到Looper中用以循环处理消息。  </li>
+<li>（4）由于Handler内部拥有Looper实例，所以可以直接通过Handler发送和处理上述的Message。  </li>
+</ul>
+<p>　　以上就是Android中消息发送和处理的基本过程。</p>
+<p>　　以下1、2部分引自<a href="http://www.cnblogs.com/codingmyworld/archive/2011/09/14/2174255.html" target="_blank" rel="noopener">博客园</a></p>
+<h4 id="1、Looper"><a href="#1、Looper" class="headerlink" title="1、Looper"></a><strong>1、Looper</strong></h4><p>　　Looper的字面意思是“循环者”，它被设计用来使一个普通线程变成Looper线程。所谓Looper线程就是循环工作的线程。在程序开发中（尤其是GUI开发中），我们经常会需要一个线程不断循环，一旦有新任务则执行，执行完继续等待下一个任务，这就是Looper线程。使用Looper类创建Looper线程很简单：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LooperThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 将当前线程初始化为Looper线程</span></span><br><span class="line">        Looper.prepare();</span><br><span class="line">         </span><br><span class="line">        <span class="comment">// ...其他处理，如实例化handler</span></span><br><span class="line">         </span><br><span class="line">        <span class="comment">// 开始循环处理消息队列</span></span><br><span class="line">        Looper.loop();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　通过上面两行核心代码，你的线程就升级为Looper线程了！！！是不是很神奇？让我们放慢镜头，看看这两行代码各自做了什么。</p>
+<h4 id="1-Looper-prepare"><a href="#1-Looper-prepare" class="headerlink" title="1) Looper.prepare()"></a>1) Looper.prepare()</h4><div style="text-align: center"><br><img src="/images/201511/2015111701.png"><br></div>
+
+<p>　　通过上图可以看到，现在你的线程中有一个Looper对象，它的内部维护了一个消息队列MQ。注意，一个Thread只能有一个Looper对象。</p>
+<h4 id="2）Looper-loop"><a href="#2）Looper-loop" class="headerlink" title="2）Looper.loop()"></a>2）Looper.loop()</h4><div style="text-align: center"><br><img src="/images/201511/2015111702.png"><br></div>
+
+<p>　　调用loop方法后，Looper线程就开始真正工作了，它不断从自己的MQ中取出队头的消息(也叫任务)执行。由上loop()方法可以简单得出结论，Looper用以处理MessageQueue中的取出的Message，由MessageQueue是Handler及Looper所共用的，取出的Message则交由Handler进行处理。而Handler也能够通过post或者send等方式将Message添加到MessageQueue中供Looper后续进行取出处理。sThreadLocal保证了Looper是线程私有的，所有信息发送与处理都是在本线程中。</p>
+<p>　　prepare()用以在sThreadLocal中创建线程与该线程对应的Looper的键值对；new Handler或者getHandler创建的Handler都根据sThreadLocal.get()进行获取；创建的Handler与Looper共用MessageQueue;loop开始循环处理Messagequeue中的事件。其即为整个流程。</p>
+<h4 id="2、Handler"><a href="#2、Handler" class="headerlink" title="2、Handler"></a><strong>2、Handler</strong></h4><p>　　handler扮演了往MQ上添加消息和处理消息的角色（只处理由自己发出的消息），即通知MQ它要执行一个任务(sendMessage)，并在loop到自己的时候执行该任务(handleMessage)，整个过程是异步的。handler创建时会关联一个looper，默认的构造方法将关联当前线程的looper，不过这也是可以set的。加入handler后的效果如下图：</p>
+<div style="text-align: center"><br><img src="/images/201511/2015111703.png"><br></div>
+
+<p>　　可以看到，一个线程可以有多个Handler，但是只能有一个Looper！</p>
+<h4 id="3、使用Handler发送和处理消息"><a href="#3、使用Handler发送和处理消息" class="headerlink" title="3、使用Handler发送和处理消息"></a><strong>3、使用Handler发送和处理消息</strong></h4><p>　　根据本文开始提到的，我们来实现通过Handler发送消息，然后改变MainActivity内一个TextView的颜色和内容。规定 flag == false 时为红色，arg1 = 0；flag == true 时为蓝色，arg1 = 1。</p>
+<p>　　我们需要明白，Handler是通过一个进程来发送消息的，所以我们需要将发送消息的过程写到Runnable.run()方法内。首先我们新建一个SendMessage implements Runnable 类，然后我们构造消息：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(<span class="keyword">true</span>) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">              Thread.sleep(<span class="number">1000</span>);                 <span class="comment">// 每个1秒启动一次消息发送</span></span><br><span class="line">              Bundle bundle = <span class="keyword">new</span> Bundle();       <span class="comment">// Bundle 用于存储消息内容</span></span><br><span class="line">              Message msg = Message.obtain();     <span class="comment">// 实例化一个空消息</span></span><br><span class="line">              <span class="keyword">if</span> (flag) &#123;                         <span class="comment">// 如果flag为真，说明当前颜色为蓝色</span></span><br><span class="line">                  msg.arg1 = <span class="number">0</span>;                   <span class="comment">// 颜色应变为红色，记录信息用于发送</span></span><br><span class="line">                  flag = <span class="keyword">false</span>;                   <span class="comment">// 假设当前已经变为红色</span></span><br><span class="line">                  bundle.putString(<span class="string">"text"</span>, <span class="string">"我的颜色是红色"</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;                              <span class="comment">// 如果flag为假，说明当前颜色为红色</span></span><br><span class="line">                  msg.arg1 = <span class="number">1</span>;                   <span class="comment">// 颜色应变为蓝色，记录信息用于发送</span></span><br><span class="line">                  flag = <span class="keyword">true</span>;                    <span class="comment">// 假设当前已经变为蓝色</span></span><br><span class="line">                  bundle.putString(<span class="string">"text"</span>, <span class="string">"我的颜色是蓝色"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">              count++;                            <span class="comment">// 记录颜色变化的次数</span></span><br><span class="line">              msg.arg2 = count;                   <span class="comment">// 存储颜色变化的次数用以发送</span></span><br><span class="line">              msg.setData(bundle);                <span class="comment">// 将Bundle封装至待发送的消息</span></span><br><span class="line">              handler.sendMessage(msg);           <span class="comment">// 通过handler发送消息</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">              e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　这里需要注意的是，我们在通过bundle发送消息的时候，发送到什么地方了呢？这里我们需要在MainActivity内实例化一个Handler来处理发送的消息，并同时用此Handler来构造SendMessage。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SendMessage</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Handler handler;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">boolean</span> flag = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SendMessage</span><span class="params">(Handler handler)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.handler = handler;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">while</span>(<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">1000</span>);                 <span class="comment">// 每个1秒启动一次消息发送               </span></span><br><span class="line">    <span class="comment">/* ----------------------------------------- */</span></span><br><span class="line">                handler.sendMessage(msg);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　下面就是在MainActivity内进行消息处理，我们继承Handler来新建一个自己的消息处理器。通过Message.getData().getString(String keyValue)来获取我们上一步中封装到Message内的Bundle信息。通过判断传入Message的arg1和arg2的简单int类型，来判断需要改变的颜色。（如果待发送的消息比较简单的话，可以直接封装到Message的arg1或者arg2内，就不必再使用Bundle来发送消息了）。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyHandler</span> <span class="keyword">extends</span> <span class="title">Handler</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span></span>&#123;</span><br><span class="line">        textView.setText(msg.getData().getString(<span class="string">"text"</span>) + msg.arg2);</span><br><span class="line">        <span class="keyword">if</span>(msg.arg1 == <span class="number">1</span>)</span><br><span class="line">            textView.setTextColor(Color.BLUE);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            textView.setTextColor(Color.RED);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　最后，为Button添加单击事件，来启动SendMessage线程即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">private</span> Button button;</span><br><span class="line">    <span class="keyword">private</span> TextView textView;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"> </span><br><span class="line">        button = (Button)findViewById(R.id.button);</span><br><span class="line">        textView = (TextView)findViewById(R.id.textView);</span><br><span class="line"> </span><br><span class="line">        button.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">                Thread thread = <span class="keyword">new</span> Thread(<span class="keyword">new</span> SendMessage(<span class="keyword">new</span> MyHandler()));</span><br><span class="line">                thread.start();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">MyHandler</span> <span class="keyword">extends</span> <span class="title">Handler</span></span>&#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span></span>&#123;</span><br><span class="line">            textView.setText(msg.getData().getString(<span class="string">"text"</span>) + msg.arg2);</span><br><span class="line">            <span class="keyword">if</span>(msg.arg1 == <span class="number">1</span>)</span><br><span class="line">                textView.setTextColor(Color.BLUE);</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                textView.setTextColor(Color.RED);</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　完整代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.app.Activity;</span><br><span class="line"><span class="keyword">import</span> android.graphics.Color;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.os.Message;</span><br><span class="line"><span class="keyword">import</span> android.os.Handler;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"><span class="keyword">import</span> android.widget.Button;</span><br><span class="line"><span class="keyword">import</span> android.widget.TextView;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">private</span> Button button;</span><br><span class="line">    <span class="keyword">private</span> TextView textView;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"> </span><br><span class="line">        button = (Button)findViewById(R.id.button);</span><br><span class="line">        textView = (TextView)findViewById(R.id.textView);</span><br><span class="line"> </span><br><span class="line">        button.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">                Thread thread = <span class="keyword">new</span> Thread(<span class="keyword">new</span> SendMessage(<span class="keyword">new</span> MyHandler()));</span><br><span class="line">                thread.start();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">MyHandler</span> <span class="keyword">extends</span> <span class="title">Handler</span></span>&#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span></span>&#123;</span><br><span class="line">            textView.setText(msg.getData().getString(<span class="string">"text"</span>) + msg.arg2);</span><br><span class="line">            <span class="keyword">if</span>(msg.arg1 == <span class="number">1</span>)</span><br><span class="line">                textView.setTextColor(Color.BLUE);</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                textView.setTextColor(Color.RED);</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SendMessage</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Handler handler;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">boolean</span> flag = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SendMessage</span><span class="params">(Handler handler)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.handler = handler;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">while</span>(<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">1000</span>);                 <span class="comment">// 每个1秒启动一次消息发送</span></span><br><span class="line">                Bundle bundle = <span class="keyword">new</span> Bundle();       <span class="comment">// Bundle 用于存储消息内容</span></span><br><span class="line">                Message msg = Message.obtain();     <span class="comment">// 实例化一个空消息</span></span><br><span class="line">                <span class="keyword">if</span> (flag) &#123;                         <span class="comment">// 如果flag为真，说明当前颜色为蓝色</span></span><br><span class="line">                    msg.arg1 = <span class="number">0</span>;                   <span class="comment">// 颜色应变为红色，记录信息用于发送</span></span><br><span class="line">                    flag = <span class="keyword">false</span>;                   <span class="comment">// 假设当前已经变为红色</span></span><br><span class="line">                    bundle.putString(<span class="string">"text"</span>, <span class="string">"我的颜色是红色"</span>);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;                            <span class="comment">// 如果flag为假，说明当前颜色为红色</span></span><br><span class="line">                    msg.arg1 = <span class="number">1</span>;                   <span class="comment">// 颜色应变为蓝色，记录信息用于发送</span></span><br><span class="line">                    flag = <span class="keyword">true</span>;                    <span class="comment">// 假设当前已经变为蓝色</span></span><br><span class="line">                    bundle.putString(<span class="string">"text"</span>, <span class="string">"我的颜色是蓝色"</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                count++;                            <span class="comment">// 记录颜色变化的次数</span></span><br><span class="line">                msg.arg2 = count;                   <span class="comment">// 存储颜色变化的次数用以发送</span></span><br><span class="line">                msg.setData(bundle);                <span class="comment">// 将Bundle封装至待发送的消息</span></span><br><span class="line">                handler.sendMessage(msg);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <!-- <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-12-07T12:46:19.244Z" itemprop="dateUpdated">2018-12-07 20:46:19</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2015/11/17/2015/2015-11-17-Android-Study-28-Handler-and-Looper/" target="_blank" rel="external">http://blog.duanxu.tech/2015/11/17/2015/2015-11-17-Android-Study-28-Handler-and-Looper/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.duanxu.tech">
+            <img src="/img/avatar.jpg" alt="Duan Xu">
+            Duan Xu
+        </a>
+    </footer>
+</blockquote>
+ -->
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Handler/">Handler</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Looper/">Looper</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.tech/2015/11/17/2015/2015-11-17-Android-Study-28-Handler-and-Looper/&title=《Android开发手记(28) Handler和Looper》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.tech/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.tech/2015/11/17/2015/2015-11-17-Android-Study-28-Handler-and-Looper/&title=《Android开发手记(28) Handler和Looper》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.tech/2015/11/17/2015/2015-11-17-Android-Study-28-Handler-and-Looper/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android开发手记(28) Handler和Looper》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.tech/2015/11/17/2015/2015-11-17-Android-Study-28-Handler-and-Looper/&via=http://blog.duanxu.tech" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.tech/2015/11/17/2015/2015-11-17-Android-Study-28-Handler-and-Looper/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2015/11/17/2015/2015-11-17-Android-Study-29-Http-Latex/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android开发手记(29) 基于Http的LaTeX数学公式转换器</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2015/11/15/2015/2015-11-15-Android-Study-27-Thread/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android开发手记(27) Java多线程的操作</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        <p><span>Duan Xu &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.tech/2015/11/17/2015/2015-11-17-Android-Study-28-Handler-and-Looper/&title=《Android开发手记(28) Handler和Looper》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.tech/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.tech/2015/11/17/2015/2015-11-17-Android-Study-28-Handler-and-Looper/&title=《Android开发手记(28) Handler和Looper》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.tech/2015/11/17/2015/2015-11-17-Android-Study-28-Handler-and-Looper/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android开发手记(28) Handler和Looper》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.tech/2015/11/17/2015/2015-11-17-Android-Study-28-Handler-and-Looper/&via=http://blog.duanxu.tech" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.tech/2015/11/17/2015/2015-11-17-Android-Study-28-Handler-and-Looper/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADJklEQVR42u3aQZLiQAwEwPn/p9nr7AFTpfZugEifCAPtTnEQkvrnJ74ev67fd5692658veb1+rPnYmNjY29iPy6vHDYLzV0r5xZsbGzsrew8tVzfuX5Yfj9PZtf7fHofGxsb+4vZ+abb1NgmKmxsbGzsE/b1FpOVk3fb8gYbGxv7m9mzhyX3Z8VGEo7/1EvDxsbGfnv2+Tj2fV7/k/k2NjY29huzH+V1Eqa7Co8bFNjY2NiL2HkCOClRknWS8LUBfdHGwsbGxl7Hnh3caUe/SaDz8cNst9jY2Nhb2fmm2xXaIzvtIaHZYSBsbGzsreyTx8/Y0RZjfJHSsLGxsVew2+M1s8M0OfUaeR7W4rfCxsbGXsSeDQ9OAnTvMLgYDGBjY2N/IPtkQJuMYPMhRJK6TgYGL35zbGxs7I9lt4CTYiNvWt0VsqfPwsbGxl7Hztv9J0d82nJllt6icGNjY2MvZectm7wpPyst8hZSjo8m29jY2Ngfzk6utkQ5eT1LhEljCxsbG3sT+/rWrMWTJ7nZnTx80fADGxsbewU7ab7n6aRtEt1bouSjaGxsbOwd7CRFnYxm20JlNopow4qNjY29id0mmPyATpQ5y+/Ogvg0QNjY2NiL2G1jqP1k3jaapat8h/Wvio2Njf0h7ORYzOyATr7Fds38epG3sbGxsVewkz/xs0/eRbp3fWxsbOxN7LxN/6+HAbOjPPlu/1oBGxsbex27/fveNobaTbcJrN0bNjY29ib2bIA6Kx5OBgltdZWXT9jY2Ng72Cej3Ls2FM2f493+3LUQNjY29kexT9JGe5hmFtw8lNEIARsbG3sdO2kJnRcnJ9kkH05EqREbGxv7C9htYmuP0SRJqCgt4rBiY2Njb2I/yqttBrWYWSJsyydsbGzsTew2AcyKirzAOA/ibAVsbGzsT2efH6Zpo5gMaPOUmY9+sbGxsXezzxNDkpzyEW+SDo+Ci42Njf317JP2TTtgmB0kepH8sLGxsb+YPRvitt9qk2XdFMPGxsZex86P7JzMH9oR73ngbuilYWNjY789u23ot6PcNsnl7aGTJ2JjY2OvYP8BtegCXWtsC7AAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '失去灵魂(╯‵□′)╯︵┻━┻';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Blog | Duan Xu';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

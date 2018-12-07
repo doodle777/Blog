@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>LaTeX 中插入数学公式 | MAY THE FORCE BE WITH YOU</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="LaTeX,Math,Equation">
+    <meta name="description" content="content{:toc}  一、常用的数学符号1、小写希腊字母   小写希腊字母 LaTeX表达式 小写希腊字母 LaTeX表达式     $$ \alpha   $$ \alpha $$ \nu      $$ \nu   $$ \beta    $$ \beta $$ \xi      $$ \xi   $$ \gamma   $$ \gamma $$ o        $$ o   $$">
+<meta name="keywords" content="LaTeX,Math,Equation">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LaTeX 中插入数学公式">
+<meta property="og:url" content="http://blog.duanxu.tech/2016/04/24/2016/2016-04-25-LaTeX-MathEquation/index.html">
+<meta property="og:site_name" content="MAY THE FORCE BE WITH YOU">
+<meta property="og:description" content="content{:toc}  一、常用的数学符号1、小写希腊字母   小写希腊字母 LaTeX表达式 小写希腊字母 LaTeX表达式     $$ \alpha   $$ \alpha $$ \nu      $$ \nu   $$ \beta    $$ \beta $$ \xi      $$ \xi   $$ \gamma   $$ \gamma $$ o        $$ o   $$">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-07T12:33:20.431Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LaTeX 中插入数学公式">
+<meta name="twitter:description" content="content{:toc}  一、常用的数学符号1、小写希腊字母   小写希腊字母 LaTeX表达式 小写希腊字母 LaTeX表达式     $$ \alpha   $$ \alpha $$ \nu      $$ \nu   $$ \beta    $$ \beta $$ \xi      $$ \xi   $$ \gamma   $$ \gamma $$ o        $$ o   $$">
+    
+        <link rel="alternate" type="application/atom+xml" title="MAY THE FORCE BE WITH YOU" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon_64.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Duan Xu</h5>
+          <a href="mailto:duanxu@outlook.com" title="duanxu@outlook.com" class="mail">duanxu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/doodle777" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/2886472974" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">LaTeX 中插入数学公式</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">LaTeX 中插入数学公式</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-04-24T08:18:00.000Z" itemprop="datePublished" class="page-time">
+  2016-04-24
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Other/">Other</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container-post body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#一、常用的数学符号"><span class="post-toc-number">1.</span> <span class="post-toc-text">一、常用的数学符号</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#1、小写希腊字母"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">1、小写希腊字母</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2、大写希腊字母"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">2、大写希腊字母</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3、运算符"><span class="post-toc-number">2.</span> <span class="post-toc-text">3、运算符</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#二、简单格式"><span class="post-toc-number">3.</span> <span class="post-toc-text">二、简单格式</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、上下标"><span class="post-toc-number">4.</span> <span class="post-toc-text">1、上下标</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2、加粗和倾斜"><span class="post-toc-number">5.</span> <span class="post-toc-text">2、加粗和倾斜</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3、分数"><span class="post-toc-number">6.</span> <span class="post-toc-text">3、分数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4、开根号"><span class="post-toc-number">7.</span> <span class="post-toc-text">4、开根号</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5、省略号"><span class="post-toc-number">8.</span> <span class="post-toc-text">5、省略号</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#6、括号和分隔符"><span class="post-toc-number">9.</span> <span class="post-toc-text">6、括号和分隔符</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#三、矩阵和行列式"><span class="post-toc-number">10.</span> <span class="post-toc-text">三、矩阵和行列式</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#四、求和与连乘"><span class="post-toc-number">11.</span> <span class="post-toc-text">四、求和与连乘</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#五、导数、极限、积分"><span class="post-toc-number">12.</span> <span class="post-toc-text">五、导数、极限、积分</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、导数"><span class="post-toc-number">13.</span> <span class="post-toc-text">1、导数</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2、极限"><span class="post-toc-number">13.1.</span> <span class="post-toc-text">2、极限</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3、积分"><span class="post-toc-number">14.</span> <span class="post-toc-text">3、积分</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-2016/2016-04-25-LaTeX-MathEquation" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">LaTeX 中插入数学公式</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-04-24 16:18:00" datetime="2016-04-24T08:18:00.000Z" itemprop="datePublished">2016-04-24</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Other/">Other</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <ul>
+<li>content<br>{:toc}</li>
+</ul>
+<h4 id="一、常用的数学符号"><a href="#一、常用的数学符号" class="headerlink" title="一、常用的数学符号"></a><strong>一、常用的数学符号</strong></h4><h5 id="1、小写希腊字母"><a href="#1、小写希腊字母" class="headerlink" title="1、小写希腊字母"></a>1、小写希腊字母</h5><table>
+<thead>
+<tr>
+<th style="text-align:center">小写希腊字母</th>
+<th>LaTeX表达式</th>
+<th style="text-align:center">小写希腊字母</th>
+<th>LaTeX表达式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">$$ \alpha   $$</td>
+<td>\alpha</td>
+<td style="text-align:center">$$ \nu      $$</td>
+<td>\nu</td>
+</tr>
+<tr>
+<td style="text-align:center">$$ \beta    $$</td>
+<td>\beta</td>
+<td style="text-align:center">$$ \xi      $$</td>
+<td>\xi</td>
+</tr>
+<tr>
+<td style="text-align:center">$$ \gamma   $$</td>
+<td>\gamma</td>
+<td style="text-align:center">$$ o        $$</td>
+<td>o</td>
+</tr>
+<tr>
+<td style="text-align:center">$$ \delta   $$</td>
+<td>\delta</td>
+<td style="text-align:center">$$ \pi      $$</td>
+<td>\pi</td>
+</tr>
+<tr>
+<td style="text-align:center">$$ \epsilon $$</td>
+<td>\epsilon</td>
+<td style="text-align:center">$$ \rho     $$</td>
+<td>\rho</td>
+</tr>
+<tr>
+<td style="text-align:center">$$ \zeta    $$</td>
+<td>\zeta</td>
+<td style="text-align:center">$$ \sigma   $$</td>
+<td>\sigma</td>
+</tr>
+<tr>
+<td style="text-align:center">$$ \eta     $$</td>
+<td>\eta</td>
+<td style="text-align:center">$$ \tau     $$</td>
+<td>\tau</td>
+</tr>
+<tr>
+<td style="text-align:center">$$ \theta   $$</td>
+<td>\theta</td>
+<td style="text-align:center">$$ \upsilon $$</td>
+<td>\upsilon</td>
+</tr>
+<tr>
+<td style="text-align:center">$$ \iota    $$</td>
+<td>\iota</td>
+<td style="text-align:center">$$ \phi     $$</td>
+<td>\phi</td>
+</tr>
+<tr>
+<td style="text-align:center">$$ \kappa   $$</td>
+<td>\kappa</td>
+<td style="text-align:center">$$ \chi     $$</td>
+<td>\chi</td>
+</tr>
+<tr>
+<td style="text-align:center">$$ \lambda  $$</td>
+<td>\lambda</td>
+<td style="text-align:center">$$ \psi     $$</td>
+<td>\psi</td>
+</tr>
+<tr>
+<td style="text-align:center">$$ \mu      $$</td>
+<td>\mu</td>
+<td style="text-align:center">$$ \omega   $$</td>
+<td>\omega</td>
+</tr>
+</tbody>
+</table>
+<h5 id="2、大写希腊字母"><a href="#2、大写希腊字母" class="headerlink" title="2、大写希腊字母"></a>2、大写希腊字母</h5><table>
+<thead>
+<tr>
+<th style="text-align:center">大写希腊字母</th>
+<th>LaTeX表达式</th>
+<th style="text-align:center">大写希腊字母</th>
+<th>LaTeX表达式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">$$ \Gamma   $$</td>
+<td>\Gamma</td>
+<td style="text-align:center">$$ \Lambda  $$</td>
+<td>\Lambda</td>
+</tr>
+<tr>
+<td style="text-align:center">$$ \Sigma   $$</td>
+<td>\Sigma</td>
+<td style="text-align:center">$$ \Psi     $$</td>
+<td>\Psi</td>
+</tr>
+<tr>
+<td style="text-align:center">$$ \Delta   $$</td>
+<td>\Delta</td>
+<td style="text-align:center">$$ \Upsilon $$</td>
+<td>\Upsilon</td>
+</tr>
+<tr>
+<td style="text-align:center">$$ \Omega   $$</td>
+<td>\Omega</td>
+<td style="text-align:center">$$ \Theta   $$</td>
+<td>\Theta</td>
+</tr>
+<tr>
+<td style="text-align:center">$$ \Xi      $$</td>
+<td>\Xi</td>
+<td style="text-align:center">$$ \Pi      $$</td>
+<td>\Pi</td>
+</tr>
+<tr>
+<td style="text-align:center">$$ \Phi     $$</td>
+<td>\Phi</td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+<h4 id="3、运算符"><a href="#3、运算符" class="headerlink" title="3、运算符"></a>3、运算符</h4><p>　　对于加减除，对应键盘上便可打出来，但是对于乘法，键盘上没有这个符号，所以我们应该输入 \times 来显示一个 $$ \times $$ 号。</p>
+<p>　　普通字符在数学公式中含义一样，除了 # $ % &amp; ~ _ ^ \ { }  若要在数学环境中表示这些符号# $ % &amp; _ { }，需要分别表示为# \$ \% \&amp; _ { }，即在个字符前加上\。</p>
+<h4 id="二、简单格式"><a href="#二、简单格式" class="headerlink" title="二、简单格式"></a><strong>二、简单格式</strong></h4><h4 id="1、上下标"><a href="#1、上下标" class="headerlink" title="1、上下标"></a>1、上下标</h4><p>　　上标：$ f(x) = x^2 $ 或者 $ f(x) = {x}^{2} $ 均可表示 $$ f(x)=x^2 $$。</p>
+<p>　　下标：$ f(x) = x_2 $ 或者 $ f(x) = {x}_{2} $ 均可表示 $$ f(x)=x_2 $$。</p>
+<p>　　上下标可以级联：$ f(x) = x_1^2 + {x}_{2}^{2} $ -&gt; $$ f(x)=x_1^2+{x}_{2}^{2} $$。</p>
+<h4 id="2、加粗和倾斜"><a href="#2、加粗和倾斜" class="headerlink" title="2、加粗和倾斜"></a>2、加粗和倾斜</h4><p>　　加粗：$ f(x) = \textbf{x}^2 $  -&gt; $$ f(x)=\textbf{x}^2 $$。</p>
+<p>　　文本：$ f(x) = x^2 \mbox{abcd} $ -&gt; $$ f(x)=x^2\mbox{abcd}$$。</p>
+<p>　　倾斜：$ f(x) = x^2 \mbox{\emph{abcd} defg} $ -&gt; $$ f(x)=x^2\mbox{\emph{abcd}defg} $$。</p>
+<h4 id="3、分数"><a href="#3、分数" class="headerlink" title="3、分数"></a>3、分数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ f(x,y) = \frac&#123;x^2&#125;&#123;y^3&#125; $</span><br></pre></td></tr></table></figure>
+<p>$$ f(x,y)=\frac{x^2}{y^3} $$</p>
+<h4 id="4、开根号"><a href="#4、开根号" class="headerlink" title="4、开根号"></a>4、开根号</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ f(x,y) = \sqrt[n]&#123;x^2 y^3&#125; $</span><br></pre></td></tr></table></figure>
+<p>$$ f(x,y)=\sqrt[n]{x^2y^3} $$</p>
+<h4 id="5、省略号"><a href="#5、省略号" class="headerlink" title="5、省略号"></a>5、省略号</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ f(x_1, x_2, \ldots, x_n) = x_1 + x_2 + \cdots + x_n $</span><br></pre></td></tr></table></figure>
+<p>$$ f(x_1,x_2,\ldots,x_n)=x_1+x_2+\cdots+x_n $$</p>
+<h4 id="6、括号和分隔符"><a href="#6、括号和分隔符" class="headerlink" title="6、括号和分隔符"></a>6、括号和分隔符</h4><p>　　公式高度比较低的话直接从键盘输入括号即可，但是对于公式高度比较高的情形，需要特殊的运算。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ &#123;f&#125;&apos;(x) = (\frac&#123;df&#125;&#123;dx&#125;) $</span><br></pre></td></tr></table></figure>
+<p>$$ {f}’(x)=(\frac{df}{dx}) $$</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ &#123;f&#125;&apos;(x) = \left( \frac&#123;df&#125;&#123;dx&#125; \right) $</span><br></pre></td></tr></table></figure>
+<p>$$ {f}’(x)=\left(\frac{df}{dx}\right) $$</p>
+<p>　　可以看出，通过将 \left( 和 \right) 结合使用，可以将括号大小随着其内容变化。[ ] 和 { } 同理。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ &#123;f&#125;&apos;(0)=\left.\frac&#123;df&#125;&#123;dx&#125;\right|_&#123;x=0&#125; $</span><br></pre></td></tr></table></figure>
+<p>$$ {f}’(0)=\left.\frac{df}{dx}\right|_{x=0} $$</p>
+<h4 id="三、矩阵和行列式"><a href="#三、矩阵和行列式" class="headerlink" title="三、矩阵和行列式"></a><strong>三、矩阵和行列式</strong></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ A=\left[ \begin&#123;matrix&#125;  </span><br><span class="line">  a &amp; b  \\  </span><br><span class="line">  c &amp; d  \\  </span><br><span class="line">\end&#123;matrix&#125; \right] $</span><br></pre></td></tr></table></figure>
+<p>$$ A=\left[\begin{matrix}<br>a&amp;b\<br>c&amp;d\<br>\end{matrix}\right] $$</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ \chi (\lambda)=\left\| \\begin&#123;matrix&#125;  </span><br><span class="line">  \lambda - a &amp; -b  \\  </span><br><span class="line">  -c &amp; \lambda - d  \\  </span><br><span class="line">\end&#123;matrix&#125; \right| $</span><br></pre></td></tr></table></figure>
+<p>$$ \chi(\lambda)=\left|\begin{matrix}<br>\lambda-a&amp;-b\<br>-c&amp;\lambda-d\<br>\end{matrix}\right| $$</p>
+<h4 id="四、求和与连乘"><a href="#四、求和与连乘" class="headerlink" title="四、求和与连乘"></a><strong>四、求和与连乘</strong></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ \sum_&#123;k=1&#125;^n k^2 = \frac&#123;1&#125;&#123;2&#125; n (n+1) $</span><br></pre></td></tr></table></figure>
+<p>$$ \sum_{k=1}^nk^2=\frac{1}{2}n(n+1) $$</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ \prod_&#123;k=1&#125;^n k = n! $</span><br></pre></td></tr></table></figure>
+<p>$$ \prod_{k=1}^nk=n! $$</p>
+<h4 id="五、导数、极限、积分"><a href="#五、导数、极限、积分" class="headerlink" title="五、导数、极限、积分"></a><strong>五、导数、极限、积分</strong></h4><h4 id="1、导数"><a href="#1、导数" class="headerlink" title="1、导数"></a>1、导数</h4><p>　　导数的表示用一对花括号将被导函数括起来，然后加上一个英文的引号即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ &#123;f&#125;&apos;(x) = x^2 + x $</span><br></pre></td></tr></table></figure>
+<p>$$ {f}’(x)=x^2+x $$</p>
+<h5 id="2、极限"><a href="#2、极限" class="headerlink" title="2、极限"></a>2、极限</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ \lim_&#123;x \to 0&#125; \frac&#123;3x^2 +7x^3&#125;&#123;x^2 +5x^4&#125; = 3 $</span><br></pre></td></tr></table></figure>
+<p>$$ \lim_{x\to0}\frac{3x^2+7x^3}{x^2+5x^4}=3 $$</p>
+<h4 id="3、积分"><a href="#3、积分" class="headerlink" title="3、积分"></a>3、积分</h4><p>　　积分中，需要注意的是，在多重积分内 dx 和 dy 之间 使用一个斜杠加一个逗号 \, 来增大稍许间距。同样，在两个积分号之间使用一个斜杠加一个感叹号 ! 来减小稍许间距。使之更美观。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ \int_a^b f(x)\,dx $</span><br></pre></td></tr></table></figure>
+<p>$$ \int_a^bf(x)\,dx $$</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ \int_0^&#123;+\infty&#125; x^n e^&#123;-x&#125; \,dx = n! $</span><br></pre></td></tr></table></figure>
+<p>$$ \int_0^{+\infty}x^ne^{-x}\,dx=n! $$</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ \int_&#123;x^2 + y^2 \leq R^2&#125; f(x,y)\,dx\,dy = \int_&#123;\theta=0&#125;^&#123;2\pi&#125; \int_&#123;r=0&#125;^R f(r\cos\theta,r\sin\theta) r\,dr\,d\theta $</span><br></pre></td></tr></table></figure>
+<p>$$ \int_{x^2 + y^2 \leq R^2} f(x,y)\,dx\,dy = \int_{\theta=0}^{2\pi} \int_{r=0}^R f(r\cos\theta,r\sin\theta) r\,dr\,d\theta $$</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ \int \!\!\! \int_D f(x,y)\,dx\,dy  </span><br><span class="line">\int \int_D f(x,y)\,dx\,dy $</span><br></pre></td></tr></table></figure>
+<p>$$ \int !!! \int_D f(x,y)\,dx\,dy<br>\int \int_D f(x,y)\,dx\,dy $$</p>
+<p>　　在加入了 ! 之后，距离的改变还是很明显的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ i\hbar\frac&#123;\partial \psi&#125;&#123;\partial &#123;t&#125;&#125; = \frac&#123;-\hbar^2&#125;&#123;2m&#125; \left( \frac&#123;\partial^2&#125;&#123;\partial x^2&#125; + </span><br><span class="line">\frac&#123;\partial^2&#125;&#123;\partial y^2&#125; + \frac&#123;\partial^2&#125;&#123;\partial z^2&#125; \right) \psi + V \psi $</span><br></pre></td></tr></table></figure>
+<p>$$ i\hbar\frac{\partial \psi}{\partial {t}} = \frac{-\hbar^2}{2m} \left( \frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2} + \frac{\partial^2}{\partial z^2} \right) \psi + V \psi $$</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ \frac&#123;d&#125;&#123;dt&#125; \int \!\!\! \int \!\!\! \int_&#123;\textbf&#123;R&#125;^3&#125; \left| \psi(\mathbf&#123;r&#125;,t) \right|^2\,dx\,dy\,dz = 0 $</span><br></pre></td></tr></table></figure>
+<p>$$ \frac{d}{dt}\int!!!\int!!!\int_{\textbf{R}^3}\left|\psi(\mathbf{r},t)\right|^2\,dx\,dy\,dz=0 $$</p>
+
+        </div>
+
+        <!-- <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-12-07T12:33:20.431Z" itemprop="dateUpdated">2018-12-07 20:33:20</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2016/04/24/2016/2016-04-25-LaTeX-MathEquation/" target="_blank" rel="external">http://blog.duanxu.tech/2016/04/24/2016/2016-04-25-LaTeX-MathEquation/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.duanxu.tech">
+            <img src="/img/avatar.jpg" alt="Duan Xu">
+            Duan Xu
+        </a>
+    </footer>
+</blockquote>
+ -->
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Equation/">Equation</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LaTeX/">LaTeX</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Math/">Math</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.tech/2016/04/24/2016/2016-04-25-LaTeX-MathEquation/&title=《LaTeX 中插入数学公式》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.tech/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.tech/2016/04/24/2016/2016-04-25-LaTeX-MathEquation/&title=《LaTeX 中插入数学公式》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.tech/2016/04/24/2016/2016-04-25-LaTeX-MathEquation/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《LaTeX 中插入数学公式》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.tech/2016/04/24/2016/2016-04-25-LaTeX-MathEquation/&via=http://blog.duanxu.tech" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.tech/2016/04/24/2016/2016-04-25-LaTeX-MathEquation/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2016/05/03/2016/2016-05-03-LaTeX-CSharp-HTTP/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">C#开发基于Http的LaTeX数学公式转换器</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2015/11/22/2015/2015-11-22-Android-Study-32-Camera/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android开发手记(32) 使用摄像头拍照</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        <p><span>Duan Xu &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.tech/2016/04/24/2016/2016-04-25-LaTeX-MathEquation/&title=《LaTeX 中插入数学公式》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.tech/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.tech/2016/04/24/2016/2016-04-25-LaTeX-MathEquation/&title=《LaTeX 中插入数学公式》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.tech/2016/04/24/2016/2016-04-25-LaTeX-MathEquation/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《LaTeX 中插入数学公式》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.tech/2016/04/24/2016/2016-04-25-LaTeX-MathEquation/&via=http://blog.duanxu.tech" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.tech/2016/04/24/2016/2016-04-25-LaTeX-MathEquation/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACvklEQVR42u3aQW4CMQwFUO5/6VbqirbK8G0nA4s3KwTtTF6QYmP78Yivr5/r/+vnd56v1furv1m9vn7utgsPDw+vtfTeIlb3STZicrdkzXh4eHineUkw6D3sOmAk71Q3BQ8PD+9zeKulTFLzSbKOh4eH9/m8yWF9vR1JcoyHh4f3abw8CU4S4kmyXn3itloLHh4eXsybNMDe9fqm/h4eHh5esaueJ7j5EV8tdkwuPDw8vBO864VGP/XjM7lXIO795SP5HvDw8PDGvF1t/urG5UlzL+Tg4eHh7eX1kuBqMyxvjPXuswxFeHh4eAd4yWN6xdZ5iXaylXh4eHjneElaXB2fmvSn8ieWqyx4eHh4m3i7SqUnyr7VTSx8h3h4eHhjXu9AT1r+SThJWmV5eXdD6MLDw8OLf633uu35p5NibrKVyyo1Hh4e3lbepEBQDQaFunIMKAcSPDw8vDEvP3zz5PhEolwduopugYeHh3eAl9+6enBXC7i94QM8PDy8e3iT0zVvcU22rHBnPDw8vFt4k0GoySGelIaT0PXrUzw8PLzDvPmy8jBQbXH1SsN4eHh453hJUTVPqXvHehWZtN/w8PDwTvB6h3v5gI6DynwoAQ8PD+9OXh4AksLB9UKry60GkgIDDw8Pr8ibH/rVplSvuZUPcpX/GQ8PD2/M6w1jTTDVgm8+yIWHh4d3gleF5Q3+JHgkGzHZUDw8PLwTvPywTkoVvY3opexRwwwPDw/vFl6eBE/KrL0xhfKXgYeHh3eAt6uHtmv4oBdC8oEwPDw8vF28STCYHPSTzSqUevHw8PCO8aqpcK/lny83j2MvSsB4eHh4b+XN22DVMYLqDNWL0Ss8PDy8N/F641DJWMC8/bYhMODh4eHFvPzIvk6Re2WFXsE3St/x8PDwDvAmDbBkoZNQUb3n5tEBPDw8vL/XN5xJ+T5eqnMNAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '失去灵魂(╯‵□′)╯︵┻━┻';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Blog | Duan Xu';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

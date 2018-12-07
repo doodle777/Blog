@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Android开发手记(18) 数据存储三 SQLite存储数据 | MAY THE FORCE BE WITH YOU</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Android,DataStore,SQLite">
+    <meta name="description" content="content{:toc}  Android为数据存储提供了五种方式： 1、SharedPreferences 2、文件存储 3、SQLite数据库 4、ContentProvider 5、网络存储 　　SQLite 是以嵌入式为目的而设计的轻型数据库，运行起来占用的资源非常低，通常只需要几百K的内存就足够了。同时也具有非常好的兼容性，支持标准SQL语言。Android提供了对SQLite的支持">
+<meta name="keywords" content="Android,DataStore,SQLite">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android开发手记(18) 数据存储三 SQLite存储数据">
+<meta property="og:url" content="http://blog.duanxu.tech/2015/10/29/2015/2015-10-29-Android-Study-18-Data-Store-3-SQLite/index.html">
+<meta property="og:site_name" content="MAY THE FORCE BE WITH YOU">
+<meta property="og:description" content="content{:toc}  Android为数据存储提供了五种方式： 1、SharedPreferences 2、文件存储 3、SQLite数据库 4、ContentProvider 5、网络存储 　　SQLite 是以嵌入式为目的而设计的轻型数据库，运行起来占用的资源非常低，通常只需要几百K的内存就足够了。同时也具有非常好的兼容性，支持标准SQL语言。Android提供了对SQLite的支持">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-07T12:43:32.857Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android开发手记(18) 数据存储三 SQLite存储数据">
+<meta name="twitter:description" content="content{:toc}  Android为数据存储提供了五种方式： 1、SharedPreferences 2、文件存储 3、SQLite数据库 4、ContentProvider 5、网络存储 　　SQLite 是以嵌入式为目的而设计的轻型数据库，运行起来占用的资源非常低，通常只需要几百K的内存就足够了。同时也具有非常好的兼容性，支持标准SQL语言。Android提供了对SQLite的支持">
+    
+        <link rel="alternate" type="application/atom+xml" title="MAY THE FORCE BE WITH YOU" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon_64.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Duan Xu</h5>
+          <a href="mailto:duanxu@outlook.com" title="duanxu@outlook.com" class="mail">duanxu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/doodle777" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/2886472974" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android开发手记(18) 数据存储三 SQLite存储数据</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android开发手记(18) 数据存储三 SQLite存储数据</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2015-10-29T13:29:00.000Z" itemprop="datePublished" class="page-time">
+  2015-10-29
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container-post body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#一、创建SQLite数据库和表"><span class="post-toc-number">1.</span> <span class="post-toc-text">一、创建SQLite数据库和表</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#二、添加、删除、修改"><span class="post-toc-number">2.</span> <span class="post-toc-text">二、添加、删除、修改</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#（2-1）SQL语句方法"><span class="post-toc-number">3.</span> <span class="post-toc-text">（2.1）SQL语句方法</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#（2-2）另一种方法"><span class="post-toc-number">4.</span> <span class="post-toc-text">（2.2）另一种方法</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#三、数据库查询"><span class="post-toc-number">5.</span> <span class="post-toc-text">三、数据库查询</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#四、SQLiteOpenHelper"><span class="post-toc-number">6.</span> <span class="post-toc-text">四、SQLiteOpenHelper</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#MainActivity-java"><span class="post-toc-number">7.</span> <span class="post-toc-text">MainActivity.java</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#MyDBHelper-java"><span class="post-toc-number">8.</span> <span class="post-toc-text">MyDBHelper.java</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-2015/2015-10-29-Android-Study-18-Data-Store-3-SQLite" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android开发手记(18) 数据存储三 SQLite存储数据</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2015-10-29 21:29:00" datetime="2015-10-29T13:29:00.000Z" itemprop="datePublished">2015-10-29</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <ul>
+<li>content<br>{:toc}</li>
+</ul>
+<p>Android为数据存储提供了五种方式：</p>
+<p>1、SharedPreferences</p>
+<p>2、文件存储</p>
+<p><strong>3、SQLite数据库</strong></p>
+<p>4、ContentProvider</p>
+<p>5、网络存储</p>
+<p>　　SQLite 是以嵌入式为目的而设计的轻型数据库，运行起来占用的资源非常低，通常只需要几百K的内存就足够了。同时也具有非常好的兼容性，支持标准SQL语言。Android提供了对SQLite的支持，我们可以通过其来管理一些应用数据。</p>
+<h4 id="一、创建SQLite数据库和表"><a href="#一、创建SQLite数据库和表" class="headerlink" title="一、创建SQLite数据库和表"></a><strong>一、创建SQLite数据库和表</strong></h4><p>　　我们可以通过SQLiteDatabase.openOrCreateDatabase()来创建一个数据库实例。</p>
+<blockquote>
+<p>SQLiteDatabase db = openOrCreateDatabase(dbName, MODE_PRIVATE, null);<br>// openOrCreateDatabase(String name, int mode, CursorFactory factory)<br>// 第一个参数为创建数据库的名称<br>// 第二个参数为创建数据库的权限，其权限同内部文件存储数据权限相同。默认为MODE_PRIVATE。<br>// 第三个参数为CursorFactory对象，用于查询时返回Cursor的子类对象；或者传入null使用默认的factory构造。  </p>
+</blockquote>
+<p>　　在创建表的时候，我们可以使用一条SQL语句来完成。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cmd = <span class="string">"CREATE TABLE IF NOT EXISTS "</span> + tableName + <span class="string">" (name VARCHAR, passwd VARCHAR)"</span>;</span><br><span class="line">db.execSQL(cmd);</span><br></pre></td></tr></table></figure>
+<p>　　这样，我们可以发现在“/data/data/[PACKAGE_NAME]/databases”目录下生成了一个“myDB.db”数据库文件。</p>
+<p>　　完整代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.database.sqlite.SQLiteDatabase;</span><br><span class="line"><span class="keyword">import</span> android.support.v7.app.AppCompatActivity;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"><span class="keyword">import</span> android.widget.Button;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">private</span> Button btnDB;</span><br><span class="line">    <span class="keyword">private</span> Button btnTable;</span><br><span class="line">    <span class="keyword">private</span> String dbName = <span class="string">"myDB"</span>;</span><br><span class="line">    <span class="keyword">private</span> String cmd = <span class="string">""</span>;</span><br><span class="line">    <span class="keyword">private</span> SQLiteDatabase db;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"> </span><br><span class="line">        btnDB = (Button)findViewById(R.id.btnDB);</span><br><span class="line">        btnTable = (Button)findViewById(R.id.btnTable);</span><br><span class="line"> </span><br><span class="line">        btnDB.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">                db = openOrCreateDatabase(dbName,MODE_PRIVATE,<span class="keyword">null</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        btnTable.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            String tableName = <span class="string">"User"</span>;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">                cmd = <span class="string">"CREATE TABLE IF NOT EXISTS "</span> + tableName + <span class="string">" (name VARCHAR, passwd VARCHAR)"</span>;</span><br><span class="line">                db.execSQL(cmd);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"> </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="二、添加、删除、修改"><a href="#二、添加、删除、修改" class="headerlink" title="二、添加、删除、修改"></a><strong>二、添加、删除、修改</strong></h4><h4 id="（2-1）SQL语句方法"><a href="#（2-1）SQL语句方法" class="headerlink" title="（2.1）SQL语句方法"></a>（2.1）SQL语句方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cmd = <span class="string">"INSERT INTO "</span> + tableName + <span class="string">" values ('Amy','123456')"</span>;</span><br><span class="line">db.execSQL(cmd);</span><br><span class="line">cmd = <span class="string">"UPDATE "</span> + tableName + <span class="string">" SET passwd='654321' WHERE name='AMY')"</span>;</span><br><span class="line">db.execSQL(cmd);</span><br><span class="line">cmd = <span class="string">"DELETE FROM "</span> + tableName + <span class="string">" WHERE name='Amy'"</span>;</span><br><span class="line">db.execSQL(cmd);</span><br></pre></td></tr></table></figure>
+<h4 id="（2-2）另一种方法"><a href="#（2-2）另一种方法" class="headerlink" title="（2.2）另一种方法"></a>（2.2）另一种方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">db.insert(String table, String nullColumnHack, ContentValues values);</span><br><span class="line">db.update(String table, Contentvalues values, String whereClause, String whereArgs);</span><br><span class="line">db.delete(String table, String whereClause, String whereArgs);</span><br></pre></td></tr></table></figure>
+<p>　　以上三个方法的第一个参数都是表示要操作的表名；insert中的第二个参数表示如果插入的数据每一列都为空的话，需要指定此行中某一列的名称，系统将此列设置为NULL，不至于出现错误；insert中的第三个参数是ContentValues类型的变量，是键值对组成的Map，key代表列名，value代表该列要插入的值；update的第二个参数也很类似，只不过它是更新该字段key为最新的value值，第三个参数whereClause表示WHERE表达式，比如“age &gt; ? and age &lt; ?”等，最后的whereArgs参数是占位符的实际参数值；delete方法的参数也是一样。</p>
+<p>　　实例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">    btnTable.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            String tableName = <span class="string">"User"</span>;</span><br><span class="line"> </span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">                cmd = <span class="string">"CREATE TABLE IF NOT EXISTS "</span> + tableName + <span class="string">" (name VARCHAR, passwd VARCHAR)"</span>;</span><br><span class="line">                db.execSQL(cmd);</span><br><span class="line"> </span><br><span class="line">                ContentValues cv = <span class="keyword">new</span> ContentValues();</span><br><span class="line">                cv.put(<span class="string">"name"</span>, <span class="string">"Amy"</span>);</span><br><span class="line">                cv.put(<span class="string">"passwd"</span>, <span class="string">"123456"</span>);</span><br><span class="line">                db.insert(dbName, <span class="keyword">null</span>, cv);</span><br><span class="line"><span class="comment">//              cmd = "INSERT INTO " + tableName + " values ('Amy','123456')";</span></span><br><span class="line"><span class="comment">//              db.execSQL(cmd);</span></span><br><span class="line"> </span><br><span class="line">                cv = <span class="keyword">new</span> ContentValues();</span><br><span class="line">                cv.put(<span class="string">"passwd"</span>, <span class="string">"654321"</span>);</span><br><span class="line">                db.update(dbName, cv, <span class="string">"name=?"</span>, <span class="keyword">new</span> String[]&#123;<span class="string">"Amy"</span>&#125;);</span><br><span class="line"><span class="comment">//              cmd = "UPDATE " + tableName + " SET passwd='654321' WHERE name='AMY')";</span></span><br><span class="line"><span class="comment">//              db.execSQL(cmd);</span></span><br><span class="line"> </span><br><span class="line">                db.delete(dbName, <span class="string">"name=?"</span>, <span class="keyword">new</span> String[]&#123;<span class="string">"Amy"</span>&#125;);</span><br><span class="line"><span class="comment">//              cmd = "DELETE FROM " + tableName + " WHERE name='Amy'";</span></span><br><span class="line"><span class="comment">//              db.execSQL(cmd);</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="三、数据库查询"><a href="#三、数据库查询" class="headerlink" title="三、数据库查询"></a><strong>三、数据库查询</strong></h4><p>　　对数据库的查询可以通过db.query()来实现，query方法一般包含8个参数：</p>
+<blockquote>
+<p>db.query(String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy, String limit);<br>// table为查询表的名称<br>// columns为查询的字段名<br>// selection为查询的条件<br>// selectionArgs为查询条件的值<br>// groupBy为分组字段值<br>// having为分组后筛选条件<br>// orderBy为排序字段名<br>// limit为查询结果返回记录条数  </p>
+</blockquote>
+<p>　　查询的的结果通过Cursor返回。代表数据集的游标。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Cursor cursor = db.query(tableName, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>);</span><br><span class="line">String str = <span class="string">""</span>;</span><br><span class="line"><span class="keyword">if</span>(cursor.getCount()!=<span class="number">0</span>)&#123;                       <span class="comment">// 查询符合条件的记录个数</span></span><br><span class="line">    cursor.moveToFirst();                       <span class="comment">// 移动到第一个记录</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;cursor.getCount();i++)&#123;</span><br><span class="line">        str += cursor.getString(<span class="number">0</span>)+<span class="string">" "</span>+cursor.getString(<span class="number">1</span>)+<span class="string">"\n"</span>;</span><br><span class="line">        cursor.moveToNext();                    <span class="comment">// 移动到下一个记录</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">new</span> AlertDialog.Builder(MainActivity.<span class="keyword">this</span>).setTitle(<span class="string">"Query"</span>)</span><br><span class="line">        .setMessage(str).setNegativeButton(<span class="string">"OK"</span>,<span class="keyword">null</span>).show();</span><br></pre></td></tr></table></figure>
+<h4 id="四、SQLiteOpenHelper"><a href="#四、SQLiteOpenHelper" class="headerlink" title="四、SQLiteOpenHelper"></a><strong>四、SQLiteOpenHelper</strong></h4><p>　　除了常规的管理方法之外，Android SDK还提供了另外一种管理数据库的方法，SQLiteOpenHelper。它提供了一套自动执行的机制来创建、更新、打开数据库。</p>
+<p>　　首先，我们继承SQLiteOpenHelper类，创建MyDBHelper类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyDBHelper</span> <span class="keyword">extends</span> <span class="title">SQLiteOpenHelper</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String tableName = <span class="string">"User"</span>;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyDBHelper</span><span class="params">(Context context, String name, SQLiteDatabase.CursorFactory factory, <span class="keyword">int</span> version)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(context, name, factory, version);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(SQLiteDatabase db)</span> </span>&#123;</span><br><span class="line">        String cmd = <span class="string">"CREATE TABLE IF NOT EXISTS "</span> + tableName + <span class="string">" (name VARCHAR, passwd VARCHAR)"</span>;</span><br><span class="line">        db.execSQL(cmd);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onUpgrade</span><span class="params">(SQLiteDatabase db, <span class="keyword">int</span> oldVersion, <span class="keyword">int</span> newVersion)</span> </span>&#123;</span><br><span class="line">        String cmd = <span class="string">"UPDATE "</span> + tableName + <span class="string">" SET passwd='654321' WHERE name='AMY')"</span>;</span><br><span class="line">        db.execSQL(cmd);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">showTable</span><span class="params">()</span></span>&#123;</span><br><span class="line">        SQLiteDatabase db = <span class="keyword">this</span>.getReadableDatabase();</span><br><span class="line">        Cursor cursor = db.query(tableName, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>);</span><br><span class="line">        String str = <span class="string">""</span>;</span><br><span class="line">        <span class="keyword">if</span>(cursor.getCount()!=<span class="number">0</span>)&#123;                       <span class="comment">// 查询符合条件的记录个数</span></span><br><span class="line">            cursor.moveToFirst();                       <span class="comment">// 移动到第一个记录</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;cursor.getCount();i++)&#123;</span><br><span class="line">                str += cursor.getString(<span class="number">0</span>)+<span class="string">" "</span>+cursor.getString(<span class="number">1</span>)+<span class="string">"\n"</span>;</span><br><span class="line">                cursor.moveToNext();                    <span class="comment">// 移动到下一个记录</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> str;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>然后，我们便可以在MainActivity内使用我们定义的SQLiteOpenHelper类的方法。
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">btnShow = (Button) findViewById(R.id.btnShow);</span><br><span class="line">btnShow.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">        dbHelper = <span class="keyword">new</span> MyDBHelper(MainActivity.<span class="keyword">this</span>, dbName, <span class="keyword">null</span>, <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">new</span> AlertDialog.Builder(MainActivity.<span class="keyword">this</span>).setTitle(<span class="string">"MyDBHelper"</span>)</span><br><span class="line">                .setMessage(dbHelper.showTable()).setNegativeButton(<span class="string">"OK"</span>, <span class="keyword">null</span>).show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>　　完整代码如下：</p>
+<h4 id="MainActivity-java"><a href="#MainActivity-java" class="headerlink" title="MainActivity.java"></a>MainActivity.java</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.app.AlertDialog;</span><br><span class="line"><span class="keyword">import</span> android.support.v7.app.AppCompatActivity;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"><span class="keyword">import</span> android.widget.Button;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">private</span> Button btnShow;</span><br><span class="line">    <span class="keyword">private</span> String dbName = <span class="string">"myDB"</span>;</span><br><span class="line">    <span class="keyword">private</span> MyDBHelper dbHelper;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"> </span><br><span class="line">        btnShow = (Button) findViewById(R.id.btnShow);</span><br><span class="line">        btnShow.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">                dbHelper = <span class="keyword">new</span> MyDBHelper(MainActivity.<span class="keyword">this</span>, dbName, <span class="keyword">null</span>, <span class="number">1</span>);</span><br><span class="line">                <span class="keyword">new</span> AlertDialog.Builder(MainActivity.<span class="keyword">this</span>).setTitle(<span class="string">"MyDBHelper"</span>)</span><br><span class="line">                        .setMessage(dbHelper.showTable()).setNegativeButton(<span class="string">"OK"</span>, <span class="keyword">null</span>).show();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="MyDBHelper-java"><a href="#MyDBHelper-java" class="headerlink" title="MyDBHelper.java"></a>MyDBHelper.java</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.content.Context;</span><br><span class="line"><span class="keyword">import</span> android.database.Cursor;</span><br><span class="line"><span class="keyword">import</span> android.database.sqlite.SQLiteDatabase;</span><br><span class="line"><span class="keyword">import</span> android.database.sqlite.SQLiteOpenHelper;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyDBHelper</span> <span class="keyword">extends</span> <span class="title">SQLiteOpenHelper</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String tableName = <span class="string">"User"</span>;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyDBHelper</span><span class="params">(Context context, String name, SQLiteDatabase.CursorFactory factory, <span class="keyword">int</span> version)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(context, name, factory, version);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(SQLiteDatabase db)</span> </span>&#123;</span><br><span class="line">        String cmd = <span class="string">"CREATE TABLE IF NOT EXISTS "</span> + tableName + <span class="string">" (name VARCHAR, passwd VARCHAR)"</span>;</span><br><span class="line">        db.execSQL(cmd);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onUpgrade</span><span class="params">(SQLiteDatabase db, <span class="keyword">int</span> oldVersion, <span class="keyword">int</span> newVersion)</span> </span>&#123;</span><br><span class="line">        String cmd = <span class="string">"UPDATE "</span> + tableName + <span class="string">" SET passwd='654321' WHERE name='AMY')"</span>;</span><br><span class="line">        db.execSQL(cmd);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">showTable</span><span class="params">()</span></span>&#123;</span><br><span class="line">        SQLiteDatabase db = <span class="keyword">this</span>.getReadableDatabase();</span><br><span class="line">        Cursor cursor = db.query(tableName, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>);</span><br><span class="line">        String str = <span class="string">""</span>;</span><br><span class="line">        <span class="keyword">if</span>(cursor.getCount()!=<span class="number">0</span>)&#123;                       <span class="comment">// 查询符合条件的记录个数</span></span><br><span class="line">            cursor.moveToFirst();                       <span class="comment">// 移动到第一个记录</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;cursor.getCount();i++)&#123;</span><br><span class="line">                str += cursor.getString(<span class="number">0</span>)+<span class="string">" "</span>+cursor.getString(<span class="number">1</span>)+<span class="string">"\n"</span>;</span><br><span class="line">                cursor.moveToNext();                    <span class="comment">// 移动到下一个记录</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> str;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <!-- <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-12-07T12:43:32.857Z" itemprop="dateUpdated">2018-12-07 20:43:32</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2015/10/29/2015/2015-10-29-Android-Study-18-Data-Store-3-SQLite/" target="_blank" rel="external">http://blog.duanxu.tech/2015/10/29/2015/2015-10-29-Android-Study-18-Data-Store-3-SQLite/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.duanxu.tech">
+            <img src="/img/avatar.jpg" alt="Duan Xu">
+            Duan Xu
+        </a>
+    </footer>
+</blockquote>
+ -->
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DataStore/">DataStore</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQLite/">SQLite</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.tech/2015/10/29/2015/2015-10-29-Android-Study-18-Data-Store-3-SQLite/&title=《Android开发手记(18) 数据存储三 SQLite存储数据》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.tech/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.tech/2015/10/29/2015/2015-10-29-Android-Study-18-Data-Store-3-SQLite/&title=《Android开发手记(18) 数据存储三 SQLite存储数据》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.tech/2015/10/29/2015/2015-10-29-Android-Study-18-Data-Store-3-SQLite/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android开发手记(18) 数据存储三 SQLite存储数据》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.tech/2015/10/29/2015/2015-10-29-Android-Study-18-Data-Store-3-SQLite/&via=http://blog.duanxu.tech" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.tech/2015/10/29/2015/2015-10-29-Android-Study-18-Data-Store-3-SQLite/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2015/11/04/2015/2015-11-04-Android-Study-19-Data-Store-4-ContentProvider/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android开发手记(19) 数据存储四 ContentProvider</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2015/10/29/2015/2015-10-29-Android-Study-17-Data-Store-2-File/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android开发手记(17) 数据存储二 文件存储数据</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        <p><span>Duan Xu &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.tech/2015/10/29/2015/2015-10-29-Android-Study-18-Data-Store-3-SQLite/&title=《Android开发手记(18) 数据存储三 SQLite存储数据》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.tech/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.tech/2015/10/29/2015/2015-10-29-Android-Study-18-Data-Store-3-SQLite/&title=《Android开发手记(18) 数据存储三 SQLite存储数据》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.tech/2015/10/29/2015/2015-10-29-Android-Study-18-Data-Store-3-SQLite/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android开发手记(18) 数据存储三 SQLite存储数据》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.tech/2015/10/29/2015/2015-10-29-Android-Study-18-Data-Store-3-SQLite/&via=http://blog.duanxu.tech" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.tech/2015/10/29/2015/2015-10-29-Android-Study-18-Data-Store-3-SQLite/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADJUlEQVR42u3aS47iQBAFwL7/pZntjBjo9zJBwkV4ZSEoVxSLdH5+fuLrdnfdf/73J/f3yTqPnvvo/n6dF1/Y2NjYF2Hfnl7J49v75Dg2B/18BWxsbOxT2W3wSBjPN5oHs2T93IKNjY2Nnbz6t0f2PNi04Q0bGxsbOw9Cm2RmFvweHQc2NjY2dlvKaTeaA9rDenstDRsbG/vj2XlX9PPv39LfxsbGxv5g9q282mA2e0qRTswU2NjY2AexX1USSlqzeVoya/HWfwk2Njb2QezNqM1maCY/srYB3B4uNjY29nXZbSm//aRNbPKjbJvEDzMwbGxs7IuzNwEsbx7M8Mk4Ths4sbGxsU9l7zGz9/xXlYTahgQ2Njb2eexZpaVtvrZbf1Vb4pdaGjY2NvYR7Palf5Nm5KvVoahcGRsbG/s8dt763RToZw3aTaP3oREbGxv7CHZeKtps9ye42hbvqrGBjY2NfRA7TypmV07dNyTyEIuNjY19Hrsdf3lVqMsbFe33664INjY29mXZ+et7u4lZ+pE3Btr2wD/32NjY2Aex92Esf9h+tdkxFeM72NjY2Bdnt2X3TYM2bxXnAXJ49NjY2NgXZ+cPng3itNTZCnXQxcbGxj6IPRuaaYs+OTIh5d+M/gxsbGzsi7Nnj0yOIE8e2tGcWRHqP10RbGxs7CPYeTs2DxVtsb5lz4pNBRgbGxv7Uuw8/Xjf0MyszZAE14e/wsbGxj6InWx3FrraxGCzQpsyYWNjY38buw1F+azQrCU8KzNhY2Njfxs7H8rJi/h5i3eThBRgbGxs7OPYyUG0Zf3NdjdjQ9GMEjY2NvZB7FnIaVuws+CX/zYPw9jY2Nhns9vpnrYktDm+YWrxvJyEjY2NfXH2JmC0hadZipKTinYyNjY29kHsVy3dDv3MGg+b8hM2Njb22exNw7Ut0OdHk/8/w8YzNjY29nHsvNS+327+q3wop47V2NjY2F/MbreynyFKkpN2hAgbGxv7m9l5SpC3cmdHsPo+NjY29nHstqiUgGeN5LwNnIfSXyaVsLGxsS/Obksz7aHsV0iKTbOAio2NjX1x9h8vHDZhvrTkJAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '失去灵魂(╯‵□′)╯︵┻━┻';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Blog | Duan Xu';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

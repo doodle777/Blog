@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Android 学习笔记(03) Activity 间传递数据 | MAY THE FORCE BE WITH YOU</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Android,Activity">
+    <meta name="description" content="content{:toc}  1. 简单数据传递建立两个Activity，名称分别为MainActivity和TheAty，在MainActivity中新建一个Button，id为btnStartAty。在TheAty中新建一个TextView，id为tv。分别加入如下代码： MainActivity.java12345678910111213141516171819202122 public">
+<meta name="keywords" content="Android,Activity">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 学习笔记(03) Activity 间传递数据">
+<meta property="og:url" content="http://blog.duanxu.tech/2015/10/08/2015/2015-10-08-Android-Study-03-Activity-Data-Transfer/index.html">
+<meta property="og:site_name" content="MAY THE FORCE BE WITH YOU">
+<meta property="og:description" content="content{:toc}  1. 简单数据传递建立两个Activity，名称分别为MainActivity和TheAty，在MainActivity中新建一个Button，id为btnStartAty。在TheAty中新建一个TextView，id为tv。分别加入如下代码： MainActivity.java12345678910111213141516171819202122 public">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-07T12:39:33.860Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 学习笔记(03) Activity 间传递数据">
+<meta name="twitter:description" content="content{:toc}  1. 简单数据传递建立两个Activity，名称分别为MainActivity和TheAty，在MainActivity中新建一个Button，id为btnStartAty。在TheAty中新建一个TextView，id为tv。分别加入如下代码： MainActivity.java12345678910111213141516171819202122 public">
+    
+        <link rel="alternate" type="application/atom+xml" title="MAY THE FORCE BE WITH YOU" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon_64.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Duan Xu</h5>
+          <a href="mailto:duanxu@outlook.com" title="duanxu@outlook.com" class="mail">duanxu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/doodle777" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/2886472974" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android 学习笔记(03) Activity 间传递数据</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android 学习笔记(03) Activity 间传递数据</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2015-10-08T12:17:00.000Z" itemprop="datePublished" class="page-time">
+  2015-10-08
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container-post body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-简单数据传递"><span class="post-toc-number">1.</span> <span class="post-toc-text">1. 简单数据传递</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-使用Bundle传递数据"><span class="post-toc-number">2.</span> <span class="post-toc-text">2. 使用Bundle传递数据</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-2015/2015-10-08-Android-Study-03-Activity-Data-Transfer" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android 学习笔记(03) Activity 间传递数据</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2015-10-08 20:17:00" datetime="2015-10-08T12:17:00.000Z" itemprop="datePublished">2015-10-08</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <ul>
+<li>content<br>{:toc}</li>
+</ul>
+<h4 id="1-简单数据传递"><a href="#1-简单数据传递" class="headerlink" title="1. 简单数据传递"></a><strong>1. 简单数据传递</strong></h4><p>建立两个Activity，名称分别为MainActivity和TheAty，在MainActivity中新建一个Button，id为btnStartAty。在TheAty中新建一个TextView，id为tv。分别加入如下代码：</p>
+<p>MainActivity.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">        Button button = (Button)findViewById(R.id.btnStartAty);</span><br><span class="line">        button.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">                Intent i = <span class="keyword">new</span> Intent();</span><br><span class="line"></span><br><span class="line">                i.setClass(MainActivity.<span class="keyword">this</span>, TheAty.class);</span><br><span class="line">                i.putExtra(<span class="string">"data"</span>, <span class="string">"hello android"</span>);</span><br><span class="line"></span><br><span class="line">                startActivity(i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>TheAty.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TheAty</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> TextView textv;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_the_aty);</span><br><span class="line"></span><br><span class="line">        Intent i = getIntent();</span><br><span class="line"></span><br><span class="line">        textv = (TextView)findViewById(R.id.tv);</span><br><span class="line">        textv.setText(i.getStringExtra(<span class="string">"data"</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其中，Intent i 的作用是作为绑定两个Activity的中介，然后进行string的传递。使用putExtra()的getStringExtra()函数对来实现简单值的传递。</p>
+<h4 id="2-使用Bundle传递数据"><a href="#2-使用Bundle传递数据" class="headerlink" title="2. 使用Bundle传递数据"></a><strong>2. 使用Bundle传递数据</strong></h4><p>MainActivity.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> EditText myText;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">        myText = (EditText)findViewById(R.id.editText);</span><br><span class="line">        Button button = (Button) findViewById(R.id.btnOK);</span><br><span class="line"></span><br><span class="line">        button.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">                String str = myText.getText().toString();</span><br><span class="line"></span><br><span class="line">                Intent i = <span class="keyword">new</span> Intent(MainActivity.<span class="keyword">this</span>, TheAty.class);</span><br><span class="line">                Bundle bundle = <span class="keyword">new</span> Bundle();</span><br><span class="line">                bundle.putString(<span class="string">"message"</span>, str);</span><br><span class="line"></span><br><span class="line">                i.putExtras(bundle);</span><br><span class="line"></span><br><span class="line">                startActivity(i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>TheAty.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TheAty</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_the_aty);</span><br><span class="line"></span><br><span class="line">        Bundle bundle = <span class="keyword">this</span>.getIntent().getExtras();</span><br><span class="line">        String mesg = bundle.getString(<span class="string">"message"</span>);</span><br><span class="line"></span><br><span class="line">        TextView myText = (TextView) findViewById(R.id.tv);</span><br><span class="line">        myText.setText(mesg);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+        </div>
+
+        <!-- <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-12-07T12:39:33.860Z" itemprop="dateUpdated">2018-12-07 20:39:33</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2015/10/08/2015/2015-10-08-Android-Study-03-Activity-Data-Transfer/" target="_blank" rel="external">http://blog.duanxu.tech/2015/10/08/2015/2015-10-08-Android-Study-03-Activity-Data-Transfer/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.duanxu.tech">
+            <img src="/img/avatar.jpg" alt="Duan Xu">
+            Duan Xu
+        </a>
+    </footer>
+</blockquote>
+ -->
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Activity/">Activity</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.tech/2015/10/08/2015/2015-10-08-Android-Study-03-Activity-Data-Transfer/&title=《Android 学习笔记(03) Activity 间传递数据》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.tech/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.tech/2015/10/08/2015/2015-10-08-Android-Study-03-Activity-Data-Transfer/&title=《Android 学习笔记(03) Activity 间传递数据》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.tech/2015/10/08/2015/2015-10-08-Android-Study-03-Activity-Data-Transfer/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android 学习笔记(03) Activity 间传递数据》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.tech/2015/10/08/2015/2015-10-08-Android-Study-03-Activity-Data-Transfer/&via=http://blog.duanxu.tech" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.tech/2015/10/08/2015/2015-10-08-Android-Study-03-Activity-Data-Transfer/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2015/10/10/2015/2015-10-10-Android-Study-04-BroadcastReceiver/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android 学习笔记(04) BroadcastReceiver监听电池信息</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2015/10/07/2015/2015-10-07-Android-Study-02-Activity-Life/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android 学习笔记(02) Activity 生命周期</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        <p><span>Duan Xu &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.tech/2015/10/08/2015/2015-10-08-Android-Study-03-Activity-Data-Transfer/&title=《Android 学习笔记(03) Activity 间传递数据》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.tech/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.tech/2015/10/08/2015/2015-10-08-Android-Study-03-Activity-Data-Transfer/&title=《Android 学习笔记(03) Activity 间传递数据》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.tech/2015/10/08/2015/2015-10-08-Android-Study-03-Activity-Data-Transfer/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android 学习笔记(03) Activity 间传递数据》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.tech/2015/10/08/2015/2015-10-08-Android-Study-03-Activity-Data-Transfer/&via=http://blog.duanxu.tech" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.tech/2015/10/08/2015/2015-10-08-Android-Study-03-Activity-Data-Transfer/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADIUlEQVR42u3aQXLbQAwEQP//005VziE1g6VTFtQ8qSxzuQ0dQAD79RVf33+vq8/319U6yVPuV0vWPLqwsbGx34SdbPpqQ7OQ5Zjk2/xnwMbGxt7Nzrd7v637YOXhzpPf/VMu/46NjY39kewkIeVpZpYa89WwsbGxsZMENvs2Ly3ysgQbGxsbO2kqnWw9D2i75o/30rCxsbF/Pft80Pt7Pv/X+TY2Njb2L2B/l9f9y/1seHBeeNQKbGxs7EXsBHDe7m/vzUOclEyX6Q0bGxt7EXv2ot8mp3wrSYBaBTY2NvZWdru59nV/Voqcjy5e/AUbGxt7HbsdkZ4nkvwpbasrGg9jY2NjL2XPmjgJI78rD+5JOLCxsbE3sX+u39K2meokVI4TikM82NjY2G/Fbls854E7L1oeKFewsbGx17HbFn/Sgp8dqUl4bTPrH8/CxsbG/gB2smibhPIgtoVNHWJsbGzspew2DbRJZXZXEr42WNjY2Nj72MObgzZQfm87SGj3iY2Njb2V3bbsZ+kqT0vtAaD2aA42Njb2bnZbfrSNpNmaszKp+J2xsbGxF7HbMqA9vjMrGJJEdX7MCBsbG/t92cm4NH9Acm+bbE6KosuVsbGxsdexT4qHWZppQ9C2qF4EGhsbG3sdu23ltMPXPJnNUlrb8MLGxsbezT75Ni8V6o2OQnD5I2FjY2OvY8/aQ+1IeDayfSrJFSd6sLGxsd+Qnbd7ZgkjWTNvXZ0MqoumEjY2NvabsJ8tP2bD3XaEPEu62NjY2FvZ+WCgbQMlpcis+DkZ8WJjY2PvY7ev+Hmjf1ao5OuclyjY2NjYO9j5A/LG0FPpKsHMWkvY2NjY+9jtcuctpLZR1aarF+tgY2Njr2PPyokkHCf/M0uHyYEebGxs7E3sWepKypW2gDkfKudjA2xsbOx97PPtnhQYz4avSIHY2NjY69izwqA94jM7anMy3H1Rh2FjY2N/GPupscGsLHlqwIyNjY2NnW8lP1hz3niqUx02Njb2OnZ+BLMdKrSD2Lo9dLvDF0cwsbGxsVewTwa9s5bQScjyoQI2Njb2B7D/AJzh/WG0KcDnAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '失去灵魂(╯‵□′)╯︵┻━┻';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Blog | Duan Xu';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

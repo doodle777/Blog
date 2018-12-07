@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Android开发手记(15) 拨打电话和收发短信 | MAY THE FORCE BE WITH YOU</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Android,Phone,Message">
+    <meta name="description" content="content{:toc}  1、Intent简介　　Android组价之间的通信，由Intent来协助完成。Intent负责对应用中一次操作的动作、动作涉及数据、附加数据进行描述，Android则根据此Intent的描述，负责找到对应的组件，将 Intent传递给调用的组件，并完成组件的调用。 　　Intent可以启动一个Activity，也可以启动一个Service，还可以发起一个广播Bro">
+<meta name="keywords" content="Android,Phone,Message">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android开发手记(15) 拨打电话和收发短信">
+<meta property="og:url" content="http://blog.duanxu.tech/2015/10/26/2015/2015-10-26-Android-Study-15-Phone-and-Message/index.html">
+<meta property="og:site_name" content="MAY THE FORCE BE WITH YOU">
+<meta property="og:description" content="content{:toc}  1、Intent简介　　Android组价之间的通信，由Intent来协助完成。Intent负责对应用中一次操作的动作、动作涉及数据、附加数据进行描述，Android则根据此Intent的描述，负责找到对应的组件，将 Intent传递给调用的组件，并完成组件的调用。 　　Intent可以启动一个Activity，也可以启动一个Service，还可以发起一个广播Bro">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-07T12:42:45.948Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android开发手记(15) 拨打电话和收发短信">
+<meta name="twitter:description" content="content{:toc}  1、Intent简介　　Android组价之间的通信，由Intent来协助完成。Intent负责对应用中一次操作的动作、动作涉及数据、附加数据进行描述，Android则根据此Intent的描述，负责找到对应的组件，将 Intent传递给调用的组件，并完成组件的调用。 　　Intent可以启动一个Activity，也可以启动一个Service，还可以发起一个广播Bro">
+    
+        <link rel="alternate" type="application/atom+xml" title="MAY THE FORCE BE WITH YOU" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon_64.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Duan Xu</h5>
+          <a href="mailto:duanxu@outlook.com" title="duanxu@outlook.com" class="mail">duanxu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/doodle777" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/2886472974" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android开发手记(15) 拨打电话和收发短信</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android开发手记(15) 拨打电话和收发短信</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2015-10-26T11:35:00.000Z" itemprop="datePublished" class="page-time">
+  2015-10-26
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container-post body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、Intent简介"><span class="post-toc-number">1.</span> <span class="post-toc-text">1、Intent简介</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2、URI"><span class="post-toc-number">2.</span> <span class="post-toc-text">2、URI</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3、拨打电话"><span class="post-toc-number">3.</span> <span class="post-toc-text">3、拨打电话</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4、发送短信"><span class="post-toc-number">4.</span> <span class="post-toc-text">4、发送短信</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5、接收短信"><span class="post-toc-number">5.</span> <span class="post-toc-text">5、接收短信</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#AndroidMainfest-xml"><span class="post-toc-number">6.</span> <span class="post-toc-text">AndroidMainfest.xml</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#MainActivity-java"><span class="post-toc-number">7.</span> <span class="post-toc-text">MainActivity.java</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Receiver-java"><span class="post-toc-number">8.</span> <span class="post-toc-text">Receiver.java</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-2015/2015-10-26-Android-Study-15-Phone-and-Message" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android开发手记(15) 拨打电话和收发短信</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2015-10-26 19:35:00" datetime="2015-10-26T11:35:00.000Z" itemprop="datePublished">2015-10-26</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <ul>
+<li>content<br>{:toc}</li>
+</ul>
+<h4 id="1、Intent简介"><a href="#1、Intent简介" class="headerlink" title="1、Intent简介"></a><strong>1、Intent简介</strong></h4><p>　　Android组价之间的通信，由Intent来协助完成。Intent负责对应用中一次操作的动作、动作涉及数据、附加数据进行描述，Android则根据此Intent的描述，负责找到对应的组件，将 Intent传递给调用的组件，并完成组件的调用。</p>
+<p>　　Intent可以启动一个Activity，也可以启动一个Service，还可以发起一个广播Broadcasts。分别通过startActivity();startService();startBroadcasts();来执行操作。</p>
+<p>　　在使用Android的电话功能的时候，我们需要调用Intent的相关功能来实现拨打电话和收发短信。</p>
+<h4 id="2、URI"><a href="#2、URI" class="headerlink" title="2、URI"></a><strong>2、URI</strong></h4><p>　　URI是统一资源标识符（Uniform Resource Identifier）的缩写。是一个用于标识某一互联网资源名称的字符串。 该种标识允许用户对任何（包括本地和互联网）的资源通过特定的协议进行交互操作。URI由包括确定语法和相关协议的方案所定义。在Android中URI的意义非常重大，他是所有资源的标示符（ID），通过URI可找到一个对应的具体实体，如文件(file)，数据库的表项(content)等，可以说贯穿整个Framework。<br>　　URI一般的格式为：[scheme:]schemeSpecificPart[#fragment]  ([…]表示可选) </p>
+<h4 id="3、拨打电话"><a href="#3、拨打电话" class="headerlink" title="3、拨打电话"></a><strong>3、拨打电话</strong></h4><p>　　直接拨打电话需要添加android.permission.CALL_PHONE权限，在AndroidManifest.xml中添加如下代码：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.CALL_PHONE"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>　　完整代码为：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">manifest</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">package</span>=<span class="string">"com.example.doodle.button"</span> &gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">application</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:allowBackup</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:icon</span>=<span class="string">"@mipmap/ic_launcher"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:label</span>=<span class="string">"@string/app_name"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:theme</span>=<span class="string">"@style/AppTheme"</span> &gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">activity</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:name</span>=<span class="string">".MainActivity"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:label</span>=<span class="string">"@string/app_name"</span> &gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.MAIN"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">                <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.LAUNCHER"</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">application</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.CALL_PHONE"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>　　然后，我们实例化一个Uri，其内容为要拨打电话的命令。电话号码通过TextView获得。然后我们实例化一个Intent，设置Intent的行为为“直接拨打电话”，Intent的数据为“拨打XXX电话命令”。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Uri uri = Uri.parse(<span class="string">"tel:"</span> + tvPhone.getText());</span><br><span class="line">Intent intent = <span class="keyword">new</span> Intent();</span><br><span class="line">intent.setAction(Intent.ACTION_CALL);</span><br><span class="line">intent.setData(uri);</span><br></pre></td></tr></table></figure>
+<p>　　然后为拨打电话按钮添加此单击事件即可</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">btnDriect.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">        Uri uri = Uri.parse(<span class="string">"tel:"</span> + tvPhone.getText());</span><br><span class="line">        Intent intent = <span class="keyword">new</span> Intent();</span><br><span class="line">        intent.setAction(Intent.ACTION_CALL);</span><br><span class="line">        intent.setData(uri);</span><br><span class="line">        startActivity(intent);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>　　同理，我们可以通过Intent来启动系统自带的拨号器。启动系统自带的拨号器是不需要android.permission.CALL_PHONE权限的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">btnSystem.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">        Uri uri = Uri.parse(<span class="string">"tel:"</span> + tvPhone.getText());</span><br><span class="line">        Intent intent = <span class="keyword">new</span> Intent(Intent.ACTION_DIAL, uri);</span><br><span class="line">        startActivity(intent);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="4、发送短信"><a href="#4、发送短信" class="headerlink" title="4、发送短信"></a><strong>4、发送短信</strong></h4><p>　　同拨打电话一样，发送短信同样需要相应的权限。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.SEND_SMS"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>　　不同的是，我们在发送短信的时候是通过SmsManager来完成发送的。首先我们要实例化一个SmsManager。通过SmsManager.sendTextMessage()方法可以进行短信发送。其原型为：</p>
+<blockquote>
+<p>sendTextMessage(String destAddr, String scAddr, String text, PendingIntent sentIntent, PendingIntent deliveryIntent);<br>// destAddress 发送短信的地址（也就是号码）<br>// scAddress 短信服务中心，如果为null，就是用当前默认的短信服务中心<br>// text 短信内容<br>// sentIntent 如果不为null，当短信发送成功或者失败时，这个PendingIntent会被广播出去成功的结果代码是Activity.RESULT_OK<br>// deliveryIntent  如果不为null，当这个短信发送到接收者那里，这个PendtingIntent会被广播，状态报告生成的pdu（指对等层次之间传递的数据单位）会拓展到数据（”pdu”）  </p>
+</blockquote>
+<p>　　这里我们需要实例化一个PendingIntent来协助SMSManger的工作。</p>
+<blockquote>
+<p>SmsManager smsManager = SmsManager.getDefault();<br>PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, new Intent(), 0);<br>smsManager.sendTextMessage(strAddr, null, strCont, pendingIntent, null);  </p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">btnSend.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">        String strAddr = etPhone.getText().toString();</span><br><span class="line">        String strCont = etContent.getText().toString();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (strAddr.equals(<span class="string">""</span>)) &#123;</span><br><span class="line">            Toast.makeText(MainActivity.<span class="keyword">this</span>, <span class="string">"收件人不能为空"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (strCont.equals(<span class="string">""</span>)) &#123;</span><br><span class="line">            Toast.makeText(MainActivity.<span class="keyword">this</span>, <span class="string">"短信内容不能为空"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        SmsManager smsManager = SmsManager.getDefault();</span><br><span class="line">        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.<span class="keyword">this</span>, <span class="number">0</span>, <span class="keyword">new</span> Intent(), <span class="number">0</span>);</span><br><span class="line">        smsManager.sendTextMessage(strAddr, <span class="keyword">null</span>, strCont, pendingIntent, <span class="keyword">null</span>);</span><br><span class="line">        Toast.makeText(MainActivity.<span class="keyword">this</span>, <span class="string">"短信发送成功"</span>,Toast.LENGTH_LONG).show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>　　完整代码为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.app.PendingIntent;</span><br><span class="line"><span class="keyword">import</span> android.content.Intent;</span><br><span class="line"><span class="keyword">import</span> android.support.v7.app.AppCompatActivity;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.telephony.SmsManager;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"><span class="keyword">import</span> android.widget.Button;</span><br><span class="line"><span class="keyword">import</span> android.widget.EditText;</span><br><span class="line"><span class="keyword">import</span> android.widget.Toast;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> EditText etPhone;</span><br><span class="line">    <span class="keyword">private</span> EditText etContent;</span><br><span class="line">    <span class="keyword">private</span> Button btnSend;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">        etPhone = (EditText) findViewById(R.id.etPhone);</span><br><span class="line">        etContent = (EditText) findViewById(R.id.etContent);</span><br><span class="line">        btnSend = (Button) findViewById(R.id.btnSend);</span><br><span class="line"></span><br><span class="line">        btnSend.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">                String strAddr = etPhone.getText().toString();</span><br><span class="line">                String strCont = etContent.getText().toString();</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (strAddr.equals(<span class="string">""</span>)) &#123;</span><br><span class="line">                    Toast.makeText(MainActivity.<span class="keyword">this</span>, <span class="string">"收件人不能为空"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (strCont.equals(<span class="string">""</span>)) &#123;</span><br><span class="line">                    Toast.makeText(MainActivity.<span class="keyword">this</span>, <span class="string">"短信内容不能为空"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                SmsManager smsManager = SmsManager.getDefault();</span><br><span class="line">                PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.<span class="keyword">this</span>, <span class="number">0</span>, <span class="keyword">new</span> Intent(), <span class="number">0</span>);</span><br><span class="line">                smsManager.sendTextMessage(strAddr, <span class="keyword">null</span>, strCont, pendingIntent, <span class="keyword">null</span>);</span><br><span class="line">                Toast.makeText(MainActivity.<span class="keyword">this</span>, <span class="string">"短信发送成功"</span>,Toast.LENGTH_LONG).show();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="5、接收短信"><a href="#5、接收短信" class="headerlink" title="5、接收短信"></a><strong>5、接收短信</strong></h4><p>　　同拨打电话一样，发送短信同样需要相应的权限。接收短信需要</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.RECEIVE_SMS"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>　　接收短信的原理是，首先新建一个BroadcastReceiver来监听短信信息，然后根据监听到的广播信息中的短信进行捕捉，然后呈现出来。</p>
+<p>　　首先，新建一个Receiver类，然后重载其onReceive方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Receiver</span> <span class="keyword">extends</span> <span class="title">BroadcastReceiver</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(Context context, Intent intent)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (intent.getAction().equals(<span class="string">"android.provider.Telephony.SMS_RECEIVED"</span>)) &#123;</span><br><span class="line"></span><br><span class="line">         </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　然后，我们新建一个Budle来接收信息，我们知道，短信信息的关键字为”pdus”，所以通过一个Object[]来接收此信息，然后再将其转化为SmsMessage即可。</p>
+<p>　　由于接收到的短信由于长度原因，可能被分割成若干条信息，所以，我们通过一个for循环来处理此短信。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (intent.getAction().equals(<span class="string">"android.provider.Telephony.SMS_RECEIVED"</span>)) &#123;</span><br><span class="line">    StringBuilder str = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">    Bundle bundle = intent.getExtras();</span><br><span class="line">    <span class="keyword">if</span> (bundle != <span class="keyword">null</span>) &#123;</span><br><span class="line">        Object[] pdus = (Object[]) bundle.get(<span class="string">"pdus"</span>);</span><br><span class="line">        SmsMessage[] msg = <span class="keyword">new</span> SmsMessage[pdus.length];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; pdus.length; i++) &#123;</span><br><span class="line">            msg[i] = SmsMessage.createFromPdu((<span class="keyword">byte</span>[]) pdus[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (SmsMessage m : msg) &#123;</span><br><span class="line">            str.append(<span class="string">"发件人："</span>);</span><br><span class="line">            str.append(m.getDisplayOriginatingAddress());</span><br><span class="line">            str.append(<span class="string">"\n内容:"</span>);</span><br><span class="line">            str.append(m.getDisplayMessageBody());</span><br><span class="line">        &#125;</span><br><span class="line">        Toast.makeText(context, <span class="string">"收到消息：\n"</span> + str, Toast.LENGTH_LONG);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　最后在AndroidManifest.xml中处理一下新建的Receiver类即可。</p>
+<p>　　完整代码：</p>
+<h4 id="AndroidMainfest-xml"><a href="#AndroidMainfest-xml" class="headerlink" title="AndroidMainfest.xml"></a>AndroidMainfest.xml</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">manifest</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">package</span>=<span class="string">"com.example.doodle.button"</span> &gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">application</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:allowBackup</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:icon</span>=<span class="string">"@mipmap/ic_launcher"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:label</span>=<span class="string">"@string/app_name"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:theme</span>=<span class="string">"@style/AppTheme"</span> &gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">activity</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:name</span>=<span class="string">".MainActivity"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:label</span>=<span class="string">"@string/app_name"</span> &gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.MAIN"</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.LAUNCHER"</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">receiver</span> <span class="attr">android:name</span>=<span class="string">".Receiver"</span> <span class="attr">android:enabled</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.provider.Telephony.SMS_RECEIVED"</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">receiver</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">application</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.SEND_SMS"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.RECEIVE_SMS"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="MainActivity-java"><a href="#MainActivity-java" class="headerlink" title="MainActivity.java"></a>MainActivity.java</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.support.v7.app.AppCompatActivity;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Receiver-java"><a href="#Receiver-java" class="headerlink" title="Receiver.java"></a>Receiver.java</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.content.BroadcastReceiver;</span><br><span class="line"><span class="keyword">import</span> android.content.Context;</span><br><span class="line"><span class="keyword">import</span> android.content.Intent;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.telephony.SmsMessage;</span><br><span class="line"><span class="keyword">import</span> android.widget.Toast;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Receiver</span> <span class="keyword">extends</span> <span class="title">BroadcastReceiver</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(Context context, Intent intent)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (intent.getAction().equals(<span class="string">"android.provider.Telephony.SMS_RECEIVED"</span>)) &#123;</span><br><span class="line">            StringBuilder str = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">            Bundle bundle = intent.getExtras();</span><br><span class="line">            <span class="keyword">if</span> (bundle != <span class="keyword">null</span>) &#123;</span><br><span class="line">                Object[] pdus = (Object[]) bundle.get(<span class="string">"pdus"</span>);</span><br><span class="line">                SmsMessage[] msg = <span class="keyword">new</span> SmsMessage[pdus.length];</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; pdus.length; i++) &#123;</span><br><span class="line">                    msg[i] = SmsMessage.createFromPdu((<span class="keyword">byte</span>[]) pdus[i]);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">for</span> (SmsMessage m : msg) &#123;</span><br><span class="line">                    str.append(<span class="string">"发件人："</span>);</span><br><span class="line">                    str.append(m.getDisplayOriginatingAddress());</span><br><span class="line">                    str.append(<span class="string">"\n内容:"</span>);</span><br><span class="line">                    str.append(m.getDisplayMessageBody());</span><br><span class="line">                &#125;</span><br><span class="line">                Toast.makeText(context, <span class="string">"收到消息：\n"</span> + str, Toast.LENGTH_LONG);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <!-- <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-12-07T12:42:45.948Z" itemprop="dateUpdated">2018-12-07 20:42:45</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2015/10/26/2015/2015-10-26-Android-Study-15-Phone-and-Message/" target="_blank" rel="external">http://blog.duanxu.tech/2015/10/26/2015/2015-10-26-Android-Study-15-Phone-and-Message/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.duanxu.tech">
+            <img src="/img/avatar.jpg" alt="Duan Xu">
+            Duan Xu
+        </a>
+    </footer>
+</blockquote>
+ -->
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Message/">Message</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Phone/">Phone</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.tech/2015/10/26/2015/2015-10-26-Android-Study-15-Phone-and-Message/&title=《Android开发手记(15) 拨打电话和收发短信》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.tech/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.tech/2015/10/26/2015/2015-10-26-Android-Study-15-Phone-and-Message/&title=《Android开发手记(15) 拨打电话和收发短信》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.tech/2015/10/26/2015/2015-10-26-Android-Study-15-Phone-and-Message/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android开发手记(15) 拨打电话和收发短信》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.tech/2015/10/26/2015/2015-10-26-Android-Study-15-Phone-and-Message/&via=http://blog.duanxu.tech" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.tech/2015/10/26/2015/2015-10-26-Android-Study-15-Phone-and-Message/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2015/10/28/2015/2015-10-28-Android-Study-16-Data-Store-1-SharedPreferences/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android开发手记(16) 数据存储一 SharedPreferences</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2015/10/22/2015/2015-10-22-Android-Study-14-MediaPlayer/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android开发手记(14) 使用MediaPlayer播放mp3</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        <p><span>Duan Xu &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.tech/2015/10/26/2015/2015-10-26-Android-Study-15-Phone-and-Message/&title=《Android开发手记(15) 拨打电话和收发短信》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.tech/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.tech/2015/10/26/2015/2015-10-26-Android-Study-15-Phone-and-Message/&title=《Android开发手记(15) 拨打电话和收发短信》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.tech/2015/10/26/2015/2015-10-26-Android-Study-15-Phone-and-Message/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android开发手记(15) 拨打电话和收发短信》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.tech/2015/10/26/2015/2015-10-26-Android-Study-15-Phone-and-Message/&via=http://blog.duanxu.tech" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.tech/2015/10/26/2015/2015-10-26-Android-Study-15-Phone-and-Message/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADNUlEQVR42u3awXLiQAwE0Pz/T2evqUoZuiWnFobnE2XI4DccOpLm6yu+vn9cv+/8fvf3316tlqx5tfLV+rdd2NjY2G/CTr7s6k6OmX0m/wHqjcPGxsY+jv04GBJwHnXJJ5P0SZ7t8j42Njb2x7PzL5uF0yYgsbGxsbHzkMjbPUmk3VuWYGNjY38aO2kqte34fJyQjxn+Qy8NGxsb++XZM8Brvv6T+TY2Njb2C7O/y2vWNmpjadYwKhTY2NjYB7HzAEg2Ivmnvy0PNi2nJ8+GjY2NfQR7djjmruOV7dbcdpQHGxsb+yD24xhI7uQD43Yw8Pih85HGk1IEGxsb+83Z+8HqpsUzK3Xawqb4nbGxsbHfkN02dJK2Th5Om8HAZguwsbGxz2a38dPGw+Z32Ifc112pi42Njf1i7PzYTRsteTGzibphsGFjY2Mfx07aMbNBb36Up33dHujBxsbG/gR2W3K04ZSPftvSIgFjY2Njn8pOmjh3DXTz6MobSW0hhI2NjX0Sux0DzNpAs/szUtTwwsbGxj6OfVeobAbAeQtpU7pgY2Njn8dOCoxNcycvadoV2kZVffgSGxsb+03YSdO/bce349j2kGUek5fvYmNjYx/E3kwS7n2UfAwwy+fhfBsbGxv7Tdh5o2e2RBt+my1Lvh0bGxv7JHb7lfnrzXi4rRrqcQU2Njb2QexZUdEOdPekxwm86qhhY2Njvzk7j5/ZwZ12nfZOvh2XJ5WwsbGxD2W3/+K329Eevkl4xWrY2NjYh7KTFn87Bm5jqR1CtO0tbGxs7PPYm+XawqBt7rdtrPpQDjY2NvZB7NlxmTyQ8tjLxxIt9XJIgI2NjX0Qu23xPI69doSQH+jJxw9PnhkbGxv7OPbsuExbxrRhdtd1eVIJGxsb+83Z3+WVFxjtkZpZ4LWlFDY2NvZ57DYA8sM3+wFDDmiHE9jY2NjnsTeHLDdNpX3Zs4pSbGxs7OPYbXto01rKAbNBRfTDYGNjY38wezPi3W9EvtFPmlPY2NjY2KP2Uz4q2G/Ek89jY2NjH8duy4A8eNqm/6wI+cNeGjY2NvbLs/NYaoey+RbMhruz4gQbGxv7IPY/fbVKFfDH8lAAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '失去灵魂(╯‵□′)╯︵┻━┻';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Blog | Duan Xu';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

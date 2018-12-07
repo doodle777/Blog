@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>JUnit学习(2) JUnit API | MAY THE FORCE BE WITH YOU</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Java,JUnit">
+    <meta name="description" content="content{:toc}  3 JUnit API引自“极客学院” JUnit 中比较重要的类有四个： |:—:|:—:|:—:||序号|类的名称|类的功能||1|Assert|assert方法的集合||2|TestCase|定义了运行多重测试的固定装置||3|TestResult|TestResult 集合了执行测试样例的所有结果||4|TestSuit|TestSuite 是测试的集合|">
+<meta name="keywords" content="Java,JUnit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JUnit学习(2) JUnit API">
+<meta property="og:url" content="http://blog.duanxu.tech/2016/08/09/2016/2016-08-09-JUnit-学习(2)-JUnit-API/index.html">
+<meta property="og:site_name" content="MAY THE FORCE BE WITH YOU">
+<meta property="og:description" content="content{:toc}  3 JUnit API引自“极客学院” JUnit 中比较重要的类有四个： |:—:|:—:|:—:||序号|类的名称|类的功能||1|Assert|assert方法的集合||2|TestCase|定义了运行多重测试的固定装置||3|TestResult|TestResult 集合了执行测试样例的所有结果||4|TestSuit|TestSuite 是测试的集合|">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-07T12:51:31.016Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JUnit学习(2) JUnit API">
+<meta name="twitter:description" content="content{:toc}  3 JUnit API引自“极客学院” JUnit 中比较重要的类有四个： |:—:|:—:|:—:||序号|类的名称|类的功能||1|Assert|assert方法的集合||2|TestCase|定义了运行多重测试的固定装置||3|TestResult|TestResult 集合了执行测试样例的所有结果||4|TestSuit|TestSuite 是测试的集合|">
+    
+        <link rel="alternate" type="application/atom+xml" title="MAY THE FORCE BE WITH YOU" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon_64.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Duan Xu</h5>
+          <a href="mailto:duanxu@outlook.com" title="duanxu@outlook.com" class="mail">duanxu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/doodle777" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/2886472974" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">JUnit学习(2) JUnit API</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">JUnit学习(2) JUnit API</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-08-09T12:27:30.000Z" itemprop="datePublished" class="page-time">
+  2016-08-09
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Java/">Java</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container-post body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-JUnit-API"><span class="post-toc-number">1.</span> <span class="post-toc-text">3 JUnit API</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-1-Assert类"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">3.1 Assert类</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-2-TestCase类"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">3.2 TestCase类</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-3-TestResult类"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">3.3 TestResult类</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-4-TestSuit类"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">3.4 TestSuit类</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-2016/2016-08-09-JUnit-学习(2)-JUnit-API" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">JUnit学习(2) JUnit API</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-08-09 20:27:30" datetime="2016-08-09T12:27:30.000Z" itemprop="datePublished">2016-08-09</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Java/">Java</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <ul>
+<li>content<br>{:toc}</li>
+</ul>
+<h3 id="3-JUnit-API"><a href="#3-JUnit-API" class="headerlink" title="3 JUnit API"></a>3 JUnit API</h3><p><strong>引自<a href="http://wiki.jikexueyuan.com/project/junit/api.html" target="_blank" rel="noopener">“极客学院”</a></strong></p>
+<p>JUnit 中比较重要的类有四个：</p>
+<p>|:—:|:—:|:—:|<br>|序号|类的名称|类的功能|<br>|1|Assert|assert方法的集合|<br>|2|TestCase|定义了运行多重测试的固定装置|<br>|3|TestResult|TestResult 集合了执行测试样例的所有结果|<br>|4|TestSuit|TestSuite 是测试的集合|</p>
+<h4 id="3-1-Assert类"><a href="#3-1-Assert类" class="headerlink" title="3.1 Assert类"></a>3.1 Assert类</h4><p>这个类提供了一系列的编写测试的有用的声明方法。只有失败的声明方法才会被记录。Assert 类的重要方法列式如下：</p>
+<p>|:—:|:—:|:—:|<br>|序号|方法|描述|<br>|1|void assertEquals(boolean expected, boolean actual)|检查两个变量或者等式是否平衡|<br>|2|void assertFalse(boolean condition)|检查条件是假的|<br>|3|void assertNotNull(Object object)|检查对象不是空的|<br>|4|void assertNull(Object object)|检查对象是空的|<br>|5|void assertTrue(boolean condition)|检查条件为真|<br>|6|void fail()|在没有报告的情况下使测试不通过|</p>
+<p>测试类用法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.junit.Assert.*;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestJunit1</span> </span>&#123;</span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testAdd</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="comment">//test data</span></span><br><span class="line">      <span class="keyword">int</span> num= <span class="number">5</span>;</span><br><span class="line">      String temp= <span class="keyword">null</span>;</span><br><span class="line">      String str= <span class="string">"Junit is working fine"</span>;</span><br><span class="line"></span><br><span class="line">      <span class="comment">//check for equality</span></span><br><span class="line">      assertEquals(<span class="string">"Junit is working fine"</span>, str);</span><br><span class="line"></span><br><span class="line">      <span class="comment">//check for false condition</span></span><br><span class="line">      assertFalse(num &gt; <span class="number">6</span>);</span><br><span class="line"></span><br><span class="line">      <span class="comment">//check for not null value</span></span><br><span class="line">      assertNotNull(str);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="3-2-TestCase类"><a href="#3-2-TestCase类" class="headerlink" title="3.2 TestCase类"></a>3.2 TestCase类</h4><p>测试样例定义了运行多重测试的固定格式。TestCase 类的一些重要方法列式如下：</p>
+<p>|:—:|:—:|:—:|<br>|序号|方法|描述|<br>|1|int countTestCases()|为被run(TestResult result) 执行的测试案例计数|<br>|2|TestResult createResult()|创建一个默认的 TestResult 对象|<br>|3|String getName()|获取 TestCase 的名称|<br>|4|TestResult run()|一个运行这个测试的方便的方法，收集由TestResult 对象产生的结果|<br>|5|void run(TestResult result)|在 TestResult 中运行测试案例并收集结果|<br>|6|void setName(String name)|设置 TestCase 的名称|<br>|7|void setUp()|创建固定装置，例如，打开一个网络连接|<br>|8|void tearDown()|拆除固定装置，例如，关闭一个网络连接|<br>|9|String toString()|返回测试案例的一个字符串表示|</p>
+<p>测试类用法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> junit.framework.TestCase;</span><br><span class="line"><span class="keyword">import</span> org.junit.Before;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestJunit2</span> <span class="keyword">extends</span> <span class="title">TestCase</span>  </span>&#123;</span><br><span class="line">   <span class="keyword">protected</span> <span class="keyword">double</span> fValue1;</span><br><span class="line">   <span class="keyword">protected</span> <span class="keyword">double</span> fValue2;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Before</span> </span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUp</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      fValue1= <span class="number">2.0</span>;</span><br><span class="line">      fValue2= <span class="number">3.0</span>;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testAdd</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="comment">//count the number of test cases</span></span><br><span class="line">      System.out.println(<span class="string">"No of Test Case = "</span>+ <span class="keyword">this</span>.countTestCases());</span><br><span class="line"></span><br><span class="line">      <span class="comment">//test getName </span></span><br><span class="line">      String name= <span class="keyword">this</span>.getName();</span><br><span class="line">      System.out.println(<span class="string">"Test Case Name = "</span>+ name);</span><br><span class="line"></span><br><span class="line">      <span class="comment">//test setName</span></span><br><span class="line">      <span class="keyword">this</span>.setName(<span class="string">"testNewAdd"</span>);</span><br><span class="line">      String newName= <span class="keyword">this</span>.getName();</span><br><span class="line">      System.out.println(<span class="string">"Updated Test Case Name = "</span>+ newName);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">//tearDown used to close the connection or clean up activities</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">tearDown</span><span class="params">(  )</span> </span>&#123;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="3-3-TestResult类"><a href="#3-3-TestResult类" class="headerlink" title="3.3 TestResult类"></a>3.3 TestResult类</h4><p>测试样例定义了运行多重测试的固定格式。TestCase 类的一些重要方法列式如下：</p>
+<p>|:—:|:—:|:—:|<br>|序号|方法|描述|<br>|1|void addError(Test test, Throwable t)|在错误列表中加入一个错误|<br>|2|void addFailure(Test test, AssertionFailedError t)|在失败列表中加入一个失败|<br>|3|void endTest(Test test)|显示测试被编译的这个结果|<br>|4|int errorCount()|获取被检测出错误的数量|<br>|5|Enumeration errors()|返回错误的详细信息|<br>|6|int failureCount()|获取被检测出的失败的数量|<br>|7|void run(TestCase test)|运行 TestCase|<br>|8|int int runCount()|获得运行测试的数量|<br>|9|void startTest(Test test)|声明一个测试即将开始|<br>|10|void stop()|标明测试必须停止|</p>
+<p>测试类用法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"><span class="keyword">import</span> junit.framework.AssertionFailedError;</span><br><span class="line"><span class="keyword">import</span> junit.framework.TestResult;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestJunit3</span> <span class="keyword">extends</span> <span class="title">TestResult</span> </span>&#123;</span><br><span class="line">   <span class="comment">// add the error</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">addError</span><span class="params">(Test test, Throwable t)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">super</span>.addError((junit.framework.Test) test, t);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// add the failure</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">addFailure</span><span class="params">(Test test, AssertionFailedError t)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">super</span>.addFailure((junit.framework.Test) test, t);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testAdd</span><span class="params">()</span> </span>&#123;</span><br><span class="line">   <span class="comment">// add any test</span></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// Marks that the test run should stop.</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">stop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">   <span class="comment">//stop the test here</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="3-4-TestSuit类"><a href="#3-4-TestSuit类" class="headerlink" title="3.4 TestSuit类"></a>3.4 TestSuit类</h4><p>TestSuite 类是测试的组成部分。它运行了很多的测试案例。TestSuite 类的一些重要方法列式如下：</p>
+<p>|:—:|:—:|:—:|<br>|序号|方法|描述|<br>|1|void addTest(Test test)|在套中加入测试。|<br>|2|void addTestSuite(Class&lt;? extends TestCase&gt; testClass)|将已经给定的类中的测试加到套中。|<br>|3|int countTestCases()|对这个测试即将运行的测试案例进行计数。|<br>|4|String getName()|返回套的名称。|<br>|5|void run(TestResult result)|在 TestResult 中运行测试并收集结果。|<br>|6|void setName(String name)|设置套的名称。|<br>|7|Test testAt(int index)|在给定的目录中返回测试。|<br>|8|int testCount()|返回套中测试的数量。|<br>|9|static Test warning(String message)|返回会失败的测试并且记录警告信息。|</p>
+<p>测试类用法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> junit.framework.*;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JunitTestSuite</span> </span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] a)</span> </span>&#123;</span><br><span class="line">      <span class="comment">// add the test's in the suite</span></span><br><span class="line">      TestSuite suite = <span class="keyword">new</span> TestSuite(TestJunit1.class, TestJunit2.class, TestJunit3.class );</span><br><span class="line">      TestResult result = <span class="keyword">new</span> TestResult();</span><br><span class="line">      suite.run(result);</span><br><span class="line">      System.out.println(<span class="string">"Number of test cases = "</span> + result.runCount());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <!-- <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-12-07T12:51:31.016Z" itemprop="dateUpdated">2018-12-07 20:51:31</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2016/08/09/2016/2016-08-09-JUnit-学习(2)-JUnit-API/" target="_blank" rel="external">http://blog.duanxu.tech/2016/08/09/2016/2016-08-09-JUnit-学习(2)-JUnit-API/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.duanxu.tech">
+            <img src="/img/avatar.jpg" alt="Duan Xu">
+            Duan Xu
+        </a>
+    </footer>
+</blockquote>
+ -->
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JUnit/">JUnit</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.tech/2016/08/09/2016/2016-08-09-JUnit-学习(2)-JUnit-API/&title=《JUnit学习(2) JUnit API》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.tech/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.tech/2016/08/09/2016/2016-08-09-JUnit-学习(2)-JUnit-API/&title=《JUnit学习(2) JUnit API》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.tech/2016/08/09/2016/2016-08-09-JUnit-学习(2)-JUnit-API/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JUnit学习(2) JUnit API》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.tech/2016/08/09/2016/2016-08-09-JUnit-学习(2)-JUnit-API/&via=http://blog.duanxu.tech" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.tech/2016/08/09/2016/2016-08-09-JUnit-学习(2)-JUnit-API/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2016/09/16/2016/2016-09-16-Ubuntu16.04-配置openCV环境/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Ubuntu 16.04 配置 openCV 环境</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/08/04/2016/2016-08-04-JUnit-学习(1)-初识JUnit/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">JUnit学习(1) 初识JUnit</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        <p><span>Duan Xu &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.tech/2016/08/09/2016/2016-08-09-JUnit-学习(2)-JUnit-API/&title=《JUnit学习(2) JUnit API》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.tech/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.tech/2016/08/09/2016/2016-08-09-JUnit-学习(2)-JUnit-API/&title=《JUnit学习(2) JUnit API》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.tech/2016/08/09/2016/2016-08-09-JUnit-学习(2)-JUnit-API/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JUnit学习(2) JUnit API》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.tech/2016/08/09/2016/2016-08-09-JUnit-学习(2)-JUnit-API/&via=http://blog.duanxu.tech" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.tech/2016/08/09/2016/2016-08-09-JUnit-学习(2)-JUnit-API/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACvUlEQVR42u3aQU4DMRAEwPz/03DhwIWke8aOglR7QizrdQXJdnrm8Yivr+B6lNfvp5JxZm/Bw8PDu8FLJv3XVNqn/nrvc3Y7Bzw8PLz38GYLd8vOp5v8Pto88PDw8D6A93yJz+/mU8fDw8P7v7z2cNxGEvm2hIeHh/cJvOT42y7xyceRfyjXsxY8PDy8k7WqIlp9z89X6nt4eHh4hxoC2kU/mUp7XB7OEw8PD+8Cb1aqb5fpfMxZlPxibnh4eHhHefkL8sU6H6ENRPJYZPhiPDw8vLhbqd0YZmHBrOnqWCSBh4eHd5SXTCIPHWYH5Zyx+gjw8PDwjvJyxiawyAv8m22m+GaAh4eHV/JOLdB5OSqJGPICW9RNhoeHh3eUly/EefmqjV83f1/sfnh4eHiHeKei1Q3j+bN5KhsFEHh4eHgXeG3wmoQOs7JZ246Ah4eH935eMsWkSLYPNZINJjri4+Hh4V3g5QNtJpQ/OzvKF5U9PDw8vDWvLVk9Hzq/O2spyO/+/IyHh4d3gZcPsQ8g2vHbMlsUAePh4eGteXmgkL+gbSCYbRXRPPHw8PAu8GZl+zZyzRmbVoM6mMDDw8Mb8fYl/FPBwSYCLo7UeHh4eGvepvDfLt95+a09WNetA3h4eHgLXlsAWyXEZeNCu8EcaB3Aw8PDC3h54SovfbXL9+YAvfof4uHh4Y14sxJUHmG0TQOzctowa8HDw8Mb8fIXbBqtZkfh/Gg+LIPh4eHhjXhf5bWJGNr4Y9bcUMS4eHh4eCPeqenOAos2CN48i4eHh3eW15bBEmQS3SaH6Zzx4hsDHh4e3gXe7DXJJE61VbWbFh4eHt4n8PKyVs5uN488XMbDw8P7BN5mY2hDinzMKEfBw8PDu8Brw4jkWDwrm+UBx8WsBQ8PD+/13XrzmDVg5R/ErIT2mF14eHh4Ke8bjs8r8Lwbi1gAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '失去灵魂(╯‵□′)╯︵┻━┻';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Blog | Duan Xu';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Java集合框架学习笔记(0) Overview | MAY THE FORCE BE WITH YOU</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Java,Framework,Collection">
+    <meta name="description" content="content{:toc}     Collection List AbstractList Vector Stack   ArrayList LinkedList     Set AbstractSet HashSet LinkedHashSet   TreeSet       Map AbstractMap HashMap LinkedHashMap   WeakHashMap HashTa">
+<meta name="keywords" content="Java,Framework,Collection">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java集合框架学习笔记(0) Overview">
+<meta property="og:url" content="http://blog.duanxu.tech/2017/05/01/2017/2017-05-01-JAVA集合框架学习笔记(0)-Overview/index.html">
+<meta property="og:site_name" content="MAY THE FORCE BE WITH YOU">
+<meta property="og:description" content="content{:toc}     Collection List AbstractList Vector Stack   ArrayList LinkedList     Set AbstractSet HashSet LinkedHashSet   TreeSet       Map AbstractMap HashMap LinkedHashMap   WeakHashMap HashTa">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://blog.duanxu.tech/images/201705/2017050101.gif">
+<meta property="og:updated_time" content="2018-12-07T12:37:12.021Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java集合框架学习笔记(0) Overview">
+<meta name="twitter:description" content="content{:toc}     Collection List AbstractList Vector Stack   ArrayList LinkedList     Set AbstractSet HashSet LinkedHashSet   TreeSet       Map AbstractMap HashMap LinkedHashMap   WeakHashMap HashTa">
+<meta name="twitter:image" content="http://blog.duanxu.tech/images/201705/2017050101.gif">
+    
+        <link rel="alternate" type="application/atom+xml" title="MAY THE FORCE BE WITH YOU" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon_64.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Duan Xu</h5>
+          <a href="mailto:duanxu@outlook.com" title="duanxu@outlook.com" class="mail">duanxu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/doodle777" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/2886472974" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Java集合框架学习笔记(0) Overview</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Java集合框架学习笔记(0) Overview</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-05-01T11:29:30.000Z" itemprop="datePublished" class="page-time">
+  2017-05-01
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Java/">Java</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container-post body-wrap">
+    
+
+<article id="post-2017/2017-05-01-JAVA集合框架学习笔记(0)-Overview" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Java集合框架学习笔记(0) Overview</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-05-01 19:29:30" datetime="2017-05-01T11:29:30.000Z" itemprop="datePublished">2017-05-01</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Java/">Java</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <ul>
+<li>content<br>{:toc}</li>
+</ul>
+<div style="text-align: center"><br><img src="/images/201705/2017050101.gif"><br></div>
+
+<ul>
+<li>Collection<ul>
+<li>List<ul>
+<li>AbstractList<ul>
+<li>Vector<ul>
+<li>Stack</li>
+</ul>
+</li>
+<li>ArrayList</li>
+<li>LinkedList</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Set<ul>
+<li>AbstractSet<ul>
+<li>HashSet<ul>
+<li>LinkedHashSet</li>
+</ul>
+</li>
+<li>TreeSet</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Map<ul>
+<li>AbstractMap<ul>
+<li>HashMap<ul>
+<li>LinkedHashMap</li>
+</ul>
+</li>
+<li>WeakHashMap</li>
+<li>HashTable</li>
+<li>IdentityHashMap</li>
+<li>TreeMap</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+
+        <!-- <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-12-07T12:37:12.021Z" itemprop="dateUpdated">2018-12-07 20:37:12</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2017/05/01/2017/2017-05-01-JAVA集合框架学习笔记(0)-Overview/" target="_blank" rel="external">http://blog.duanxu.tech/2017/05/01/2017/2017-05-01-JAVA集合框架学习笔记(0)-Overview/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.duanxu.tech">
+            <img src="/img/avatar.jpg" alt="Duan Xu">
+            Duan Xu
+        </a>
+    </footer>
+</blockquote>
+ -->
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Collection/">Collection</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Framework/">Framework</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.tech/2017/05/01/2017/2017-05-01-JAVA集合框架学习笔记(0)-Overview/&title=《Java集合框架学习笔记(0) Overview》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.tech/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.tech/2017/05/01/2017/2017-05-01-JAVA集合框架学习笔记(0)-Overview/&title=《Java集合框架学习笔记(0) Overview》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.tech/2017/05/01/2017/2017-05-01-JAVA集合框架学习笔记(0)-Overview/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Java集合框架学习笔记(0) Overview》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.tech/2017/05/01/2017/2017-05-01-JAVA集合框架学习笔记(0)-Overview/&via=http://blog.duanxu.tech" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.tech/2017/05/01/2017/2017-05-01-JAVA集合框架学习笔记(0)-Overview/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/05/01/2017/2017-05-01-JAVA集合框架学习笔记(1)-ArrayList/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Java集合框架学习笔记(1) ArrayList</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/03/30/2017/2017-03-30-转-Java核心技术点之注解/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">[转]Java核心技术点之注解</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        <p><span>Duan Xu &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.duanxu.tech/2017/05/01/2017/2017-05-01-JAVA集合框架学习笔记(0)-Overview/&title=《Java集合框架学习笔记(0) Overview》 — MAY THE FORCE BE WITH YOU&pic=http://blog.duanxu.tech/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.duanxu.tech/2017/05/01/2017/2017-05-01-JAVA集合框架学习笔记(0)-Overview/&title=《Java集合框架学习笔记(0) Overview》 — MAY THE FORCE BE WITH YOU&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.duanxu.tech/2017/05/01/2017/2017-05-01-JAVA集合框架学习笔记(0)-Overview/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Java集合框架学习笔记(0) Overview》 — MAY THE FORCE BE WITH YOU&url=http://blog.duanxu.tech/2017/05/01/2017/2017-05-01-JAVA集合框架学习笔记(0)-Overview/&via=http://blog.duanxu.tech" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.duanxu.tech/2017/05/01/2017/2017-05-01-JAVA集合框架学习笔记(0)-Overview/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADLUlEQVR42u3ay47iQAwF0P7/n2ak2Y1ahHttekSqT1Yo5OFTLEzZ/vqKj8ff4/uZZ+ev70qu/P6W9t43HNjY2Ng3YT8ujzbc79/mISb4JJ5rCzY2Nvap7OsgZonqehFnCWyWzLCxsbGx243Hi+Rxic/PtMuHjY2NjT0DXy9ZDpvFiY2Njf172JvNwyb0TQL7T7U0bGxs7I9nt43eT/78g/1tbGxs7I9kP0ZHXnJKClJ5eShPVC/ix8bGxj6InQQ9K+LMRipnm5zZeBA2Njb2Gewk6BzWLkHCblNgVFrCxsbGPoi9L9Mn4c6GfpLhnjzaqMuNjY2NfUN2PgTTppk8qbQt5/yNT+PHxsbGPpT9c8mmTYHJj9H+AEXXGhsbG/tW7FkbtcW0W4u8MZBsUV4sKDY2NvYvYCeF+Lb0M2sVvPdbbGxs7JPYbRqYJaS8kZDHsBn9wcbGxj6JnQ/BtC+eFYPeVUjK2wzY2NjYd2e3pPYF+21GW6KK0io2Njb2Eey6mL4uJLXPbNsG0cJhY2NjH8Ru51jyu2ZFqGRp8nJV3YTGxsbGviF71rJty0ZtuG3xKH9anbexsbGxP57dFmvaIcs2je2XOGkYYGNjY5/Nnv3dnzWJ27c/yqNwYWNjYx/B3g9W5kvWFpVmzYMidWFjY2Pflr15cdISaMv9m9xbFLawsbGxj2bnm4pZyT4Z09w0cetcjY2NjX0cu4VtGG2ToG0MPL0LGxsb+yD2JqCfG+jJNyGbK7GxsbHPYOcDl5sr8zZtu8kZbm+wsbGxD2K3BaZNEmqbEPsNSZGlsbGxsQ9lt3/0o9J8fP2+Afy2VgE2Njb2rdizYZ1Z8ps1jDdp7OluDBsbG/sI9ixFDYdmyu3KrHH75k4INjY29keyH+WRL1by+V3PSX6Gf+7CxsbGPog9q6LnaW/TkJi1codbEWxsbOybs9/76Lbl0DaAky1QFDM2Njb2cew8weRJLmnKtoM+m3iwsbGxsdsaexL65spNSsPGxsb+nezZpqXdhOzHhqK3Y2NjYx/Hno3jzEZ8ZgWsTSsXGxsb+2z2vtCfj/XkZ1penkqxsbGxD2L/AfzkMBMtpaQVAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '失去灵魂(╯‵□′)╯︵┻━┻';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Blog | Duan Xu';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
